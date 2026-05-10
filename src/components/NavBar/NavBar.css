@@ -52,6 +52,7 @@
 
 .nav-link-text {
     display: block;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {
