@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.text {
+    cursor: default;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.icon {
+    position: relative;
+    top: -2px;
+    width: 20px;
+    height: 20px;
+    stroke-width: 2px;
+}
+
+.nav-link {
+    justify-content: center;
+    cursor: pointer;
+    gap: 0.1rem;
+    padding-top: 2px;
+    padding-inline: 15px;
+    color: black;
+}
+
+.nav-link--active {
+    background-color: black;
+    border-radius: 10px;
+    color: white;
+}
+
+.navbar {
+    cursor: default;
+    justify-content: space-between;
+    padding: 1rem;
+    padding-inline: 2rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.app-title {
+    font-weight: 700;
+}
+
+.nav-link-container {
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.nav-link-text {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .nav-link-text {
+        display: none;
+    }
+
+    .nav-link {
+        padding-top: 5px;
+        padding-inline: 5px;
+    }
+
+    .icon {
+        font-size: 20px;
+        width: 30px;
+        height: 30px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .app-title {
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .nav-link {
+        padding-top: 2px;
+        padding-inline: 3px;
+    }
+
+    .icon {
+        font-size: 15px;
+        width: 20px;
+        height: 20px;
+    }
+
+}
