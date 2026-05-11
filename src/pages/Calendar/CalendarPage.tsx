@@ -1,9 +1,14 @@
-interface CalendarPageProps {
+import './CalendarPage.css';
+import { CalendarHeader } from './components/CalendarHeader/CalendarHeader';
+import { CalendarGrid } from './components/CalendarGrid/CalendarGrid';
 
-}
+interface CalendarPageProps { }
 
 export const CalendarPage = ({ }: CalendarPageProps) => {
     return (
-        <div>CalendarPage</div>
+        <div className='page-container'>
+            <CalendarHeader />
+            <CalendarGrid />
+        </div>
     )
 }

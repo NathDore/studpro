@@ -5,10 +5,10 @@ import { NavBar } from "../components/NavBar/NavBar";
 
 function Root() {
     return (
-        <>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <NavBar />
             <Outlet />
-        </>
+        </div>
     );
 }
 

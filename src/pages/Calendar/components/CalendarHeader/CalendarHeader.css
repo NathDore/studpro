@@ -1,0 +1,47 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 70px;
+    border-top: 1px solid lightgray;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 100px repeat(7, 1fr);
+    grid-template-rows: 1fr;
+}
+
+.child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+.time {
+    border-left: 1px solid lightgray;
+}
+
+.day {
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.date {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.date--current {
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

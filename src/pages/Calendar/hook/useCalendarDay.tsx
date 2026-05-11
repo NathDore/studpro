@@ -1,0 +1,35 @@
+import { useEffect, useState } from "react"
+import type { CalendarDay } from "../types/CalendarDay"
+
+const getMonday = (date: Date): Date => {
+    const day = date.getDay();
+    const diffToMonday = day === 0 ? 6 : day - 1;
+    const monday = new Date(date);
+    monday.setDate(date.getDate() - diffToMonday);
+    return monday;
+};
+
+const DAY_NAMES: CalendarDay['day'][] = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+
+export const useCalendarDay = () => {
+    const [days, setDays] = useState<CalendarDay[]>([]);
+
+    useEffect(() => {
+        const currentDate = new Date();
+        const monday = getMonday(currentDate);
+
+        const newDays: CalendarDay[] = [];
+        const currentDay = new Date(monday);
+
+        for (let i = 0; i < 7; i++) {
+            newDays.push({ day: DAY_NAMES[i], date: currentDay.getDate().toString(), isCurrentDay: currentDate.getDate() === currentDay.getDate() ? true : false });
+            currentDay.setDate(monday.getDate() + i + 1);
+        }
+
+        setDays(newDays);
+    }, []);
+
+    return {
+        days
+    }
+}
