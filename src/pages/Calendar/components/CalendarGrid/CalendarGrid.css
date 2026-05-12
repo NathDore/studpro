@@ -32,6 +32,13 @@
 .hour-cell {
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
+    cursor: pointer;
+}
+
+.hour-cell:hover {
+    border: 1px solid rgb(37, 37, 37);
+    background-color: lightgray;
+
 }
 
 @media (max-width: 768px) {}
