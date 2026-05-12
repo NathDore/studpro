@@ -1,9 +1,12 @@
 import './CalendarGrid.css';
 import { useCalendarDay } from '../../hook/useCalendarDay';
 import type { CalendarDay } from '../../types/CalendarDay';
+import type { Task } from '../../../../types/Task';
+import { TaskLayer } from '../TaskLayer/TaskLayer';
 
 interface CalendarGridProps {
     onHourCellClick: (calendar: CalendarDay, time: Time) => void;
+    tasks: Task[];
 }
 
 export interface Time {
@@ -26,7 +29,7 @@ const getTimes = (): Time[] => {
     });
 }
 
-export const CalendarGrid = ({ onHourCellClick }: CalendarGridProps) => {
+export const CalendarGrid = ({ onHourCellClick, tasks }: CalendarGridProps) => {
     const times = getTimes();
 
     return (
@@ -34,6 +37,8 @@ export const CalendarGrid = ({ onHourCellClick }: CalendarGridProps) => {
             {
                 times?.map(time => <CalendarRow onHourCellClick={onHourCellClick} key={time.id} time={time} />)
             }
+
+            <TaskLayer tasks={tasks} />
         </div>
     )
 }

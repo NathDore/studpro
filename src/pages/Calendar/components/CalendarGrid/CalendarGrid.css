@@ -1,7 +1,8 @@
 .calendar {
+    position: relative;
+    flex: 1;
     overflow-y: auto;
     scrollbar-width: none;
-    padding-bottom: 30px;
 }
 
 .calendar::-webkit-scrollbar {

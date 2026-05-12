@@ -1,0 +1,13 @@
+.task-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(24 * 60px);
+    pointer-events: none;
+}
+
+.task {
+    pointer-events: auto;
+    position: absolute;
+}
