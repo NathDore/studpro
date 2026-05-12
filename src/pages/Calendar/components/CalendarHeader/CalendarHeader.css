@@ -19,6 +19,7 @@
     align-items: center;
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
+    padding-bottom: 1rem;
 }
 
 .time {
