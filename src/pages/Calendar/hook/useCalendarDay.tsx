@@ -22,7 +22,12 @@ export const useCalendarDay = () => {
         const currentDay = new Date(monday);
 
         for (let i = 0; i < 7; i++) {
-            newDays.push({ day: DAY_NAMES[i], date: currentDay.getDate().toString(), isCurrentDay: currentDate.getDate() === currentDay.getDate() ? true : false });
+            newDays.push({
+                id: currentDay.toISOString().split('T')[0],
+                day: DAY_NAMES[i],
+                date: currentDay.getDate().toString(),
+                isCurrentDay: currentDate.getDate() === currentDay.getDate() ? true : false
+            });
             currentDay.setDate(monday.getDate() + i + 1);
         }
 

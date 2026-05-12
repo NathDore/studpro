@@ -11,7 +11,7 @@ export const CalendarHeader = ({ }: CalendarHeaderProps) => {
         <div className='header grid'>
             <div className='child time'></div>
             {
-                days.map(day => <CalendarDayCol calendarDay={day} />)
+                days.map(day => <CalendarDayCol key={day.id} calendarDay={day} />)
             }
         </div>
     )

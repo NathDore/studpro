@@ -1,5 +1,39 @@
 .calendar {
-    display: flex;
-    flex: 1;
     overflow-y: auto;
+    scrollbar-width: none;
+    padding-bottom: 30px;
 }
+
+.calendar::-webkit-scrollbar {
+    display: none;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 40px repeat(7, 1fr);
+    height: 60px;
+}
+
+.time-cell {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    border-right: 1px solid lightgray;
+}
+
+.time-cell-text {
+    position: relative;
+    bottom: -10px;
+    left: -4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.hour-cell {
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+@media (max-width: 768px) {}
+
+@media (max-width: 480px) {}

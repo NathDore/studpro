@@ -2,13 +2,12 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    height: 70px;
-    border-top: 1px solid lightgray;
+    height: 50px;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: 100px repeat(7, 1fr);
+    grid-template-columns: 40px repeat(7, 1fr);
     grid-template-rows: 1fr;
 }
 
@@ -18,12 +17,13 @@
     justify-content: center;
     align-items: center;
     border-right: 1px solid lightgray;
+    border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
-    padding-bottom: 1rem;
 }
 
 .time {
-    border-left: 1px solid lightgray;
+    border-top: none;
+    border-bottom: none;
 }
 
 .day {
@@ -33,31 +33,25 @@
 
 .date {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 13px;
 }
 
 .date--current {
     background-color: black;
     color: white;
     border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
+    width: 1.3rem;
+    height: 1.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    bottom: 1px;
 }
 
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 50px repeat(7, 1fr);
-    }
-}
+@media (max-width: 768px) {}
 
 @media (max-width: 480px) {
-    .grid {
-        grid-template-columns: 30px repeat(7, 1fr);
-    }
-
     .day {
         font-weight: 400;
         font-size: 10px;
