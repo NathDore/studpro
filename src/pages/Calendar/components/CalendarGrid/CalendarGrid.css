@@ -9,39 +9,6 @@
     display: none;
 }
 
-.row {
-    display: grid;
-    grid-template-columns: 40px repeat(7, 1fr);
-    height: 60px;
-}
-
-.time-cell {
-    display: flex;
-    justify-content: end;
-    align-items: end;
-    border-right: 1px solid lightgray;
-}
-
-.time-cell-text {
-    position: relative;
-    bottom: -10px;
-    left: -4px;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.hour-cell {
-    border-right: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
-    cursor: pointer;
-}
-
-.hour-cell:hover {
-    border: 1px solid rgb(37, 37, 37);
-    background-color: lightgray;
-
-}
-
 @keyframes flash {
     0% {
         background-color: transparent;

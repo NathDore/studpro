@@ -1,0 +1,8 @@
+.scrollbar {
+    position: fixed;
+    right: 5px;
+    width: 8px;
+    background-color: aqua;
+    border-radius: 4px;
+    transition: top 0.05s linear;
+}

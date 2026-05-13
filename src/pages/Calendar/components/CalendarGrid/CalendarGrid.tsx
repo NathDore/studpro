@@ -1,8 +1,10 @@
 import './CalendarGrid.css';
-import { useCalendarDay } from '../../hook/useCalendarDay';
 import type { CalendarDay } from '../../types/CalendarDay';
 import type { Task } from '../../../../types/Task';
 import { TaskLayer } from '../TaskLayer/TaskLayer';
+import { useRef } from 'react';
+import { Scrollbar } from '../Scrollbar/Scrollbar';
+import { CalendarRow } from '../CalendarRow/CalendarRow';
 
 interface CalendarGridProps {
     onHourCellClick: (calendar: CalendarDay, time: Time) => void;
@@ -31,33 +33,17 @@ const getTimes = (): Time[] => {
 
 export const CalendarGrid = ({ onHourCellClick, tasks }: CalendarGridProps) => {
     const times = getTimes();
+    const calendarRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div className='calendar'>
+        <div className='calendar' ref={calendarRef}>
             {
                 times?.map(time => <CalendarRow onHourCellClick={onHourCellClick} key={time.id} time={time} />)
             }
 
             <TaskLayer tasks={tasks} />
+            <Scrollbar calendarRef={calendarRef} />
         </div>
     )
 }
 
-interface CalendarRowProps {
-    time: Time;
-    onHourCellClick: (calendar: CalendarDay, time: Time) => void;
-}
-
-export const CalendarRow = ({ time, onHourCellClick }: CalendarRowProps) => {
-
-    const { days } = useCalendarDay();
-
-    return (
-        <div className='row'>
-            <div className='time-cell'> <p className='time-cell-text'>{time.time} {time.period}</p></div>
-            {
-                days.map((day) => <div onClick={() => onHourCellClick(day, time)} className='hour-cell' key={day.id}></div>)
-            }
-        </div>
-    )
-}
