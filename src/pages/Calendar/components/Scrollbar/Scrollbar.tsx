@@ -9,15 +9,37 @@ export const Scrollbar = ({ calendarRef }: ScrollbarProps) => {
     const [scrollbarHeight, setScrollbarHeight] = useState(0);
     const [scrollbarTop, setScrollbarTop] = useState(0);
     const [isReady, setIsReady] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragStartY, setDragStartY] = useState(0)
+
+    const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setIsDragging(true);
+        setDragStartY(e.clientY);
+    }
+
+    const onMouseMove = (e: MouseEvent) => {
+        if (!isDragging) return;
+        const deltaY = e.clientY - dragStartY;
+
+        const el = calendarRef.current;
+        if (!el) return;
+
+        const ratio = el.clientHeight / el.scrollHeight;
+        el.scrollTop += deltaY / ratio;
+        setDragStartY(e.clientY);
+    }
+
+    const onMouseUp = () => {
+        if (!isDragging) return;
+        setIsDragging(false);
+    }
 
     useEffect(() => {
         const el = calendarRef.current;
         if (!el) return;
 
         const update = () => {
-            const el = calendarRef.current;
-            if (!el) return;
-
             const ratio = el.clientHeight / el.scrollHeight;
             const calendarTop = el.getBoundingClientRect().top;
             setScrollbarHeight(el.clientHeight * ratio);
@@ -35,10 +57,22 @@ export const Scrollbar = ({ calendarRef }: ScrollbarProps) => {
         };
     }, []);
 
+    useEffect(() => {
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+
+        return () => {
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+        };
+
+    }, [isDragging, dragStartY])
+
     if (!isReady) return;
 
     return (
         <div
+            onMouseDown={onMouseDown}
             className='scrollbar'
             style={{ height: scrollbarHeight, top: scrollbarTop }}
         />

@@ -2,7 +2,7 @@
     position: fixed;
     right: 5px;
     width: 8px;
-    background-color: aqua;
+    background-color: rgb(143, 143, 143);
     border-radius: 4px;
     transition: top 0.05s linear;
 }
