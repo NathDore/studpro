@@ -69,7 +69,9 @@ interface TaskWrapperProps {
 export const TaskWrapper = ({ position, task, onTaskCellClick }: TaskWrapperProps) => {
     return (
         <div onClick={() => onTaskCellClick(task)} key={task.id} className='task-wrapper' style={{ left: position.left, top: position.top, height: position.height, width: position.width }}>
-            <div style={{ backgroundColor: task.color }} className='task'>
+            <div style={{ backgroundColor: task.course.color }} className='task'>
+                <p className='task-text task-name'>{task.course.name}</p>
+                <div style={{ height: 2 }} />
                 <p className='task-text'>{task.description}</p>
             </div>
         </div>

@@ -1,7 +1,9 @@
+import type { Course } from "./Course";
+
 export interface Task {
     id: string,
+    course: Course,
     description: string;
-    color: string;
     start: Date;
     end: Date;
 }
