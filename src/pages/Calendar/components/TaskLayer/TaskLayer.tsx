@@ -5,6 +5,7 @@ import './TaskLayer.css';
 
 interface TaskLayerProps {
     tasks: Task[];
+    onTaskCellClick: (task: Task) => void;
 }
 
 interface TaskPosition {
@@ -27,7 +28,7 @@ const getTaskPosition = (task: Task, cellWidth: number): TaskPosition => {
     return { left, top, height, width }
 }
 
-export const TaskLayer = ({ tasks }: TaskLayerProps) => {
+export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
     if (tasks.length <= 0) return null;
     const layerRef = useRef<HTMLDivElement>(null);
     const [cellWidth, setCellWidth] = useState<number>(0);
@@ -52,7 +53,7 @@ export const TaskLayer = ({ tasks }: TaskLayerProps) => {
                 tasks.map(task => {
                     const position: TaskPosition = getTaskPosition(task, cellWidth);
 
-                    return <div key={task.id} className='task' style={{ backgroundColor: task.color, left: position.left, top: position.top, height: position.height, width: position.width }}>{task.description}</div>
+                    return <div onClick={() => onTaskCellClick(task)} key={task.id} className='task' style={{ backgroundColor: task.color, left: position.left, top: position.top, height: position.height, width: position.width }}>{task.description}</div>
                 })
             }
         </div>

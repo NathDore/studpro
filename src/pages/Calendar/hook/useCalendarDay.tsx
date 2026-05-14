@@ -34,7 +34,20 @@ export const useCalendarDay = () => {
         setDays(newDays);
     }, []);
 
+    const convertDateToCalendarDay = (date: Date): CalendarDay => {
+        const currentDate = new Date();
+        const dayIndex = date.getDay();
+        const adjustedIndex = dayIndex === 0 ? 6 : dayIndex - 1;
+
+        return {
+            id: date.toISOString().split('T')[0],
+            day: DAY_NAMES[adjustedIndex],
+            date: date.getDate().toString(),
+            isCurrentDay: date.getDate() === currentDate.getDate()
+        }
+    }
     return {
-        days
+        days,
+        convertDateToCalendarDay
     }
 }

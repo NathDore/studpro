@@ -8,6 +8,7 @@ import { CalendarRow } from '../CalendarRow/CalendarRow';
 
 interface CalendarGridProps {
     onHourCellClick: (calendar: CalendarDay, time: Time) => void;
+    onTaskCellClick: (task: Task) => void;
     tasks: Task[];
 }
 
@@ -31,7 +32,7 @@ const getTimes = (): Time[] => {
     });
 }
 
-export const CalendarGrid = ({ onHourCellClick, tasks }: CalendarGridProps) => {
+export const CalendarGrid = ({ onHourCellClick, tasks, onTaskCellClick }: CalendarGridProps) => {
     const times = getTimes();
     const calendarRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +42,7 @@ export const CalendarGrid = ({ onHourCellClick, tasks }: CalendarGridProps) => {
                 times?.map(time => <CalendarRow onHourCellClick={onHourCellClick} key={time.id} time={time} />)
             }
 
-            <TaskLayer tasks={tasks} />
+            <TaskLayer tasks={tasks} onTaskCellClick={onTaskCellClick} />
             <Scrollbar calendarRef={calendarRef} />
         </div>
     )
