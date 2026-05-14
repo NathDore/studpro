@@ -22,7 +22,7 @@
 .hour-cell {
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
-    cursor: pointer;
+    cursor: default;
 }
 
 .hour-cell:hover {

@@ -53,9 +53,25 @@ export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
                 tasks.map(task => {
                     const position: TaskPosition = getTaskPosition(task, cellWidth);
 
-                    return <div onClick={() => onTaskCellClick(task)} key={task.id} className='task' style={{ backgroundColor: task.color, left: position.left, top: position.top, height: position.height, width: position.width }}>{task.description}</div>
+                    return <TaskWrapper key={task.id} task={task} position={position} onTaskCellClick={onTaskCellClick} />
                 })
             }
+        </div>
+    )
+}
+
+interface TaskWrapperProps {
+    position: TaskPosition;
+    task: Task;
+    onTaskCellClick: (task: Task) => void;
+}
+
+export const TaskWrapper = ({ position, task, onTaskCellClick }: TaskWrapperProps) => {
+    return (
+        <div onClick={() => onTaskCellClick(task)} key={task.id} className='task-wrapper' style={{ left: position.left, top: position.top, height: position.height, width: position.width }}>
+            <div style={{ backgroundColor: task.color }} className='task'>
+                <p className='task-text'>{task.description}</p>
+            </div>
         </div>
     )
 }
