@@ -60,11 +60,20 @@
 }
 
 .section-button {
-    padding: 10px;
+    padding-block: 5px;
+    padding-inline: 10px;
     border: 1px solid lightgray;
     border-radius: 5px;
 }
 
 .section-button:hover {
     border: 1px solid rgb(89, 89, 89);
+}
+
+.section-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
 }

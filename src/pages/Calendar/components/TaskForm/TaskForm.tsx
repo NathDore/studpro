@@ -15,7 +15,11 @@ export const TaskForm = ({ onClose }: TaskFormProps) => {
                 <DescriptionSection />
                 <DateSection />
                 <TimeSection />
-                <button className='section-button section-label' onClick={onClose}>Cancel</button>
+                <div className='section-button-container'>
+                    <button className='section-button section-label' onClick={onClose}>Cancel</button>
+                    <button className='section-button section-label'>Add task</button>
+                </div>
+
             </div>
         </div>
     );
