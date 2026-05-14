@@ -67,12 +67,24 @@ interface TaskWrapperProps {
 }
 
 export const TaskWrapper = ({ position, task, onTaskCellClick }: TaskWrapperProps) => {
+    const textRef = useRef<HTMLParagraphElement>(null);
+    const [displayText, setDisplayText] = useState(true);
+
+    useEffect(() => {
+        if (!textRef.current) return;
+        setDisplayText(textRef.current?.scrollHeight <= textRef.current?.clientHeight);
+    }, [position])
+
     return (
         <div onClick={() => onTaskCellClick(task)} key={task.id} className='task-wrapper' style={{ left: position.left, top: position.top, height: position.height, width: position.width }}>
-            <div style={{ backgroundColor: task.course.color }} className='task'>
+            <div ref={textRef} style={{ backgroundColor: task.course.color }} className='task'>
                 <p className='task-text task-name'>{task.course.name}</p>
                 <div style={{ height: 2 }} />
-                <p className='task-text'>{task.description}</p>
+                {
+                    <p className='task-text' style={{ visibility: displayText ? 'visible' : 'hidden' }}>
+                        {task.description}
+                    </p>
+                }
             </div>
         </div>
     )
