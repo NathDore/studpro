@@ -23,6 +23,7 @@
 .date-calendar-icon {
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
 
 .date-picker-container input {

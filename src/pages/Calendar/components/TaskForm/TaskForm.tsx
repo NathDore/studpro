@@ -1,5 +1,6 @@
 import { CourseSection } from './components/CourseSection/CourseSection';
 import { DateSection } from './components/DateSection/DateSection';
+import { TimeSection } from './components/TimeSection/TimeSection';
 import './TaskForm.css';
 
 interface TaskFormProps {
@@ -32,20 +33,6 @@ const DescriptionSection = ({ }: DescriptionSectionProps) => {
         <div className='section-container'>
             <p className='section-label'>Description</p>
             <input className='section-input' placeholder='e.g Sprint planning, Design meeting...' />
-        </div>
-    );
-}
-
-interface TimeSectionProps { }
-
-const TimeSection = ({ }: TimeSectionProps) => {
-    return (
-        <div className='section-container'>
-            <p className='section-label'>Time</p>
-            <div className='section-row'>
-                <input className='section-input' placeholder='start' />
-                <input className='section-input' placeholder='end' />
-            </div>
         </div>
     );
 }
