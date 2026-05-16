@@ -30,9 +30,9 @@ interface DescriptionSectionProps { }
 
 const DescriptionSection = ({ }: DescriptionSectionProps) => {
     return (
-        <div className='section-container'>
+        <div className='section-column'>
             <p className='section-label'>Description</p>
-            <input className='section-input' placeholder='e.g Sprint planning, Design meeting...' />
+            <input className='section-input section-text' placeholder='e.g Sprint planning, Design meeting...' />
         </div>
     );
 }

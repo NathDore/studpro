@@ -26,35 +26,21 @@ export const DatePicker = ({ }: DatePickerProps) => {
     return (
         <div className='section-input date-picker'>
             <div className='date-picker-container'>
-                <input
-                    className='default-cursor'
-                    type='text'
-                    value={year}
-                    maxLength={4}
-                    onChange={(e) => setYear(Number(e.target.value))}
-                    onFocus={(e) => e.target.select()}
-                />
-                <span className='default-cursor'>-</span>
-                <input
-                    className='default-cursor'
-                    type='text'
-                    value={String(month).padStart(2, '0')}
-                    maxLength={2}
-                    onChange={(e) => setMonth(Number(e.target.value))}
-                    onFocus={(e) => e.target.select()}
-                />
-                <span className='default-cursor'>-</span>
-                <input
-                    className='default-cursor'
-                    type='text'
-                    value={String(day).padStart(2, '0')}
-                    maxLength={2}
-                    onChange={(e) => setDay(Number(e.target.value))}
-                    onFocus={(e) => e.target.select()}
-                />
+                <div className='default-cursor section-text'>
+                    {year}
+                </div>
+                <span className='default-cursor section-text'>-</span>
+                <div className='default-cursor section-text'>
+                    {String(month).padStart(2, '0')}
+                </div>
+                <span className='default-cursor section-text'>-</span>
+                <div className='default-cursor section-text'>
+                    {String(day).padStart(2, '0')}
+                </div>
             </div>
 
-            <div className='date-calendar-icon' onClick={onCalendarIconClick}><CalendarIcon /></div>
+            <div className='section-icon' onClick={onCalendarIconClick}><CalendarIcon /></div>
+
             <input
                 ref={dateInputRef}
                 className='date-picker-input'

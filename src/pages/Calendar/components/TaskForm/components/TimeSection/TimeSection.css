@@ -15,23 +15,9 @@
     font-weight: 500;
 }
 
-.time-picker-label {
-    font-size: 12px;
-}
-
 .time-picker {
     min-width: 0;
     width: 2ch;
-}
-
-.default-cursor {
-    cursor: default;
-}
-
-.clock-icon {
-    width: 20px;
-    cursor: pointer;
-    stroke-width: 1.1px;
 }
 
 .flex-row {

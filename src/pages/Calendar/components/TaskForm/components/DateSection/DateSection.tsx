@@ -5,7 +5,7 @@ interface DateSectionProps { }
 
 export const DateSection = ({ }: DateSectionProps) => {
     return (
-        <div className='section-container'>
+        <div className='section-column'>
             <p className='section-label'>Date</p>
             <DatePicker />
         </div>
