@@ -1,10 +1,10 @@
 import { useState } from "react";
 import './TimeSection.css';
-import { ClockIcon } from "../../../../../../components/icons/ClockIcon";
+import { TimePicker } from "./TimePicker/TimePicker";
 
 interface TimeSectionProps { }
 
-interface TimePickerValue {
+export interface TimePickerValue {
     hour: number;
     minutes: number;
     period: 'AM' | 'PM';
@@ -20,11 +20,11 @@ export const TimeSection = ({ }: TimeSectionProps) => {
             <div style={{ height: 5 }} />
             <div className='section-row'>
                 <div>
-                    <p className='time-picker-label section-label'>Start</p>
+                    <p className='section-label'>Start</p>
                     <TimePicker timePickerValue={startTime} setTimePickerValue={setStartTime} />
                 </div>
                 <div>
-                    <p className='time-picker-label section-label'>End</p>
+                    <p className='section-label'>End</p>
                     <TimePicker timePickerValue={endTime} setTimePickerValue={setEndTime} />
                 </div>
             </div>
@@ -32,27 +32,3 @@ export const TimeSection = ({ }: TimeSectionProps) => {
     );
 }
 
-interface TimePickerProps {
-    timePickerValue: TimePickerValue;
-    setTimePickerValue: React.Dispatch<React.SetStateAction<TimePickerValue>>;
-}
-
-export const TimePicker = ({ timePickerValue, setTimePickerValue }: TimePickerProps) => {
-    return (
-        <div className='section-input section-row time-picker-container'>
-            <div className='flex-row'>
-                <div className='default-cursor section-text time-picker-commun time-picker '>
-                    {String(timePickerValue.hour).padStart(2, '0')}
-                </div>
-                <span className='default-cursor section-text time-picker-commun'>:</span>
-                <div className='default-cursor section-text time-picker-commun time-picker '>
-                    {String(timePickerValue.minutes).padStart(2, '0')}
-                </div>
-                <div style={{ width: 2 }} />
-                <span className='default-cursor section-text time-picker-commun '>{timePickerValue.period}</span>
-            </div>
-
-            <ClockIcon className='section-icon section-text time-picker-commun' />
-        </div>
-    )
-}
