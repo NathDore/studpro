@@ -6,6 +6,10 @@ const MAT160: Course = { id: "MAT-160", name: "MAT-160", color: "#E67E22" };
 const IFT2007: Course = { id: "IFT-2007", name: "IFT-2007", color: "#9B59B6" };
 const IFT1003: Course = { id: "IFT-1003", name: "IFT-1003", color: "#2ECC71" };
 
+export const COURSE_DATA: Course[] = [
+    MAT130, MAT160, IFT2007, IFT1003
+];
+
 export const TASKS_DATA: Task[] = [
     {
         id: "1",
