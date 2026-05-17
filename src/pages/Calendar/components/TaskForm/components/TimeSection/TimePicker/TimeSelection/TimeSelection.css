@@ -43,7 +43,12 @@
 }
 
 .selected {
-    border: 1px solid rgb(80, 80, 80);
+    border: 1px solid lightgray;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(153, 200, 254);
 }
 
 .period-section {}

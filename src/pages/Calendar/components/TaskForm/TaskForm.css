@@ -32,6 +32,8 @@
     font-size: 18px;
     font-weight: 700;
     color: rgb(40, 40, 40);
+    user-select: none;
+    cursor: default;
 }
 
 /* Commun */
@@ -47,17 +49,6 @@
     gap: 1rem;
 }
 
-.section-button {
-    padding-block: 5px;
-    padding-inline: 10px;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-}
-
-.section-button:hover {
-    border: 1px solid rgb(89, 89, 89);
-}
-
 .section-button-container {
     display: flex;
     flex-direction: row;
@@ -70,6 +61,8 @@
     font-size: 14px;
     font-weight: 500;
     color: rgb(40, 40, 40);
+    user-select: none;
+    cursor: default;
 }
 
 .section-text {
@@ -82,6 +75,18 @@
     padding: 10px;
     border: 1px solid lightgray;
     border-radius: 5px;
+}
+
+.section-button {
+    padding-block: 5px;
+    padding-inline: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.section-button:hover {
+    border: 1px solid rgb(89, 89, 89);
 }
 
 .section-input:hover {
