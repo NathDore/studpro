@@ -21,10 +21,17 @@ export const getStartTime = (endTime: Time): Time | null => {
     let period = endTime.period;
     let time = (endTime.hour - 1).toString();
 
-    if (endTime.period === 'PM' && endTime.hour === 12) {
+    if (endTime.hour === 1 && endTime.period === 'PM') {
+        return {
+            id: endTime.id,
+            hour: 12,
+            minutes: 0,
+            period: 'PM'
+        };
+    } else if (endTime.period === 'PM' && endTime.hour === 12) {
         period = 'AM';
     } else if (endTime.period === 'AM' && endTime.hour === 1) {
-        period = 'PM';
+        period = 'AM';
         time = '12';
     }
 

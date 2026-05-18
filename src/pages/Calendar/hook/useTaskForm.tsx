@@ -14,6 +14,11 @@ interface useTaskFormProps {
     initialEndTime: Time;
 }
 
+interface TaskFormError {
+    description?: string;
+    course?: string;
+}
+
 const monday = getMonday(new Date());
 const maxDate = new Date(monday);
 maxDate.setDate(monday.getDate() + 6);
