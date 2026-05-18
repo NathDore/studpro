@@ -3,8 +3,8 @@ import type { Time } from '../types/Time';
 export const getTimes = (): Time[] => {
     return Array.from({ length: 24 }, (_, i) => {
         const hour = i + 1;
-        const period = hour < 12 ? 'AM' : 'PM';
-        const displayHour = hour > 12 ? hour - 12 : hour;
+        const displayHour = hour === 24 ? 12 : hour > 12 ? hour - 12 : hour;
+        const period = hour === 24 ? 'AM' : hour < 12 ? 'AM' : 'PM';
 
         return {
             id: i,
