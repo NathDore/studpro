@@ -42,7 +42,15 @@ export const getEndTime = (startTime: Time): Time | null => {
     let newHour = startTime.hour + 1;
     let newPeriod = startTime.period;
 
-    if (startTime.hour === 11 && startTime.period === 'AM') {
+    if (startTime.hour === 11 && startTime.period === 'PM') {
+        return {
+            id: startTime.id,
+            hour: 12,
+            minutes: 0,
+            period: 'AM'
+        };
+    }
+    else if (startTime.hour === 11 && startTime.period === 'AM') {
         newPeriod = 'PM';
     } else if (startTime.hour === 12 && startTime.period === 'PM') {
         newHour = 1;

@@ -17,11 +17,11 @@ export const TimeSection = ({ startTime, onStartTimeChange, endTime, onEndTimeCh
             <div className='section-row'>
                 <div>
                     <p className='section-label'>Start</p>
-                    <TimePicker time={startTime} setTime={onStartTimeChange} />
+                    <TimePicker time={startTime} setTime={onStartTimeChange} type='start' />
                 </div>
                 <div>
                     <p className='section-label'>End</p>
-                    <TimePicker time={endTime} setTime={onEndTimeChange} />
+                    <TimePicker time={endTime} setTime={onEndTimeChange} type='end' />
                 </div>
             </div>
         </div>

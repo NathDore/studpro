@@ -7,9 +7,10 @@ import type { Time } from "../../../../../types/Time";
 interface TimePickerProps {
     time: Time;
     setTime: (time: Time) => void;
+    type: 'start' | 'end';
 }
 
-export const TimePicker = ({ time, setTime }: TimePickerProps) => {
+export const TimePicker = ({ time, setTime, type }: TimePickerProps) => {
     const [displaySelection, setDisplaySelection] = useState<boolean>(false);
 
     const handleOnClick: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -33,7 +34,7 @@ export const TimePicker = ({ time, setTime }: TimePickerProps) => {
 
             <ClockIcon className='section-icon section-text time-picker-commun pointer-cursor' />
 
-            <TimeSelection displaySelection={displaySelection} time={time} setTime={setTime} />
+            <TimeSelection displaySelection={displaySelection} time={time} setTime={setTime} type={type} />
         </div>
     )
 }
