@@ -2,13 +2,16 @@
 import { useRef, useState } from 'react';
 import './DatePicker.css';
 import { CalendarIcon } from '../../../../../../../components/icons/CalendarIcon';
+import type { CalendarDay } from '../../../../../types/CalendarDay';
 
-interface DatePickerProps { }
+interface DatePickerProps {
+    calendarDay: CalendarDay
+}
 
-export const DatePicker = ({ }: DatePickerProps) => {
-    const [year, setYear] = useState(new Date().getFullYear());
-    const [month, setMonth] = useState(new Date().getMonth() + 1);
-    const [day, setDay] = useState(new Date().getDate());
+export const DatePicker = ({ calendarDay }: DatePickerProps) => {
+    const [year, setYear] = useState(calendarDay.fullDate.getFullYear());
+    const [month, setMonth] = useState(calendarDay.fullDate.getMonth() + 1);
+    const [day, setDay] = useState(calendarDay.fullDate.getDate());
     const dateInputRef = useRef<HTMLInputElement>(null);
 
     const onCalendarIconClick = () => {

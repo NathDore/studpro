@@ -1,8 +1,12 @@
 import { useState } from "react";
 import './TimeSection.css';
 import { TimePicker } from "./TimePicker/TimePicker";
+import type { Time } from "../../../CalendarGrid/CalendarGrid";
 
-interface TimeSectionProps { }
+interface TimeSectionProps {
+    startTime: Time;
+    endTime: Time;
+}
 
 export interface TimePickerValue {
     hour: number;
@@ -10,9 +14,9 @@ export interface TimePickerValue {
     period: 'AM' | 'PM';
 }
 
-export const TimeSection = ({ }: TimeSectionProps) => {
-    const [startTime, setStartTime] = useState<TimePickerValue>({ hour: 1, minutes: 15, period: 'AM' });
-    const [endTime, setEndTime] = useState<TimePickerValue>({ hour: 5, minutes: 0, period: 'AM' });
+export const TimeSection = ({ startTime, endTime }: TimeSectionProps) => {
+    const [currentStartTime, setStartTime] = useState<TimePickerValue>({ hour: startTime.hour, minutes: startTime.minutes, period: startTime.period });
+    const [currentEndTime, setEndTime] = useState<TimePickerValue>({ hour: endTime.hour, minutes: endTime.minutes, period: endTime.period });
 
     return (
         <div className='section-column'>
@@ -21,11 +25,11 @@ export const TimeSection = ({ }: TimeSectionProps) => {
             <div className='section-row'>
                 <div>
                     <p className='section-label'>Start</p>
-                    <TimePicker timePickerValue={startTime} setTimePickerValue={setStartTime} />
+                    <TimePicker timePickerValue={currentStartTime} setTimePickerValue={setStartTime} />
                 </div>
                 <div>
                     <p className='section-label'>End</p>
-                    <TimePicker timePickerValue={endTime} setTimePickerValue={setEndTime} />
+                    <TimePicker timePickerValue={currentEndTime} setTimePickerValue={setEndTime} />
                 </div>
             </div>
         </div>

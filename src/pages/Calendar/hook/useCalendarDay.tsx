@@ -19,16 +19,18 @@ export const useCalendarDay = () => {
         const monday = getMonday(currentDate);
 
         const newDays: CalendarDay[] = [];
-        const currentDay = new Date(monday);
 
         for (let i = 0; i < 7; i++) {
+            const currentDay = new Date(monday);
+            currentDay.setDate(monday.getDate() + i);
+
             newDays.push({
                 id: currentDay.toISOString().split('T')[0],
                 day: DAY_NAMES[i],
                 date: currentDay.getDate().toString(),
-                isCurrentDay: currentDate.getDate() === currentDay.getDate() ? true : false
+                fullDate: currentDay,
+                isCurrentDay: currentDate.getDate() === currentDay.getDate()
             });
-            currentDay.setDate(monday.getDate() + i + 1);
         }
 
         setDays(newDays);
@@ -43,6 +45,7 @@ export const useCalendarDay = () => {
             id: date.toISOString().split('T')[0],
             day: DAY_NAMES[adjustedIndex],
             date: date.getDate().toString(),
+            fullDate: date,
             isCurrentDay: date.getDate() === currentDate.getDate()
         }
     }

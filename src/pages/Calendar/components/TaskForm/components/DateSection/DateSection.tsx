@@ -1,13 +1,16 @@
 import './DateSection.css';
 import { DatePicker } from './DatePicker/DatePicker';
+import type { CalendarDay } from '../../../../types/CalendarDay';
 
-interface DateSectionProps { }
+interface DateSectionProps {
+    calendarDay: CalendarDay
+}
 
-export const DateSection = ({ }: DateSectionProps) => {
+export const DateSection = ({ calendarDay }: DateSectionProps) => {
     return (
         <div className='section-column'>
             <p className='section-label'>Date</p>
-            <DatePicker />
+            <DatePicker calendarDay={calendarDay} />
         </div>
     );
 }
