@@ -1,34 +1,26 @@
-import React, { useState, type Dispatch, type SetStateAction } from 'react';
-import type { TimePickerValue } from '../../TimeSection';
 import './TimeSelection.css';
+import type { Time } from '../../../../../../types/Time';
 
 interface TimeSelectionProps {
     displaySelection: boolean;
-    timePickerValue: TimePickerValue;
-    setTimePickerValue: Dispatch<SetStateAction<TimePickerValue>>;
+    time: Time;
+    setTime: (time: Time) => void;
 }
 
 const hours = Array.from({ length: 12 }, (_, i) => i + 1);
 const minutes = Array.from({ length: 61 }, (_, i) => i);
 
-export const TimeSelection = ({ displaySelection, timePickerValue, setTimePickerValue }: TimeSelectionProps) => {
-    const [currentHour, setCurrentHour] = useState(timePickerValue.hour);
-    const [currentMinutes, setCurrentMinutes] = useState(timePickerValue.minutes);
-    const [currentPeriod, setCurrentPeriod] = useState(timePickerValue.period);
-
+export const TimeSelection = ({ displaySelection, time, setTime }: TimeSelectionProps) => {
     const handleOnHourClick = (h: number) => {
-        setCurrentHour(h);
-        setTimePickerValue({ hour: h, minutes: currentMinutes, period: currentPeriod }); // ✅
+        setTime({ id: time.id, hour: h, minutes: time.minutes, period: time.period });
     }
 
     const handleOnMinutesClick = (m: number) => {
-        setCurrentMinutes(m);
-        setTimePickerValue({ hour: currentHour, minutes: m, period: currentPeriod });
+        setTime({ id: time.id, hour: time.hour, minutes: m, period: time.period });
     }
 
     const handleOnPeriodClick = (period: 'AM' | 'PM') => {
-        setCurrentPeriod(period);
-        setTimePickerValue({ hour: currentHour, minutes: currentMinutes, period: period });
+        setTime({ id: time.id, hour: time.hour, minutes: time.minutes, period: period });
     }
 
     return (
@@ -36,20 +28,20 @@ export const TimeSelection = ({ displaySelection, timePickerValue, setTimePicker
             <div className='time-section-commun hide-scrollbar hour-section'>
                 {
                     hours.map((h) =>
-                        <span onClick={() => handleOnHourClick(h)} className={`section-text pointer-cursor ${currentHour === h ? 'selected' : ''} user-selection`} key={h}>{String(h).padStart(2, '0')}</span>
+                        <span onClick={() => handleOnHourClick(h)} className={`section-text pointer-cursor ${time.hour === h ? 'selected' : ''} user-selection`} key={h}>{String(h).padStart(2, '0')}</span>
                     )
                 }
             </div>
             <div className='time-section-commun hide-scrollbar minutes-section'>
                 {
                     minutes.map((m) =>
-                        <span onClick={() => handleOnMinutesClick(m)} className={`section-text pointer-cursor ${currentMinutes === m ? 'selected' : ''} user-selection`} key={m}>{String(m).padStart(2, '0')}</span>
+                        <span onClick={() => handleOnMinutesClick(m)} className={`section-text pointer-cursor ${time.minutes === m ? 'selected' : ''} user-selection`} key={m}>{String(m).padStart(2, '0')}</span>
                     )
                 }
             </div>
             <div className='time-section-commun period-section'>
-                <span onClick={() => handleOnPeriodClick('AM')} className={`section-text pointer-cursor ${currentPeriod === 'AM' ? 'selected' : ''} user-selection`} >AM</span>
-                <span onClick={() => handleOnPeriodClick('PM')} className={`section-text pointer-cursor ${currentPeriod === 'PM' ? 'selected' : ''} user-selection`} >PM</span>
+                <span onClick={() => handleOnPeriodClick('AM')} className={`section-text pointer-cursor ${time.period === 'AM' ? 'selected' : ''} user-selection`} >AM</span>
+                <span onClick={() => handleOnPeriodClick('PM')} className={`section-text pointer-cursor ${time.period === 'PM' ? 'selected' : ''} user-selection`} >PM</span>
             </div>
         </div>
     )

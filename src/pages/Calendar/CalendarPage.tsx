@@ -2,7 +2,7 @@ import './CalendarPage.css';
 import { CalendarHeader } from './components/CalendarHeader/CalendarHeader';
 import { CalendarGrid } from './components/CalendarGrid/CalendarGrid';
 import type { CalendarDay } from './types/CalendarDay';
-import type { Time } from './components/CalendarGrid/CalendarGrid';
+import type { Time } from './types/Time';
 import { TASKS_DATA } from './data/Task_data';
 import type { Task } from '../../types/Task';
 import { useCalendarDay } from './hook/useCalendarDay';
@@ -23,15 +23,14 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
     const [displayForm, setDisplayForm] = useState<SelectedSlot | null>(null);
 
     const onHourCellClick = (calendarDay: CalendarDay, time: Time) => {
-        if (!time?.time || !calendarDay.fullDate) return;
+        if (!time?.hour || !calendarDay.fullDate) return;
 
         const startTime = getStartTime(time);
         if (!startTime) return;
 
         const endTime: Time = {
             id: time.id,
-            time: time.time,
-            hour: Number(time.time),
+            hour: time.hour,
             minutes: 0,
             period: time.period
         };
@@ -51,7 +50,7 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
             <CalendarHeader />
             <CalendarGrid onHourCellClick={onHourCellClick} tasks={TASKS_DATA} onTaskCellClick={onTaskCellClick} />
             {
-                displayForm && <TaskForm calendarDay={displayForm.calendarDay} startTime={displayForm.time} endTime={displayForm.endTime} onClose={() => setDisplayForm(null)} />
+                displayForm && <TaskForm calendarDay={displayForm.calendarDay} initialStartTime={displayForm.time} initialEndTime={displayForm.endTime} onClose={() => setDisplayForm(null)} />
             }
         </div>
     )

@@ -1,4 +1,4 @@
-import type { Time } from '../components/CalendarGrid/CalendarGrid';
+import type { Time } from '../types/Time';
 
 export const getTimes = (): Time[] => {
     return Array.from({ length: 24 }, (_, i) => {
@@ -8,7 +8,6 @@ export const getTimes = (): Time[] => {
 
         return {
             id: i,
-            time: displayHour.toString(),
             hour: displayHour,
             minutes: 0,
             period
@@ -17,21 +16,20 @@ export const getTimes = (): Time[] => {
 }
 
 export const getStartTime = (endTime: Time): Time | null => {
-    if (!endTime?.time) return null;
+    if (!endTime?.hour) return null;
 
     let period = endTime.period;
-    let time = (parseInt(endTime.time) - 1).toString();
+    let time = (endTime.hour - 1).toString();
 
-    if (endTime.period === 'PM' && endTime.time === '12') {
+    if (endTime.period === 'PM' && endTime.hour === 12) {
         period = 'AM';
-    } else if (endTime.period === 'AM' && endTime.time === '1') {
+    } else if (endTime.period === 'AM' && endTime.hour === 1) {
         period = 'PM';
         time = '12';
     }
 
     return {
         id: endTime.id,
-        time,
         hour: Number(time),
         minutes: 0,
         period

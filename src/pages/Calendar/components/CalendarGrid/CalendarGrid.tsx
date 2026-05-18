@@ -6,19 +6,12 @@ import { useRef } from 'react';
 import { Scrollbar } from '../Scrollbar/Scrollbar';
 import { CalendarRow } from '../CalendarRow/CalendarRow';
 import { getTimes } from '../../utils/timeUtils';
+import type { Time } from '../../types/Time';
 
 interface CalendarGridProps {
     onHourCellClick: (calendar: CalendarDay, time: Time) => void;
     onTaskCellClick: (task: Task) => void;
     tasks: Task[];
-}
-
-export interface Time {
-    id: number;
-    time: string;
-    hour: number;
-    minutes: number;
-    period: 'AM' | 'PM';
 }
 
 export const CalendarGrid = ({ onHourCellClick, tasks, onTaskCellClick }: CalendarGridProps) => {

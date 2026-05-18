@@ -1,6 +1,6 @@
 import { useCalendarDay } from "../../hook/useCalendarDay";
 import type { CalendarDay } from "../../types/CalendarDay";
-import type { Time } from "../CalendarGrid/CalendarGrid";
+import type { Time } from "../../types/Time";
 import './CalendarRow.css';
 
 interface CalendarRowProps {
@@ -14,7 +14,7 @@ export const CalendarRow = ({ time, onHourCellClick }: CalendarRowProps) => {
 
     return (
         <div className='row'>
-            <div className='time-cell'> <p className='time-cell-text'>{time.time} {time.period}</p></div>
+            <div className='time-cell'> <p className='time-cell-text'>{time.hour.toString()} {time.period}</p></div>
             {
                 days.map((day) => <div onClick={() => onHourCellClick(day, time)} className='hour-cell' key={day.id}></div>)
             }
