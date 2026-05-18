@@ -14,7 +14,7 @@ export const DatePicker = ({ calendarDay }: DatePickerProps) => {
     const [day, setDay] = useState(calendarDay.fullDate.getDate());
     const dateInputRef = useRef<HTMLInputElement>(null);
 
-    const onCalendarIconClick = () => {
+    const onCalendarClick = () => {
         if (!dateInputRef.current) return;
         dateInputRef.current.showPicker();
     }
@@ -27,7 +27,7 @@ export const DatePicker = ({ calendarDay }: DatePickerProps) => {
     }
 
     return (
-        <div className='section-input date-picker'>
+        <div onClick={onCalendarClick} className='section-input date-picker pointer-cursor'>
             <div className='date-picker-container'>
                 <div className='default-cursor section-text'>
                     {year}
@@ -42,7 +42,7 @@ export const DatePicker = ({ calendarDay }: DatePickerProps) => {
                 </div>
             </div>
 
-            <div className='section-icon' onClick={onCalendarIconClick}><CalendarIcon /></div>
+            <div className='section-icon'><CalendarIcon /></div>
 
             <input
                 ref={dateInputRef}
