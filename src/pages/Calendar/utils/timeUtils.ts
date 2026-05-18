@@ -35,3 +35,37 @@ export const getStartTime = (endTime: Time): Time | null => {
         period
     };
 }
+
+export const getEndTime = (startTime: Time): Time | null => {
+    if (!startTime?.hour) return null;
+
+    let newHour = startTime.hour + 1;
+    let newPeriod = startTime.period;
+
+    if (startTime.hour === 11 && startTime.period === 'AM') {
+        newPeriod = 'PM';
+    } else if (startTime.hour === 12 && startTime.period === 'PM') {
+        newHour = 1;
+        newPeriod = 'AM';
+    } else if (startTime.hour === 12 && startTime.period === 'AM') {
+        newHour = 1;
+    }
+
+    return {
+        id: startTime.id,
+        hour: newHour,
+        minutes: 0,
+        period: newPeriod
+    };
+}
+
+export const toMinutes = (time: Time): number => {
+    if (time.hour === 12 && time.period === 'AM') return time.minutes;
+    if (time.hour === 12 && time.period === 'PM') return 720 + time.minutes;
+
+    if (time.period === 'AM') {
+        return ((time.hour) * 60) + time.minutes;
+    } else {
+        return ((time.hour + 12) * 60) + time.minutes;
+    }
+}

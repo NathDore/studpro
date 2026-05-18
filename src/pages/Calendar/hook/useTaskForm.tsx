@@ -3,6 +3,7 @@ import type { Course } from "../../../types/Course";
 import { COURSE_DATA } from "../data/Task_data";
 import type { CalendarDay } from "../types/CalendarDay";
 import type { Time } from "../types/Time";
+import { getEndTime, getStartTime, toMinutes } from "../utils/timeUtils";
 
 const courses: Course[] = COURSE_DATA;
 
@@ -33,10 +34,20 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
 
     const onStartTimeChange = (time: Time) => {
         setStartTime(time);
+
+        if (toMinutes(time) >= toMinutes(endTime)) {
+            const newEndTime = getEndTime(time);
+            if (newEndTime) setEndTime(newEndTime);
+        }
     }
 
     const onEndTimeChange = (time: Time) => {
         setEndTime(time);
+
+        if (toMinutes(time) <= toMinutes(startTime)) {
+            const newStartTime = getStartTime(time);
+            if (newStartTime) setStartTime(newStartTime);
+        }
     }
 
     return {
