@@ -28,10 +28,6 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
         const startTime = getStartTime(time);
         if (!startTime) return;
 
-        console.log(
-            `[Calendar] Hour cell click | Start Time: ${startTime.time} ${startTime.period} | Day: ${calendarDay.day} | Date: ${calendarDay.date}`
-        );
-
         const endTime: Time = {
             id: time.id,
             time: time.time,
@@ -39,14 +35,6 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
             minutes: 0,
             period: time.period
         };
-
-        console.log(
-            `[Calendar] Hour cell click | End Time: ${endTime.time} ${endTime.period} | Day: ${calendarDay.day} | Date: ${calendarDay.date}`
-        )
-
-        if (calendarDay.fullDate) {
-            console.log(calendarDay.fullDate);
-        }
 
         setDisplayForm({ calendarDay, time: startTime, endTime });
     }

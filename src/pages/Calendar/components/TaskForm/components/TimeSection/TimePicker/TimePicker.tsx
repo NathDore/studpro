@@ -35,7 +35,7 @@ export const TimePicker = ({ timePickerValue, setTimePickerValue }: TimePickerPr
                 <ClockIcon className='section-icon section-text time-picker-commun' />
             </div>
 
-            <TimeSelection displaySelection={displaySelection} timePickerValue={timePickerValue} />
+            <TimeSelection displaySelection={displaySelection} timePickerValue={timePickerValue} setTimePickerValue={setTimePickerValue} />
         </div>
     )
 }

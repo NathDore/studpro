@@ -42,13 +42,23 @@
     overflow: scroll;
 }
 
+.user-selection {
+    user-select: none;
+}
+
+.user-selection:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: lightgray;
+}
+
 .selected {
-    border: 1px solid lightgray;
+    outline: 1px solid lightgray;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: rgb(153, 200, 254);
 }
-
-.period-section {}
