@@ -6,9 +6,11 @@ import { CalendarIcon } from '../../../../../../../components/icons/CalendarIcon
 interface DatePickerProps {
     date: Date;
     onDateChange: (date: Date) => void;
+    minDate: Date;
+    maxDate: Date;
 }
 
-export const DatePicker = ({ date, onDateChange }: DatePickerProps) => {
+export const DatePicker = ({ date, onDateChange, minDate, maxDate }: DatePickerProps) => {
     const dateInputRef = useRef<HTMLInputElement>(null);
 
     const year = date.getFullYear();
@@ -49,6 +51,8 @@ export const DatePicker = ({ date, onDateChange }: DatePickerProps) => {
                 type='date'
                 value={`${year}-${month}-${day}`}
                 onChange={onNativeChange}
+                min={minDate.toISOString().split('T')[0]}
+                max={maxDate.toISOString().split('T')[0]}
             />
         </div>
     );

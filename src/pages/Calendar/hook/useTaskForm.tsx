@@ -4,6 +4,7 @@ import { COURSE_DATA } from "../data/Task_data";
 import type { CalendarDay } from "../types/CalendarDay";
 import type { Time } from "../types/Time";
 import { getEndTime, getStartTime, toMinutes } from "../utils/timeUtils";
+import { getMonday } from "../utils/dateUtils";
 
 const courses: Course[] = COURSE_DATA;
 
@@ -12,6 +13,10 @@ interface useTaskFormProps {
     initialStartTime: Time;
     initialEndTime: Time;
 }
+
+const monday = getMonday(new Date());
+const maxDate = new Date(monday);
+maxDate.setDate(monday.getDate() + 6);
 
 export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: useTaskFormProps) => {
     const [description, setDescription] = useState<string>('');
@@ -61,6 +66,8 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
         startTime,
         onStartTimeChange,
         endTime,
-        onEndTimeChange
+        onEndTimeChange,
+        minDate: monday,
+        maxDate
     };
 }

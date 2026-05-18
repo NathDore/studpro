@@ -25,7 +25,9 @@ export const TaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClos
         startTime,
         onStartTimeChange,
         endTime,
-        onEndTimeChange
+        onEndTimeChange,
+        minDate,
+        maxDate
     } = useTaskForm({ calendarDay, initialStartTime, initialEndTime });
 
     return (
@@ -34,7 +36,7 @@ export const TaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClos
                 <p className='modal-title'>New task</p>
                 <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
                 <DescriptionSection description={description} onDescriptionChange={onDescriptionChange} />
-                <DateSection date={date} onDateChange={onDateChange} />
+                <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
                 <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
                 <div className='section-button-container'>
                     <button className='section-label section-button' onClick={onClose}>Cancel</button>
