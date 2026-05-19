@@ -33,6 +33,9 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
 
     const onDescriptionChange = (description: string) => {
         setDescription(description);
+        if (errors.description) {
+            setErrors(prev => ({ ...prev, description: undefined }));
+        }
     }
 
     const onCourseChange = (course: Course) => {
@@ -64,7 +67,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
     const onSubmit = () => {
         const currentErrors: TaskFormError = {};
 
-        if (description.length <= 0) {
+        if (!description.trim()) {
             currentErrors.description = "A description is required.";
         }
 
