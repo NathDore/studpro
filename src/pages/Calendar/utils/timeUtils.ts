@@ -91,3 +91,18 @@ export const toHours24 = (time: Time): number => {
     if (time.period === 'AM') return time.hour;
     return time.hour + 12;
 }
+
+export const fromDate = (date: Date): Time => {
+    const hours24 = date.getHours();
+    const minutes = date.getMinutes();
+
+    const period = hours24 < 12 ? 'AM' : 'PM';
+    const hour = hours24 === 0 ? 12 : hours24 > 12 ? hours24 - 12 : hours24;
+
+    return {
+        id: 0,
+        hour,
+        minutes,
+        period
+    };
+}

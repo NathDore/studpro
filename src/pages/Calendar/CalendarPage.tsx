@@ -8,7 +8,7 @@ import type { Task } from '../../types/Task';
 import { useCalendarDay } from './hook/useCalendarDay';
 import { useEffect, useState } from 'react';
 import { TaskForm } from './components/TaskForm/TaskForm';
-import { getStartTime } from './utils/timeUtils';
+import { fromDate, getStartTime } from './utils/timeUtils';
 import { useTaskStore } from '../../store/taskStore';
 
 interface CalendarPageProps { }
@@ -24,6 +24,8 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
     const { tasks } = useTaskStore();
 
     const [displayForm, setDisplayForm] = useState<SelectedSlot | null>(null);
+    const [mode, setMode] = useState<'create' | 'update'>('create');
+    const [selectedTask, setSelectedTask] = useState<Task | undefined>();
 
     const onHourCellClick = (calendarDay: CalendarDay, time: Time) => {
         if (!time?.hour || !calendarDay.fullDate) return;
@@ -38,6 +40,8 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
             period: time.period
         };
 
+        setMode('create');
+        setSelectedTask(undefined);
         setDisplayForm({ calendarDay, time: startTime, endTime });
     }
 
@@ -46,6 +50,13 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
         console.log(
             `[Calendar] Hour task click | Time: ${task.start.getHours} | Day: ${calendarDay.day} | Date: ${calendarDay.date}`
         );
+
+        const startTime: Time = fromDate(task.start);
+        const endTime: Time = fromDate(task.end);
+
+        setMode('update');
+        setSelectedTask(task);
+        setDisplayForm({ calendarDay, time: startTime, endTime });
     }
 
     useEffect(() => {
@@ -57,7 +68,7 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
             <CalendarHeader />
             <CalendarGrid onHourCellClick={onHourCellClick} tasks={tasks} onTaskCellClick={onTaskCellClick} />
             {
-                displayForm && <TaskForm calendarDay={displayForm.calendarDay} initialStartTime={displayForm.time} initialEndTime={displayForm.endTime} onClose={() => setDisplayForm(null)} />
+                displayForm && <TaskForm mode={mode} task={selectedTask} calendarDay={displayForm.calendarDay} initialStartTime={displayForm.time} initialEndTime={displayForm.endTime} onClose={() => setDisplayForm(null)} />
             }
         </div>
     )

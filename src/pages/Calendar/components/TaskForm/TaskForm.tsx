@@ -1,3 +1,4 @@
+import type { Task } from '../../../../types/Task';
 import { useTaskForm } from '../../hook/useTaskForm';
 import type { CalendarDay } from '../../types/CalendarDay';
 import type { Time } from '../../types/Time';
@@ -7,13 +8,15 @@ import { TimeSection } from './components/TimeSection/TimeSection';
 import './TaskForm.css';
 
 interface TaskFormProps {
+    mode: 'create' | 'update',
+    task?: Task;
     onClose: () => void;
     calendarDay: CalendarDay;
     initialStartTime: Time;
     initialEndTime: Time;
 }
 
-export const TaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClose }: TaskFormProps) => {
+export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEndTime, onClose }: TaskFormProps) => {
     const {
         description,
         onDescriptionChange,
@@ -30,19 +33,19 @@ export const TaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClos
         maxDate,
         onSubmit,
         errors
-    } = useTaskForm({ calendarDay, initialStartTime, initialEndTime, onClose });
+    } = useTaskForm({ calendarDay, initialStartTime, initialEndTime, onClose, task });
 
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content modal" onClick={(e) => e.stopPropagation()}>
-                <p className='modal-title'>New task</p>
+                <p className='modal-title'>{mode === 'create' ? 'New task' : 'Edit task'}</p>
                 <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
                 <DescriptionSection descriptionError={errors.description} description={description} onDescriptionChange={onDescriptionChange} />
                 <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
                 <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
                 <div className='section-button-container'>
                     <button className='section-label section-button' onClick={onClose}>Cancel</button>
-                    <button className='section-label section-button' onClick={onSubmit}>Add task</button>
+                    <button className='section-label section-button' onClick={() => onSubmit(mode, task)}>Add task</button>
                 </div>
             </div>
         </div>
