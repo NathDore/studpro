@@ -19,7 +19,7 @@ export const CourseDropDown = ({ course, onCourseChange, courses }: DropDownProp
                     <span className='section-text'>{course.name}</span>
                 </div>
 
-                <span className='section-text'>{isOpen ? "▲" : "▼"}</span>
+                <span className='section-text user-select-none'>{isOpen ? "▲" : "▼"}</span>
             </div>
 
             {isOpen && (

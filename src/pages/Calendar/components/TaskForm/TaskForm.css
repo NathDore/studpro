@@ -110,3 +110,7 @@
 .border-error {
     border: 1px solid red;
 }
+
+.user-select-none {
+    user-select: none;
+}

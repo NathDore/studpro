@@ -30,15 +30,15 @@ export const DatePicker = ({ date, onDateChange, minDate, maxDate }: DatePickerP
     return (
         <div onClick={onCalendarClick} className='section-input date-picker pointer-cursor'>
             <div className='date-picker-container'>
-                <div className='default-cursor section-text pointer-cursor'>
+                <div className='default-cursor section-text pointer-cursor user-select-none'>
                     {year}
                 </div>
-                <span className='default-cursor section-text pointer-cursor'>-</span>
-                <div className='default-cursor section-text pointer-cursor'>
+                <span className='default-cursor section-text pointer-cursor user-select-none'>-</span>
+                <div className='default-cursor section-text pointer-cursor user-select-none'>
                     {month}
                 </div>
-                <span className='default-cursor section-text pointer-cursor'>-</span>
-                <div className='default-cursor section-text pointer-cursor'>
+                <span className='default-cursor section-text pointer-cursor user-select-none'>-</span>
+                <div className='default-cursor section-text pointer-cursor user-select-none'>
                     {day}
                 </div>
             </div>
