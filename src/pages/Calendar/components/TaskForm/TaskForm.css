@@ -98,3 +98,15 @@
     cursor: pointer;
     stroke-width: 1.1px;
 }
+
+.section-error {
+    display: flex;
+    align-items: center;
+    color: red;
+    padding-inline: 5px;
+    font-size: 12px;
+}
+
+.border-error {
+    border: 1px solid red;
+}

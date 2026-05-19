@@ -84,3 +84,10 @@ export const toMinutes = (time: Time): number => {
         return ((time.hour + 12) * 60) + time.minutes;
     }
 }
+
+export const toHours24 = (time: Time): number => {
+    if (time.hour === 12 && time.period === 'AM') return 0;
+    if (time.hour === 12 && time.period === 'PM') return 12;
+    if (time.period === 'AM') return time.hour;
+    return time.hour + 12;
+}

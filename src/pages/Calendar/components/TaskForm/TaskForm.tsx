@@ -27,7 +27,9 @@ export const TaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClos
         endTime,
         onEndTimeChange,
         minDate,
-        maxDate
+        maxDate,
+        onSubmit,
+        errors
     } = useTaskForm({ calendarDay, initialStartTime, initialEndTime });
 
     return (
@@ -35,14 +37,13 @@ export const TaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClos
             <div className="modal-content modal" onClick={(e) => e.stopPropagation()}>
                 <p className='modal-title'>New task</p>
                 <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
-                <DescriptionSection description={description} onDescriptionChange={onDescriptionChange} />
+                <DescriptionSection descriptionError={errors.description} description={description} onDescriptionChange={onDescriptionChange} />
                 <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
                 <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
                 <div className='section-button-container'>
                     <button className='section-label section-button' onClick={onClose}>Cancel</button>
-                    <button className='section-label section-button'>Add task</button>
+                    <button className='section-label section-button' onClick={onSubmit}>Add task</button>
                 </div>
-
             </div>
         </div>
     );
@@ -51,13 +52,17 @@ export const TaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClos
 interface DescriptionSectionProps {
     description: string;
     onDescriptionChange: (description: string) => void;
+    descriptionError?: string;
 }
 
-const DescriptionSection = ({ description, onDescriptionChange }: DescriptionSectionProps) => {
+const DescriptionSection = ({ description, onDescriptionChange, descriptionError }: DescriptionSectionProps) => {
     return (
         <div className='section-column'>
             <p className='section-label'>Description</p>
-            <input className='section-input section-text' placeholder='e.g Sprint planning, Design meeting...' value={description} onChange={(e) => onDescriptionChange(e.target.value)} />
+            <input className={`section-input section-text ${descriptionError ? 'border-error' : ''}`} placeholder='e.g Sprint planning, Design meeting...' value={description} onChange={(e) => onDescriptionChange(e.target.value)} />
+            {
+                descriptionError ? <div className='section-error' style={{ height: 25 }}>{descriptionError}</div> : <div style={{ height: 25 }} />
+            }
         </div>
     );
 }

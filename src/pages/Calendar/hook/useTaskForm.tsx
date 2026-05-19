@@ -3,8 +3,9 @@ import type { Course } from "../../../types/Course";
 import { COURSE_DATA } from "../data/Task_data";
 import type { CalendarDay } from "../types/CalendarDay";
 import type { Time } from "../types/Time";
-import { getEndTime, getStartTime, toMinutes } from "../utils/timeUtils";
+import { getEndTime, getStartTime, toHours24, toMinutes } from "../utils/timeUtils";
 import { getMonday } from "../utils/dateUtils";
+import type { Task } from "../../../types/Task";
 
 const courses: Course[] = COURSE_DATA;
 
@@ -16,7 +17,6 @@ interface useTaskFormProps {
 
 interface TaskFormError {
     description?: string;
-    course?: string;
 }
 
 const monday = getMonday(new Date());
@@ -29,6 +29,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
     const [date, setDate] = useState<Date>(calendarDay.fullDate);
     const [startTime, setStartTime] = useState<Time>(initialStartTime);
     const [endTime, setEndTime] = useState<Time>(initialEndTime);
+    const [errors, setErrors] = useState<TaskFormError>({});
 
     const onDescriptionChange = (description: string) => {
         setDescription(description);
@@ -60,6 +61,35 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
         }
     }
 
+    const onSubmit = () => {
+        const currentErrors: TaskFormError = {};
+
+        if (description.length <= 0) {
+            currentErrors.description = "A description is required.";
+        }
+
+        if (Object.keys(currentErrors).length > 0) {
+            setErrors(currentErrors);
+            return;
+        }
+
+        const startTimeDate = new Date(date);
+        const endTimeDate = new Date(date);
+
+        startTimeDate.setHours(toHours24(startTime), startTime.minutes);
+        endTimeDate.setHours(toHours24(endTime), endTime.minutes);
+
+        const newTaks: Task = {
+            id: crypto.randomUUID(),
+            course,
+            description,
+            start: startTimeDate,
+            end: endTimeDate
+        }
+
+        console.log("Submit new task", newTaks);
+    }
+
     return {
         description,
         onDescriptionChange,
@@ -73,6 +103,8 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
         endTime,
         onEndTimeChange,
         minDate: monday,
-        maxDate
+        maxDate,
+        errors,
+        onSubmit
     };
 }
