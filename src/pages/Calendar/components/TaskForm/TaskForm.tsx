@@ -30,7 +30,7 @@ export const TaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClos
         maxDate,
         onSubmit,
         errors
-    } = useTaskForm({ calendarDay, initialStartTime, initialEndTime });
+    } = useTaskForm({ calendarDay, initialStartTime, initialEndTime, onClose });
 
     return (
         <div className="modal-overlay" onClick={onClose}>

@@ -3,12 +3,13 @@ import { CalendarHeader } from './components/CalendarHeader/CalendarHeader';
 import { CalendarGrid } from './components/CalendarGrid/CalendarGrid';
 import type { CalendarDay } from './types/CalendarDay';
 import type { Time } from './types/Time';
-import { TASKS_DATA } from './data/Task_data';
+import { add_fake_data } from './data/Task_data';
 import type { Task } from '../../types/Task';
 import { useCalendarDay } from './hook/useCalendarDay';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TaskForm } from './components/TaskForm/TaskForm';
 import { getStartTime } from './utils/timeUtils';
+import { useTaskStore } from '../../store/taskStore';
 
 interface CalendarPageProps { }
 
@@ -20,6 +21,8 @@ interface SelectedSlot {
 
 export const CalendarPage = ({ }: CalendarPageProps) => {
     const { convertDateToCalendarDay } = useCalendarDay();
+    const { tasks } = useTaskStore();
+
     const [displayForm, setDisplayForm] = useState<SelectedSlot | null>(null);
 
     const onHourCellClick = (calendarDay: CalendarDay, time: Time) => {
@@ -45,10 +48,14 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
         );
     }
 
+    useEffect(() => {
+        add_fake_data();
+    }, [])
+
     return (
         <div className='page-container'>
             <CalendarHeader />
-            <CalendarGrid onHourCellClick={onHourCellClick} tasks={TASKS_DATA} onTaskCellClick={onTaskCellClick} />
+            <CalendarGrid onHourCellClick={onHourCellClick} tasks={tasks} onTaskCellClick={onTaskCellClick} />
             {
                 displayForm && <TaskForm calendarDay={displayForm.calendarDay} initialStartTime={displayForm.time} initialEndTime={displayForm.endTime} onClose={() => setDisplayForm(null)} />
             }

@@ -1,10 +1,16 @@
 import type { Task } from "../../../types/Task";
 import type { Course } from "../../../types/Course";
+import { useTaskStore } from "../../../store/taskStore";
 
 const MAT130: Course = { id: "MAT-130", name: "MAT-130", color: "#4A90D9" };
 const MAT160: Course = { id: "MAT-160", name: "MAT-160", color: "#E67E22" };
 const IFT2007: Course = { id: "IFT-2007", name: "IFT-2007", color: "#9B59B6" };
 const IFT1003: Course = { id: "IFT-1003", name: "IFT-1003", color: "#2ECC71" };
+
+export const add_fake_data = () => {
+    const { addTask } = useTaskStore.getState(); // ✅
+    TASKS_DATA.forEach(t => addTask(t));
+}
 
 export const COURSE_DATA: Course[] = [
     MAT130, MAT160, IFT2007, IFT1003

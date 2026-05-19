@@ -6,6 +6,7 @@ import type { Time } from "../types/Time";
 import { getEndTime, getStartTime, toHours24, toMinutes } from "../utils/timeUtils";
 import { getMonday } from "../utils/dateUtils";
 import type { Task } from "../../../types/Task";
+import { useTaskStore } from "../../../store/taskStore";
 
 const courses: Course[] = COURSE_DATA;
 
@@ -13,6 +14,7 @@ interface useTaskFormProps {
     calendarDay: CalendarDay;
     initialStartTime: Time;
     initialEndTime: Time;
+    onClose: () => void;
 }
 
 interface TaskFormError {
@@ -23,13 +25,15 @@ const monday = getMonday(new Date());
 const maxDate = new Date(monday);
 maxDate.setDate(monday.getDate() + 6);
 
-export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: useTaskFormProps) => {
+export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClose }: useTaskFormProps) => {
     const [description, setDescription] = useState<string>('');
     const [course, setCourse] = useState<Course>(courses[0]);
     const [date, setDate] = useState<Date>(calendarDay.fullDate);
     const [startTime, setStartTime] = useState<Time>(initialStartTime);
     const [endTime, setEndTime] = useState<Time>(initialEndTime);
     const [errors, setErrors] = useState<TaskFormError>({});
+
+    const { addTask } = useTaskStore();
 
     const onDescriptionChange = (description: string) => {
         setDescription(description);
@@ -82,7 +86,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
         startTimeDate.setHours(toHours24(startTime), startTime.minutes);
         endTimeDate.setHours(toHours24(endTime), endTime.minutes);
 
-        const newTaks: Task = {
+        const newTask: Task = {
             id: crypto.randomUUID(),
             course,
             description,
@@ -90,7 +94,8 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime }: u
             end: endTimeDate
         }
 
-        console.log("Submit new task", newTaks);
+        addTask(newTask);
+        onClose();
     }
 
     return {
