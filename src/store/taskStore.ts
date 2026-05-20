@@ -5,6 +5,7 @@ interface TaskStore {
     tasks: Task[];
     addTask: (task: Task) => void;
     updateTask: (updatedTask: Task) => void;
+    removeTask: (taskId: string) => void;
 }
 
 export const useTaskStore = create<TaskStore>((set) => ({
@@ -15,6 +16,11 @@ export const useTaskStore = create<TaskStore>((set) => ({
     updateTask: (updatedTask: Task) => set((state) => ({
         tasks: state.tasks.map((task) =>
             task.id === updatedTask.id ? updatedTask : task
+        )
+    })),
+    removeTask: (taskId: string) => set((state) => ({
+        tasks: state.tasks.filter((task) =>
+            task.id !== taskId
         )
     }))
 }));

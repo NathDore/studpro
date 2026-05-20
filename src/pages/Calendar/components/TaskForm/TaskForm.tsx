@@ -32,7 +32,8 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
         minDate,
         maxDate,
         onSubmit,
-        errors
+        errors,
+        onRemove
     } = useTaskForm({ calendarDay, initialStartTime, initialEndTime, onClose, task });
 
     return (
@@ -46,6 +47,9 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
                 <div className='section-button-container'>
                     <button className='section-label section-button' onClick={onClose}>Cancel</button>
                     <button className='section-label section-button' onClick={() => onSubmit(mode, task)}>Add task</button>
+                    {
+                        mode === 'update' && <button className='section-label section-button' onClick={() => { if (task) onRemove(task?.id) }}>Remove</button>
+                    }
                 </div>
             </div>
         </div>

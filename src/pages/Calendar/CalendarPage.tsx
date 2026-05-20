@@ -60,8 +60,10 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
     }
 
     useEffect(() => {
-        add_fake_data();
-    }, [])
+        if (useTaskStore.getState().tasks.length === 0) {
+            //add_fake_data();
+        }
+    }, []);
 
     return (
         <div className='page-container'>

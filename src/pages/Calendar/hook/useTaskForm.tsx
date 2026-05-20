@@ -7,6 +7,7 @@ import { getEndTime, getStartTime, toHours24, toMinutes, fromDate } from "../uti
 import { getMonday } from "../utils/dateUtils";
 import type { Task } from "../../../types/Task";
 import { useTaskStore } from "../../../store/taskStore";
+import { taskExist } from "../utils/taskValidation";
 
 const courses: Course[] = COURSE_DATA;
 
@@ -34,7 +35,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
     const [endTime, setEndTime] = useState<Time>(task?.end ? fromDate(task.end) : initialEndTime);
     const [errors, setErrors] = useState<TaskFormError>({});
 
-    const { addTask, updateTask } = useTaskStore();
+    const { addTask, updateTask, removeTask, tasks } = useTaskStore();
 
     const onDescriptionChange = (description: string) => {
         setDescription(description);
@@ -114,6 +115,14 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
         onClose();
     }
 
+    const onRemove = (taskId: string) => {
+        if (!taskExist(tasks, taskId)) return;
+
+        removeTask(taskId);
+
+        onClose();
+    }
+
     return {
         description,
         onDescriptionChange,
@@ -129,6 +138,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
         minDate: monday,
         maxDate,
         errors,
-        onSubmit
+        onSubmit,
+        onRemove
     };
 }

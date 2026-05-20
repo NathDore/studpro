@@ -29,26 +29,36 @@ const getTaskPosition = (task: Task, cellWidth: number): TaskPosition => {
 }
 
 export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
-    if (tasks.length <= 0) return null;
     const layerRef = useRef<HTMLDivElement>(null);
     const [cellWidth, setCellWidth] = useState<number>(0);
+    const observerRef = useRef<ResizeObserver | null>(null);
 
-    useEffect(() => {
-        if (!layerRef.current) return;
+    const setRef = (node: HTMLDivElement | null) => {
+        if (observerRef.current) {
+            observerRef.current.disconnect();
+            observerRef.current = null;
+        }
+
+        if (!node) return;
+
+        (layerRef as React.MutableRefObject<HTMLDivElement>).current = node;
+
+        const { width } = node.getBoundingClientRect();
+        setCellWidth((width - TIME_CELL_WIDTH) / 7);
 
         const observer = new ResizeObserver(() => {
-            const { width } = layerRef.current!.getBoundingClientRect();
-            setCellWidth(
-                (width - TIME_CELL_WIDTH) / 7,
-            );
+            const { width } = node.getBoundingClientRect();
+            setCellWidth((width - TIME_CELL_WIDTH) / 7);
         });
 
-        observer.observe(layerRef.current);
-        return () => observer.disconnect();
-    }, []);
+        observer.observe(node);
+        observerRef.current = observer;
+    };
+
+    if (tasks.length <= 0) return null;
 
     return (
-        <div ref={layerRef} className='task-layer'>
+        <div ref={setRef} className='task-layer'>
             {
                 tasks.map(task => {
                     const position: TaskPosition = getTaskPosition(task, cellWidth);
