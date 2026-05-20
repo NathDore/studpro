@@ -1,6 +1,6 @@
 .task-wrapper {
     pointer-events: auto;
-    position: relative;
+    position: absolute;
     display: flex;
     justify-content: center;
 }
