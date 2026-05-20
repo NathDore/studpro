@@ -11,7 +11,7 @@ interface TaskCellProps {
 }
 
 export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => {
-    const { getDarkerColor, cellHeight, setCellHeight, onResizeTop, onResizeBottom, cellTopPosition, setCellTopPosition, wasResizing } = useTaskCell({ initialHeight: position.height, initialTopPosition: position.top });
+    const { getDarkerColor, cellHeight, setCellHeight, onResizeTop, onResizeBottom, cellTopPosition, setCellTopPosition, wasResizing, isResizing } = useTaskCell({ initialHeight: position.height, initialTopPosition: position.top });
 
     const textRef = useRef<HTMLParagraphElement>(null);
     const [displayText, setDisplayText] = useState(true);
@@ -19,8 +19,11 @@ export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => 
     useEffect(() => {
         if (!textRef.current) return;
         setDisplayText(textRef.current?.scrollHeight <= textRef.current?.clientHeight);
-        setCellHeight(position.height);
-        setCellTopPosition(position.top);
+
+        if (!wasResizing.current && !isResizing) {
+            setCellHeight(position.height);
+            setCellTopPosition(position.top);
+        }
     }, [position]);
 
     return (
@@ -45,7 +48,7 @@ export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => 
                     </p>
                 }
             </div>
-            <div onMouseDown={(e) => onResizeBottom(e.nativeEvent)} style={{ backgroundColor: getDarkerColor(task.course.color) }} className='resize-bar  resize-bar-bottom'></div>
+            <div onMouseDown={(e) => onResizeBottom(e.nativeEvent, task)} style={{ backgroundColor: getDarkerColor(task.course.color) }} className='resize-bar  resize-bar-bottom'></div>
         </div>
     )
 }
