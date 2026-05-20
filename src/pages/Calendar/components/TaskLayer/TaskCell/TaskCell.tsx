@@ -11,7 +11,7 @@ interface TaskCellProps {
 }
 
 export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => {
-    const { getDarkerColor, cellHeight, setCellHeight, onResizeTop, onResizeBottom } = useTaskCell({ initialHeight: position.height });
+    const { getDarkerColor, cellHeight, setCellHeight, onResizeTop, onResizeBottom, cellTopPosition, setCellTopPosition, wasResizing } = useTaskCell({ initialHeight: position.height, initialTopPosition: position.top });
 
     const textRef = useRef<HTMLParagraphElement>(null);
     const [displayText, setDisplayText] = useState(true);
@@ -20,11 +20,22 @@ export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => 
         if (!textRef.current) return;
         setDisplayText(textRef.current?.scrollHeight <= textRef.current?.clientHeight);
         setCellHeight(position.height);
+        setCellTopPosition(position.top);
     }, [position]);
 
     return (
-        <div onClick={() => onTaskCellClick(task)} key={task.id} className='task-wrapper' style={{ left: position.left, top: position.top, height: cellHeight, width: position.width }}>
-            <div onMouseDown={onResizeTop} style={{ backgroundColor: getDarkerColor(task.course.color) }} className='resize-bar resize-bar-top'></div>
+        <div onClick={(e) => {
+            if (wasResizing.current) {
+                wasResizing.current = false;
+                return;
+            }
+            onTaskCellClick(task);
+        }}
+            key={task.id}
+            className='task-wrapper'
+            style={{ left: position.left, top: cellTopPosition, height: cellHeight, width: position.width }}>
+
+            <div onMouseDown={(e) => onResizeTop(e.nativeEvent, task)} style={{ backgroundColor: getDarkerColor(task.course.color) }} className='resize-bar resize-bar-top'></div>
             <div ref={textRef} style={{ backgroundColor: task.course.color }} className='task'>
                 <p className='task-text task-name user-select-none'>{task.course.name}</p>
                 <div style={{ height: 2 }} />
@@ -34,7 +45,7 @@ export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => 
                     </p>
                 }
             </div>
-            <div onMouseDown={onResizeBottom} style={{ backgroundColor: getDarkerColor(task.course.color) }} className='resize-bar  resize-bar-bottom'></div>
+            <div onMouseDown={(e) => onResizeBottom(e.nativeEvent)} style={{ backgroundColor: getDarkerColor(task.course.color) }} className='resize-bar  resize-bar-bottom'></div>
         </div>
     )
 }
