@@ -14,7 +14,7 @@ export const CalendarRow = ({ time, onHourCellClick }: CalendarRowProps) => {
 
     return (
         <div className='row'>
-            <div className='time-cell'> <p className='time-cell-text'>{time.hour.toString()} {time.period}</p></div>
+            <div className='time-cell'> <p className='time-cell-text user-select-none'>{time.hour.toString()} {time.period}</p></div>
             {
                 days.map((day) => <div onClick={() => onHourCellClick(day, time)} className='hour-cell' key={day.id}></div>)
             }

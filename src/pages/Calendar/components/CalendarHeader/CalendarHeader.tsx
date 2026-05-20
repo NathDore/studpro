@@ -25,8 +25,8 @@ export const CalendarDayCol = ({ calendarDay }: CalendarDayColProps) => {
 
     return (
         <div className='child'>
-            <p className='day'>{calendarDay.day}</p>
-            <p className={`date ${calendarDay.isCurrentDay ? 'date--current' : ''}`}>{calendarDay.date}</p>
+            <p className='user-select-none day'>{calendarDay.day}</p>
+            <p className={`user-select-none date ${calendarDay.isCurrentDay ? 'date--current' : ''}`}>{calendarDay.date}</p>
         </div>
     );
 }

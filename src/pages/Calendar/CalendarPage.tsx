@@ -3,7 +3,6 @@ import { CalendarHeader } from './components/CalendarHeader/CalendarHeader';
 import { CalendarGrid } from './components/CalendarGrid/CalendarGrid';
 import type { CalendarDay } from './types/CalendarDay';
 import type { Time } from './types/Time';
-import { add_fake_data } from './data/Task_data';
 import type { Task } from '../../types/Task';
 import { useCalendarDay } from './hook/useCalendarDay';
 import { useEffect, useState } from 'react';
@@ -47,10 +46,6 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
 
     const onTaskCellClick = (task: Task) => {
         const calendarDay: CalendarDay = convertDateToCalendarDay(task.start);
-        console.log(
-            `[Calendar] Hour task click | Time: ${task.start.getHours} | Day: ${calendarDay.day} | Date: ${calendarDay.date}`
-        );
-
         const startTime: Time = fromDate(task.start);
         const endTime: Time = fromDate(task.end);
 
@@ -58,12 +53,6 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
         setSelectedTask(task);
         setDisplayForm({ calendarDay, time: startTime, endTime });
     }
-
-    useEffect(() => {
-        if (useTaskStore.getState().tasks.length === 0) {
-            //add_fake_data();
-        }
-    }, []);
 
     return (
         <div className='page-container'>
