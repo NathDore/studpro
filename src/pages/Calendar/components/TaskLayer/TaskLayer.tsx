@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import type { Task } from '../../../../types/Task'
 import { TIME_CELL_WIDTH } from '../../constants';
-import './TaskLayer.css';
 import { TaskCell } from './TaskCell/TaskCell';
 import { getTaskPosition, type TaskPosition } from './TaskCell/utils/taskUtils';
+import './TaskLayer.css';
 
 interface TaskLayerProps {
     tasks: Task[];

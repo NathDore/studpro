@@ -1,28 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import type { Task } from "../../../../../../types/Task";
 import { useTaskStore } from "../../../../../../store/taskStore";
 import { CELL_HEIGHT } from "../../../../constants";
+import type { TaskPosition } from "../utils/taskUtils";
 
-interface useTaskCellProps {
-    initialHeight: number;
-    initialTopPosition: number;
-}
+interface useTaskCellProps { }
 
-export const useTaskCell = ({ initialHeight, initialTopPosition }: useTaskCellProps) => {
-    const [cellHeight, setCellHeight] = useState(initialHeight);
-    const [cellTopPosition, setCellTopPosition] = useState(initialTopPosition);
-
+export const useTaskCell = () => {
     const isResizing = useRef(false);
     const direction = useRef<'top' | 'bottom'>('top');
     const startY = useRef(0);
     const startHeight = useRef(0);
     const startTop = useRef(0);
     const activeTask = useRef<Task | null>(null);
-
-    const currentHeight = useRef(initialHeight);
-    const currentTop = useRef(initialTopPosition);
-
-    const wasResizing = useRef(false);
 
     const { updateTask } = useTaskStore();
 
@@ -35,76 +25,58 @@ export const useTaskCell = ({ initialHeight, initialTopPosition }: useTaskCellPr
         };
     }, []);
 
-    const onResizeTop = (e: MouseEvent, task: Task) => {
+    const onResizeTop = (e: MouseEvent, task: Task, position: TaskPosition) => {
         e.preventDefault();
         e.stopPropagation();
 
         startY.current = e.clientY;
-        startHeight.current = currentHeight.current;
-        startTop.current = currentTop.current;
+        startHeight.current = position.height;
+        startTop.current = position.top;
         activeTask.current = task;
         direction.current = 'top';
         isResizing.current = true;
     };
 
-    const onResizeBottom = (e: MouseEvent, task: Task) => {
+    const onResizeBottom = (e: MouseEvent, task: Task, position: TaskPosition) => {
         e.preventDefault();
         e.stopPropagation();
 
         startY.current = e.clientY;
-        startHeight.current = currentHeight.current;
-        startTop.current = currentTop.current;
+        startHeight.current = position.height;
+        startTop.current = position.top;
         activeTask.current = task;
         direction.current = 'bottom';
         isResizing.current = true;
     };
 
     const onMouseMove = (e: MouseEvent) => {
-        if (!isResizing.current) return;
+        if (!isResizing.current || !activeTask.current) return;
 
         const deltaY = e.clientY - startY.current;
+        const newStart = new Date(activeTask.current.start);
+        const newEnd = new Date(activeTask.current.end);
 
         if (direction.current === 'top') {
-            const newHeight = startHeight.current - deltaY;
             const newTop = startTop.current + deltaY;
-            currentHeight.current = newHeight;
-            currentTop.current = newTop;
-            setCellHeight(newHeight);
-            setCellTopPosition(newTop);
+            const newHours = newTop / CELL_HEIGHT;
+            newStart.setHours(Math.floor(newHours));
+            newStart.setMinutes((newHours % 1) * 60);
         }
 
         if (direction.current === 'bottom') {
-            const newHeight = startHeight.current + deltaY;
-            currentHeight.current = newHeight;
-            setCellHeight(newHeight);
+            const newBottom = startTop.current + startHeight.current + deltaY;
+            const newHours = newBottom / CELL_HEIGHT;
+            newEnd.setHours(Math.floor(newHours));
+            newEnd.setMinutes((newHours % 1) * 60);
         }
+
+        updateTask({ ...activeTask.current, start: newStart, end: newEnd });
     };
 
     const onMouseUp = () => {
         if (!isResizing.current) return;
-
-        if (activeTask.current) {
-            const newStart = new Date(activeTask.current.start);
-            const newEnd = new Date(activeTask.current.end);
-
-            if (direction.current === 'top') {
-                const newHours = currentTop.current / CELL_HEIGHT;
-                newStart.setHours(Math.floor(newHours));
-                newStart.setMinutes((newHours % 1) * 60);
-            }
-
-            if (direction.current === 'bottom') {
-                const newHours = (currentTop.current + currentHeight.current) / CELL_HEIGHT;
-                newEnd.setHours(Math.floor(newHours));
-                newEnd.setMinutes((newHours % 1) * 60);
-            }
-
-            updateTask({ ...activeTask.current, start: newStart, end: newEnd });
-            activeTask.current = null;
-        }
-
         isResizing.current = false;
-        wasResizing.current = true;
+        activeTask.current = null;
     };
 
     const getDarkerColor = (color: string): string => {
@@ -117,15 +89,5 @@ export const useTaskCell = ({ initialHeight, initialTopPosition }: useTaskCellPr
         return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
     };
 
-    return {
-        getDarkerColor,
-        onResizeTop,
-        onResizeBottom,
-        cellHeight,
-        setCellHeight,
-        cellTopPosition,
-        setCellTopPosition,
-        wasResizing,
-        isResizing
-    };
+    return { getDarkerColor, onResizeTop, onResizeBottom, isResizing };
 };
