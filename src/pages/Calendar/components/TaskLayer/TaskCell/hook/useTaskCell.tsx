@@ -28,7 +28,8 @@ export const useTaskCell = () => {
     const onResizeTop = (e: MouseEvent, task: Task, position: TaskPosition) => {
         e.preventDefault();
         e.stopPropagation();
-
+        document.body.style.cursor = 'ns-resize';
+        document.body.classList.add('is-resizing');
         startY.current = e.clientY;
         startHeight.current = position.height;
         startTop.current = position.top;
@@ -40,7 +41,8 @@ export const useTaskCell = () => {
     const onResizeBottom = (e: MouseEvent, task: Task, position: TaskPosition) => {
         e.preventDefault();
         e.stopPropagation();
-
+        document.body.style.cursor = 'ns-resize';
+        document.body.classList.add('is-resizing');
         startY.current = e.clientY;
         startHeight.current = position.height;
         startTop.current = position.top;
@@ -55,16 +57,30 @@ export const useTaskCell = () => {
         const deltaY = e.clientY - startY.current;
         const newStart = new Date(activeTask.current.start);
         const newEnd = new Date(activeTask.current.end);
+        const heightOf15min = CELL_HEIGHT / 4;
 
         if (direction.current === 'top') {
-            const newTop = startTop.current + deltaY;
+            let newTop = startTop.current + deltaY;
+            const clampPosition = (startTop.current + startHeight.current) - heightOf15min;
+
+
+            if (newTop > clampPosition) {
+                newTop = clampPosition;
+            }
+
             const newHours = newTop / CELL_HEIGHT;
             newStart.setHours(Math.floor(newHours));
             newStart.setMinutes((newHours % 1) * 60);
         }
 
         if (direction.current === 'bottom') {
-            const newBottom = startTop.current + startHeight.current + deltaY;
+            let newBottom = startTop.current + startHeight.current + deltaY;
+            const clampPosition = (startTop.current + heightOf15min);
+
+            if (newBottom < clampPosition) {
+                newBottom = clampPosition;
+            }
+
             const newHours = newBottom / CELL_HEIGHT;
             newEnd.setHours(Math.floor(newHours));
             newEnd.setMinutes((newHours % 1) * 60);
@@ -75,6 +91,8 @@ export const useTaskCell = () => {
 
     const onMouseUp = () => {
         if (!isResizing.current) return;
+        document.body.style.cursor = '';
+        document.body.classList.remove('is-resizing');
         isResizing.current = false;
         activeTask.current = null;
     };
