@@ -38,7 +38,9 @@ export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => 
             className='task-wrapper'
             style={{ left: position.left, top: cellTopPosition, height: cellHeight, width: position.width }}>
 
-            <div onMouseDown={(e) => onResizeTop(e.nativeEvent, task)} style={{ backgroundColor: getDarkerColor(task.course.color) }} className='resize-bar resize-bar-top'></div>
+            <div onMouseDown={(e) => onResizeTop(e.nativeEvent, task)} className='resize-bar resize-bar-top'>
+                <div className='visual-resize-bar' />
+            </div>
             <div ref={textRef} style={{ backgroundColor: task.course.color }} className='task'>
                 <p className='task-text task-name user-select-none'>{task.course.name}</p>
                 <div style={{ height: 2 }} />
@@ -48,7 +50,9 @@ export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => 
                     </p>
                 }
             </div>
-            <div onMouseDown={(e) => onResizeBottom(e.nativeEvent, task)} style={{ backgroundColor: getDarkerColor(task.course.color) }} className='resize-bar  resize-bar-bottom'></div>
+            <div onMouseDown={(e) => onResizeBottom(e.nativeEvent, task)} style={{ /*backgroundColor: getDarkerColor(task.course.color)*/ }} className='resize-bar  resize-bar-bottom'>
+                <div className='visual-resize-bar' />
+            </div>
         </div>
     )
 }
