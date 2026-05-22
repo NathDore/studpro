@@ -5,7 +5,7 @@ import type { CalendarDay } from './types/CalendarDay';
 import type { Time } from './types/Time';
 import type { Task } from '../../types/Task';
 import { useCalendarDay } from './hook/useCalendarDay';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TaskForm } from './components/TaskForm/TaskForm';
 import { fromDate, getStartTime } from './utils/timeUtils';
 import { useTaskStore } from '../../store/taskStore';

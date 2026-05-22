@@ -1,5 +1,5 @@
 import type { Task } from '../../../../types/Task';
-import { useTaskForm } from '../../hook/useTaskForm';
+import { useTaskForm } from './hook/useTaskForm';
 import type { CalendarDay } from '../../types/CalendarDay';
 import type { Time } from '../../types/Time';
 import { CourseSection } from './components/CourseSection/CourseSection';

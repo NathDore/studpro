@@ -1,13 +1,13 @@
 import { useState } from "react";
-import type { Course } from "../../../types/Course";
-import { COURSE_DATA } from "../data/Task_data";
-import type { CalendarDay } from "../types/CalendarDay";
-import type { Time } from "../types/Time";
-import { getEndTime, getStartTime, toHours24, toMinutes, fromDate } from "../utils/timeUtils";
-import { getMonday } from "../utils/dateUtils";
-import type { Task } from "../../../types/Task";
-import { useTaskStore } from "../../../store/taskStore";
-import { taskExist } from "../utils/taskValidation";
+import type { Course } from "../../../../../types/Course";
+import { COURSE_DATA } from "../../../data/Task_data";
+import type { CalendarDay } from "../../../types/CalendarDay";
+import type { Time } from "../../../types/Time";
+import { getEndTime, getStartTime, toHours24, toMinutes, fromDate } from "../../../utils/timeUtils";
+import { getMonday } from "../../../utils/dateUtils";
+import type { Task } from "../../../../../types/Task";
+import { useTaskStore } from "../../../../../store/taskStore";
+import { taskExist } from "../../../utils/taskValidation";
 
 const courses: Course[] = COURSE_DATA;
 
