@@ -2,19 +2,25 @@ import { useEffect, useRef } from "react";
 import type { Task } from "../../../../../../types/Task";
 import { useTaskStore } from "../../../../../../store/taskStore";
 import { CELL_HEIGHT } from "../../../../constants";
-import type { TaskPosition } from "../utils/taskUtils";
+import { getTaskPosition, type TaskPosition } from "../utils/taskUtils";
+import { useCellWidth } from "../../hook/useCellWidth";
+import { TASK_GAP } from "../../constants";
 
 interface useTaskCellProps { }
 
+type Direction = 'top' | 'bottom';
+
 export const useTaskCell = () => {
     const isResizing = useRef(false);
-    const direction = useRef<'top' | 'bottom'>('top');
+    const direction = useRef<Direction>('top');
     const startY = useRef(0);
     const startHeight = useRef(0);
     const startTop = useRef(0);
     const activeTask = useRef<Task | null>(null);
+    const adjacentTask = useRef<Task | null>(null);
 
-    const { updateTask } = useTaskStore();
+    const { updateTask, tasks } = useTaskStore();
+    const { cellWidth } = useCellWidth();
 
     useEffect(() => {
         window.addEventListener('mousemove', onMouseMove);
@@ -24,6 +30,31 @@ export const useTaskCell = () => {
             window.removeEventListener('mouseup', onMouseUp);
         };
     }, []);
+
+    const getAdjacentTask = (dir: Direction, tasks: Task[], currentTask: Task): Task | null => {
+        const currentPos = getTaskPosition(currentTask, cellWidth);
+        const sameDayTasks = tasks.filter(t =>
+            t.start.getDate() === currentTask.start.getDate() && t.id !== currentTask.id
+        );
+
+        let closestTask: Task | null = null;
+        let closestDistance = Infinity;
+
+        sameDayTasks.forEach(candidate => {
+            const candidatePos = getTaskPosition(candidate, cellWidth);
+
+            const distance = dir === 'top'
+                ? currentPos.top - (candidatePos.top + candidatePos.height)
+                : candidatePos.top - (currentPos.top + currentPos.height);
+
+            if (distance >= 0 && distance < closestDistance) {
+                closestDistance = distance;
+                closestTask = candidate;
+            }
+        });
+
+        return closestTask;
+    };
 
     const onResizeTop = (e: MouseEvent, task: Task, position: TaskPosition) => {
         e.preventDefault();
@@ -36,6 +67,7 @@ export const useTaskCell = () => {
         activeTask.current = task;
         direction.current = 'top';
         isResizing.current = true;
+        adjacentTask.current = getAdjacentTask('top', tasks, task);
     };
 
     const onResizeBottom = (e: MouseEvent, task: Task, position: TaskPosition) => {
@@ -49,6 +81,7 @@ export const useTaskCell = () => {
         activeTask.current = task;
         direction.current = 'bottom';
         isResizing.current = true;
+        adjacentTask.current = getAdjacentTask('bottom', tasks, task);
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -61,11 +94,18 @@ export const useTaskCell = () => {
 
         if (direction.current === 'top') {
             let newTop = startTop.current + deltaY;
-            const clampPosition = (startTop.current + startHeight.current) - heightOf15min;
+            const clampHeight = (startTop.current + startHeight.current) - heightOf15min;
 
+            if (newTop > clampHeight) {
+                newTop = clampHeight;
+            }
 
-            if (newTop > clampPosition) {
-                newTop = clampPosition;
+            if (adjacentTask.current) {
+                const adjacentTaskPos = getTaskPosition(adjacentTask.current, cellWidth);
+                const clampPos = (adjacentTaskPos.top + adjacentTaskPos.height) + TASK_GAP;
+                if (newTop < clampPos) {
+                    newTop = clampPos;
+                }
             }
 
             const newHours = newTop / CELL_HEIGHT;
@@ -75,11 +115,20 @@ export const useTaskCell = () => {
 
         if (direction.current === 'bottom') {
             let newBottom = startTop.current + startHeight.current + deltaY;
-            const clampPosition = (startTop.current + heightOf15min);
+            const clampHeight = (startTop.current + heightOf15min);
 
-            if (newBottom < clampPosition) {
-                newBottom = clampPosition;
+            if (newBottom < clampHeight) {
+                newBottom = clampHeight;
             }
+
+            if (adjacentTask.current) {
+                const adjacentTaskPos = getTaskPosition(adjacentTask.current, cellWidth);
+                const clampPos = (adjacentTaskPos.top) - TASK_GAP;
+                if (newBottom > clampPos) {
+                    newBottom = clampPos;
+                }
+            }
+
 
             const newHours = newBottom / CELL_HEIGHT;
             newEnd.setHours(Math.floor(newHours));
