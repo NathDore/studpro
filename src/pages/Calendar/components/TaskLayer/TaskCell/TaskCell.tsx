@@ -7,7 +7,7 @@ interface TaskCellProps {
     position: TaskPosition;
     task: Task;
     onTaskCellClick: (task: Task) => void;
-    isResizing: React.MutableRefObject<boolean>
+    isResizing: React.RefObject<boolean>
     onResizeTop: (e: MouseEvent, task: Task, position: TaskPosition) => void;
     onResizeBottom: (e: MouseEvent, task: Task, position: TaskPosition) => void;
 }
