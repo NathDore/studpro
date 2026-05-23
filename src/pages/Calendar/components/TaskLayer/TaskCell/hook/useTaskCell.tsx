@@ -141,7 +141,7 @@ export const useTaskCell = () => {
             newEnd.getHours() === activeTask.current.end.getHours() &&
             newEnd.getMinutes() === activeTask.current.end.getMinutes();
 
-        if (startUnchanged && endUnchanged) return; // ← rien n'a changé, on sort
+        if (startUnchanged && endUnchanged) return;
 
         updateTask({ ...activeTask.current, start: newStart, end: newEnd });
     };

@@ -7,7 +7,7 @@ interface TaskCellProps {
     position: TaskPosition;
     task: Task;
     onTaskCellClick: (task: Task) => void;
-    isResizing: boolean
+    isResizing: React.MutableRefObject<boolean>
     onResizeTop: (e: MouseEvent, task: Task, position: TaskPosition) => void;
     onResizeBottom: (e: MouseEvent, task: Task, position: TaskPosition) => void;
 }
@@ -24,7 +24,7 @@ export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResize
 
     return (
         <div onMouseUp={(e) => {
-            if (isResizing) return;
+            if (isResizing.current) return;
             onTaskCellClick(task);
         }}
             key={task.id}

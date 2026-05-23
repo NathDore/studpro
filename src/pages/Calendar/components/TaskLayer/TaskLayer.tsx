@@ -27,7 +27,7 @@ export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
                         task={task}
                         position={position}
                         onTaskCellClick={onTaskCellClick}
-                        isResizing={isResizing.current}
+                        isResizing={isResizing}
                         onResizeTop={onResizeTop}
                         onResizeBottom={onResizeBottom}
                     />
