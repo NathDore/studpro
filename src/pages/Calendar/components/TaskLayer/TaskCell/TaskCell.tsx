@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Task } from '../../../../../types/Task';
 import './TaskCell.css';
-import { useTaskCell } from './hook/useTaskCell';
 import type { TaskPosition } from './utils/taskUtils';
 
 interface TaskCellProps {
     position: TaskPosition;
     task: Task;
     onTaskCellClick: (task: Task) => void;
+    isResizing: boolean
+    onResizeTop: (e: MouseEvent, task: Task, position: TaskPosition) => void;
+    onResizeBottom: (e: MouseEvent, task: Task, position: TaskPosition) => void;
 }
 
-export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => {
-    const { getDarkerColor, onResizeTop, onResizeBottom, isResizing } = useTaskCell();
+export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResizeTop, onResizeBottom }: TaskCellProps) => {
 
     const textRef = useRef<HTMLParagraphElement>(null);
     const [displayText, setDisplayText] = useState(true);
@@ -23,7 +24,7 @@ export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => 
 
     return (
         <div onMouseUp={(e) => {
-            if (isResizing.current) return;
+            if (isResizing) return;
             onTaskCellClick(task);
         }}
             key={task.id}
@@ -42,7 +43,7 @@ export const TaskCell = ({ position, task, onTaskCellClick }: TaskCellProps) => 
                     </p>
                 }
             </div>
-            <div onMouseDown={(e) => onResizeBottom(e.nativeEvent, task, position)} style={{ /*backgroundColor: getDarkerColor(task.course.color)*/ }} className='resize-bar  resize-bar-bottom'>
+            <div onMouseDown={(e) => onResizeBottom(e.nativeEvent, task, position)} className='resize-bar  resize-bar-bottom'>
                 <div className='visual-resize-bar' />
             </div>
         </div>

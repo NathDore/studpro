@@ -1,10 +1,9 @@
-import { useRef, useState } from 'react';
 import type { Task } from '../../../../types/Task'
-import { TIME_CELL_WIDTH } from '../../constants';
 import { TaskCell } from './TaskCell/TaskCell';
 import { getTaskPosition, type TaskPosition } from './TaskCell/utils/taskUtils';
 import './TaskLayer.css';
 import { useCellWidth } from './hook/useCellWidth';
+import { useTaskCell } from './TaskCell/hook/useTaskCell';
 
 interface TaskLayerProps {
     tasks: Task[];
@@ -13,6 +12,7 @@ interface TaskLayerProps {
 
 export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
     const { setRef, cellWidth } = useCellWidth();
+    const { onResizeTop, onResizeBottom, isResizing } = useTaskCell();
 
     if (tasks.length <= 0) return null;
 
@@ -22,7 +22,15 @@ export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
                 tasks.map(task => {
                     const position: TaskPosition = getTaskPosition(task, cellWidth);
 
-                    return <TaskCell key={task.id} task={task} position={position} onTaskCellClick={onTaskCellClick} />
+                    return <TaskCell
+                        key={task.id}
+                        task={task}
+                        position={position}
+                        onTaskCellClick={onTaskCellClick}
+                        isResizing={isResizing.current}
+                        onResizeTop={onResizeTop}
+                        onResizeBottom={onResizeBottom}
+                    />
                 })
             }
         </div>

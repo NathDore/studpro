@@ -114,7 +114,7 @@ export const useTaskCell = () => {
 
             const newHours = newTop / CELL_HEIGHT;
             newStart.setHours(Math.floor(newHours));
-            newStart.setMinutes((newHours % 1) * 60);
+            newStart.setMinutes(Math.round((newHours % 1) * 60));
         }
 
         if (direction.current === 'bottom') {
@@ -130,8 +130,18 @@ export const useTaskCell = () => {
 
             const newHours = newBottom / CELL_HEIGHT;
             newEnd.setHours(Math.floor(newHours));
-            newEnd.setMinutes((newHours % 1) * 60);
+            newEnd.setMinutes(Math.round((newHours % 1) * 60));
         }
+
+        const startUnchanged =
+            newStart.getHours() === activeTask.current.start.getHours() &&
+            newStart.getMinutes() === activeTask.current.start.getMinutes();
+
+        const endUnchanged =
+            newEnd.getHours() === activeTask.current.end.getHours() &&
+            newEnd.getMinutes() === activeTask.current.end.getMinutes();
+
+        if (startUnchanged && endUnchanged) return; // ← rien n'a changé, on sort
 
         updateTask({ ...activeTask.current, start: newStart, end: newEnd });
     };
