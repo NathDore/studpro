@@ -6,8 +6,6 @@ import { getTaskPosition, type TaskPosition } from "../utils/taskUtils";
 import { useCellWidth } from "../../hook/useCellWidth";
 import { TASK_GAP } from "../../constants";
 
-interface useTaskCellProps { }
-
 type Direction = 'top' | 'bottom';
 
 export const useTaskCell = () => {
@@ -22,12 +20,24 @@ export const useTaskCell = () => {
     const { updateTask, tasks } = useTaskStore();
     const { cellWidth } = useCellWidth();
 
+    const onMouseMoveRef = useRef<((e: MouseEvent) => void) | null>(null);
+    const onMouseUpRef = useRef<(() => void) | null>(null);
+
     useEffect(() => {
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('mouseup', onMouseUp);
+        const handleMouseMove = (e: MouseEvent) => {
+            onMouseMoveRef.current?.(e);
+        };
+
+        const handleMouseUp = () => {
+            onMouseUpRef.current?.();
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+
         return () => {
-            window.removeEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mouseup', onMouseUp);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
         };
     }, []);
 
@@ -42,7 +52,6 @@ export const useTaskCell = () => {
 
         sameDayTasks.forEach(candidate => {
             const candidatePos = getTaskPosition(candidate, cellWidth);
-
             const distance = dir === 'top'
                 ? currentPos.top - (candidatePos.top + candidatePos.height)
                 : candidatePos.top - (currentPos.top + currentPos.height);
@@ -95,17 +104,12 @@ export const useTaskCell = () => {
         if (direction.current === 'top') {
             let newTop = startTop.current + deltaY;
             const clampHeight = (startTop.current + startHeight.current) - heightOf15min;
-
-            if (newTop > clampHeight) {
-                newTop = clampHeight;
-            }
+            if (newTop > clampHeight) newTop = clampHeight;
 
             if (adjacentTask.current) {
                 const adjacentTaskPos = getTaskPosition(adjacentTask.current, cellWidth);
                 const clampPos = (adjacentTaskPos.top + adjacentTaskPos.height) + TASK_GAP;
-                if (newTop < clampPos) {
-                    newTop = clampPos;
-                }
+                if (newTop < clampPos) newTop = clampPos;
             }
 
             const newHours = newTop / CELL_HEIGHT;
@@ -116,19 +120,13 @@ export const useTaskCell = () => {
         if (direction.current === 'bottom') {
             let newBottom = startTop.current + startHeight.current + deltaY;
             const clampHeight = (startTop.current + heightOf15min);
-
-            if (newBottom < clampHeight) {
-                newBottom = clampHeight;
-            }
+            if (newBottom < clampHeight) newBottom = clampHeight;
 
             if (adjacentTask.current) {
                 const adjacentTaskPos = getTaskPosition(adjacentTask.current, cellWidth);
-                const clampPos = (adjacentTaskPos.top) - TASK_GAP;
-                if (newBottom > clampPos) {
-                    newBottom = clampPos;
-                }
+                const clampPos = adjacentTaskPos.top - TASK_GAP;
+                if (newBottom > clampPos) newBottom = clampPos;
             }
-
 
             const newHours = newBottom / CELL_HEIGHT;
             newEnd.setHours(Math.floor(newHours));
@@ -145,6 +143,9 @@ export const useTaskCell = () => {
         isResizing.current = false;
         activeTask.current = null;
     };
+
+    onMouseMoveRef.current = onMouseMove;
+    onMouseUpRef.current = onMouseUp;
 
     const getDarkerColor = (color: string): string => {
         const hex = color.replace('#', '');
