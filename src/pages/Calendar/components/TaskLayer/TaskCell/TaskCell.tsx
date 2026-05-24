@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import type { Task } from '../../../../../types/Task';
 import './TaskCell.css';
 import type { TaskPosition } from './utils/taskUtils';
+import { NotesIcon } from '../../../../../components/icons/NotesIcon';
+import { fromDate, toMinutes } from '../../../utils/timeUtils';
 
 interface TaskCellProps {
     position: TaskPosition;
@@ -13,15 +15,10 @@ interface TaskCellProps {
 }
 
 export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResizeTop, onResizeBottom }: TaskCellProps) => {
-
     const textRef = useRef<HTMLParagraphElement>(null);
-    const [displayText, setDisplayText] = useState(true);
 
-    useEffect(() => {
-        if (!textRef.current) return;
-        setDisplayText(textRef.current?.scrollHeight <= textRef.current?.clientHeight);
-    }, [position]);
-
+    const durationMinutes = toMinutes(fromDate(task.end)) - toMinutes(fromDate(task.start));
+    const showIcon = durationMinutes <= 60;
     return (
         <div onMouseUp={(e) => {
             if (isResizing.current) return;
@@ -34,14 +31,17 @@ export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResize
             <div onMouseDown={(e) => onResizeTop(e.nativeEvent, task, position)} className='resize-bar resize-bar-top'>
                 <div className='visual-resize-bar' />
             </div>
-            <div ref={textRef} style={{ backgroundColor: task.course.color }} className='task'>
+            <div style={{ backgroundColor: task.course.color }} className='task'>
                 <p className='task-text task-name user-select-none'>{task.course.name}</p>
                 <div style={{ height: 2 }} />
-                {
-                    <p className='task-text user-select-none' style={{ visibility: displayText ? 'visible' : 'hidden' }}>
-                        {task.description}
-                    </p>
-                }
+                <p
+                    ref={textRef}
+                    className='task-text task-description user-select-none'
+                    style={{ display: showIcon ? 'none' : undefined }}
+                >
+                    {task.description}
+                </p>
+                {showIcon && <NotesIcon className='notes-icon' />}
             </div>
             <div onMouseDown={(e) => onResizeBottom(e.nativeEvent, task, position)} className='resize-bar  resize-bar-bottom'>
                 <div className='visual-resize-bar' />

@@ -12,6 +12,7 @@
     cursor: pointer;
     overflow: hidden;
     transition: filter 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
 }
 
 .task-text {
@@ -19,10 +20,6 @@
     font-weight: 400;
     font-size: 14px;
     overflow-wrap: break-word;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
     overflow: hidden;
     line-height: 1.1;
     color: #171c1f;
@@ -70,6 +67,21 @@
 .resize-bar:hover .visual-resize-bar {
     opacity: 1;
     width: 60%;
+}
+
+.notes-icon {
+    width: 20px;
+    cursor: pointer;
+    stroke-width: 1.1px;
+    color: #171c1f;
+    position: absolute;
+    left: 5px;
+    background-color: #c7c7c73a;
+}
+
+.task-description {
+    overflow: hidden;
+    line-height: 1.1;
 }
 
 body.is-resizing .task {
