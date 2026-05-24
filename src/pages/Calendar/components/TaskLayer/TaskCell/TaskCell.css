@@ -80,6 +80,8 @@
 }
 
 .task-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 1.1;
 }

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import type { Task } from '../../../../../types/Task';
 import './TaskCell.css';
 import type { TaskPosition } from './utils/taskUtils';
@@ -19,6 +19,24 @@ export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResize
 
     const durationMinutes = toMinutes(fromDate(task.end)) - toMinutes(fromDate(task.start));
     const showIcon = durationMinutes <= 60;
+
+    useEffect(() => {
+        const el = textRef.current;
+        if (!el) return;
+
+        const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
+        const container = el.parentElement;
+        if (!container) return;
+
+        const usedHeight = Array.from(container.children)
+            .filter(child => child !== el)
+            .reduce((acc, child) => acc + (child as HTMLElement).offsetHeight, 0);
+
+        const availableHeight = container.clientHeight - usedHeight;
+        const maxLines = Math.floor(availableHeight / lineHeight);
+        el.style.webkitLineClamp = String(maxLines > 0 ? maxLines : 1);
+    }, [position]);
+
     return (
         <div onMouseUp={(e) => {
             if (isResizing.current) return;
@@ -33,7 +51,7 @@ export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResize
             </div>
             <div style={{ backgroundColor: task.course.color }} className='task'>
                 <p className='task-text task-name user-select-none'>{task.course.name}</p>
-                <div style={{ height: 2 }} />
+                <div style={{ height: 8 }} />
                 <p
                     ref={textRef}
                     className='task-text task-description user-select-none'
