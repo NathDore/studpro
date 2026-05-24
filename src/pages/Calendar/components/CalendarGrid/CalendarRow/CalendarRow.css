@@ -17,17 +17,19 @@
     left: -4px;
     font-size: 12px;
     font-weight: 500;
+    color: #4e5f69;
 }
 
 .hour-cell {
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
     cursor: default;
+    background-color: #FDFCF9;
 }
 
 .hour-cell:hover {
-    border: 1px solid rgb(37, 37, 37);
-    background-color: lightgray;
+    border: 1px solid #535557;
+    background-color: #deebf5;
 }
 
 body.is-resizing .hour-cell {

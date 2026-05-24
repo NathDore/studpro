@@ -18,6 +18,7 @@ body {
     font-size: 16px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    background-color: #F7F5F0;
 }
 
 a {
