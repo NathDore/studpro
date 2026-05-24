@@ -12,7 +12,6 @@ interface TimeSectionProps {
 export const TimeSection = ({ startTime, onStartTimeChange, endTime, onEndTimeChange }: TimeSectionProps) => {
     return (
         <div className='section-column'>
-            <p className='section-label'>Time</p>
             <div style={{ height: 5 }} />
             <div className='section-row'>
                 <div>

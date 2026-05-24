@@ -38,12 +38,17 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
 
     return (
         <div className="modal-overlay" onClick={onClose}>
+
             <div className="modal-content modal" onClick={(e) => e.stopPropagation()}>
-                <p className='modal-title'>{mode === 'create' ? 'New task' : 'Edit task'}</p>
-                <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
-                <DescriptionSection descriptionError={errors.description} description={description} onDescriptionChange={onDescriptionChange} />
-                <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
-                <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
+                <div className='modal-title-container'>
+                    <p className='modal-title'>{mode === 'create' ? 'New task' : 'Edit task'}</p>
+                </div>
+                <div className='modal-content-containter'>
+                    <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
+                    <DescriptionSection descriptionError={errors.description} description={description} onDescriptionChange={onDescriptionChange} />
+                    <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
+                    <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
+                </div>
                 <div className='section-button-container'>
                     <button className='section-label section-button' onClick={onClose}>Cancel</button>
                     <button className='section-label section-button' onClick={() => onSubmit(mode, task)}>Add task</button>
@@ -66,7 +71,12 @@ const DescriptionSection = ({ description, onDescriptionChange, descriptionError
     return (
         <div className='section-column'>
             <p className='section-label'>Description</p>
-            <input className={`section-input section-text ${descriptionError ? 'border-error' : ''}`} placeholder='e.g Sprint planning, Design meeting...' value={description} onChange={(e) => onDescriptionChange(e.target.value)} />
+            <textarea
+                className={`section-input section-text ${descriptionError ? 'border-error' : ''} description-input`}
+                placeholder='e.g Sprint planning, Design meeting...'
+                value={description}
+                onChange={(e) => onDescriptionChange(e.target.value)}
+            />
             {
                 descriptionError ? <div className='section-error' style={{ height: 25 }}>{descriptionError}</div> : <div style={{ height: 25 }} />
             }
