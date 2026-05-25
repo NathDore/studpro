@@ -34,6 +34,7 @@
 
 .task-name {
     font-weight: 600;
+    margin-bottom: 8px;
 }
 
 .task:hover {
