@@ -1,0 +1,14 @@
+.note-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.note-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    stroke-width: 1.1px;
+    color: #171c1f;
+    background-color: #c7c7c73a;
+}

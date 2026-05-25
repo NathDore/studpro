@@ -1,10 +1,9 @@
 import type { Task } from '../../../../../types/Task';
 import type { TaskPosition } from './utils/taskUtils';
-import { NotesIcon } from '../../../../../components/icons/NotesIcon';
 import { useTaskDisplay } from './hook/useTaskDisplay';
-import { useNoteTooltip } from './NoteTooltip/hook/useNoteTooltip';
-import { NoteTooltip } from './NoteTooltip/NoteTooltip';
 import './TaskCell.css';
+import { computeNoteLayout } from './Note/utils/noteUtils';
+import { NoteIconLayer } from './Note/NoteIconLayer/NoteIconLayer';
 
 interface TaskCellProps {
     position: TaskPosition;
@@ -23,8 +22,9 @@ export const TaskCell = ({
     onResizeTop,
     onResizeBottom,
 }: TaskCellProps) => {
-    const { textRef, maxLines, showIcon, displayInline } = useTaskDisplay(task, position);
-    const { iconRef, tooltipPos, handleMouseEnter, handleMouseLeave } = useNoteTooltip();
+    const { displayInline } = useTaskDisplay(task, position);
+
+    const layout = computeNoteLayout(task.notes, position.height);
 
     const handleClick = (e: React.MouseEvent) => {
         if (isResizing.current) return;
@@ -52,33 +52,18 @@ export const TaskCell = ({
                     {task.course.name}
                 </p>
 
-                {!showIcon && (
-                    <p
-                        ref={textRef}
-                        className="task-text task-description user-select-none"
-                        style={{ WebkitLineClamp: maxLines }}
-                    >
-                        {task.description}
-                    </p>
-                )}
+                {
+                    layout.expanded.length > 0 && layout.expanded.map((n) => <div className='note-expanded-text' key={n.id}>{n.text}</div>)
+                }
 
-                {showIcon && (
-                    <div
-                        ref={iconRef}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                        className={`notes-icon-wrapper ${displayInline ? 'notes-icon-wrapper-inline' : ''}`}
-                    >
-                        <NotesIcon className="notes-icon" />
-                        {tooltipPos && (
-                            <NoteTooltip
-                                description={task.description}
-                                top={tooltipPos.top}
-                                left={tooltipPos.left}
-                            />
-                        )}
-                    </div>
-                )}
+                {
+                    layout.collapsed.length > 0 && layout.expanded.length > 0 && <div className='line-separator' />
+                }
+
+                {
+                    layout.collapsed.length > 0 && <NoteIconLayer notes={layout.collapsed} />
+                }
+
             </div>
 
             <div

@@ -28,7 +28,7 @@ const maxDate = new Date(monday);
 maxDate.setDate(monday.getDate() + 6);
 
 export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClose, task }: useTaskFormProps) => {
-    const [description, setDescription] = useState<string>(task?.description ?? '');
+    const [description, setDescription] = useState<string>(task?.notes[0].text ?? '');
     const [course, setCourse] = useState<Course>(task?.course ?? courses[0]);
     const [date, setDate] = useState<Date>(calendarDay.fullDate);
     const [startTime, setStartTime] = useState<Time>(task?.start ? fromDate(task.start) : initialStartTime);
@@ -92,7 +92,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
             const newTask: Task = {
                 id: crypto.randomUUID(),
                 course,
-                description,
+                notes: [{ id: crypto.randomUUID(), text: description }, { id: crypto.randomUUID(), text: 'Another note to test' }],
                 start: startTimeDate,
                 end: endTimeDate
             }
@@ -104,7 +104,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
             const updatedTask: Task = {
                 id: task?.id,
                 course,
-                description,
+                notes: [{ id: task.notes[0].id, text: description }, { id: task.notes[1].id, text: 'Another note to test' }],
                 start: startTimeDate,
                 end: endTimeDate
             }
