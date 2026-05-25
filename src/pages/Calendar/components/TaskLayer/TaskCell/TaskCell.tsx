@@ -19,6 +19,7 @@ export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResize
 
     const durationMinutes = toMinutes(fromDate(task.end)) - toMinutes(fromDate(task.start));
     const showIcon = durationMinutes <= 60;
+    const displayInline = durationMinutes <= 50;
 
     useEffect(() => {
         const el = textRef.current;
@@ -49,7 +50,7 @@ export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResize
             <div onMouseDown={(e) => onResizeTop(e.nativeEvent, task, position)} className='resize-bar resize-bar-top'>
                 <div className='visual-resize-bar' />
             </div>
-            <div style={{ backgroundColor: task.course.color }} className='task'>
+            <div style={{ backgroundColor: task.course.color }} className={`task  ${displayInline ? 'task-inline' : ''}`}>
                 <p className='task-text task-name user-select-none'>{task.course.name}</p>
                 <div style={{ height: 8 }} />
                 <p
@@ -59,7 +60,7 @@ export const TaskCell = ({ position, task, onTaskCellClick, isResizing, onResize
                 >
                     {task.description}
                 </p>
-                {showIcon && <NotesIcon className='notes-icon' />}
+                {showIcon && <NotesIcon className={`notes-icon ${displayInline ? 'notes-icon-inline' : ''}`} />}
             </div>
             <div onMouseDown={(e) => onResizeBottom(e.nativeEvent, task, position)} className='resize-bar  resize-bar-bottom'>
                 <div className='visual-resize-bar' />

@@ -15,6 +15,13 @@
     position: relative;
 }
 
+.task-inline {
+    display: flex;
+    flex-direction: row;
+    background-color: aqua;
+    justify-content: space-between;
+}
+
 .task-text {
     cursor: pointer;
     font-weight: 400;
@@ -77,6 +84,12 @@
     position: absolute;
     left: 5px;
     background-color: #c7c7c73a;
+}
+
+.notes-icon-inline {
+    position: relative;
+    left: 0;
+    max-height: 20px;
 }
 
 .task-description {
