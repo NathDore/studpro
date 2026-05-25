@@ -18,8 +18,9 @@
 .task-inline {
     display: flex;
     flex-direction: row;
-    background-color: aqua;
     justify-content: space-between;
+    align-items: center;
+    padding: 0px 8px;
 }
 
 .task-text {
@@ -35,6 +36,10 @@
 .task-name {
     font-weight: 600;
     margin-bottom: 8px;
+}
+
+.task-name-inline {
+    margin-bottom: 0px;
 }
 
 .task:hover {
@@ -77,20 +82,24 @@
     width: 60%;
 }
 
+.notes-icon-wrapper {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    line-height: 0;
+}
+
+.notes-icon-wrapper-inline {
+    position: relative;
+    bottom: 0;
+}
+
 .notes-icon {
     width: 20px;
     cursor: pointer;
     stroke-width: 1.1px;
     color: #171c1f;
-    position: absolute;
-    left: 5px;
     background-color: #c7c7c73a;
-}
-
-.notes-icon-inline {
-    position: relative;
-    left: 0;
-    max-height: 20px;
 }
 
 .task-description {
