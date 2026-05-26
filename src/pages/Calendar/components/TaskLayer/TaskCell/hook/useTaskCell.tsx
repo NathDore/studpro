@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type { Task } from "../../../../../../types/Task";
 import { useTaskStore } from "../../../../../../store/taskStore";
 import { CELL_HEIGHT } from "../../../../constants";
@@ -22,6 +22,13 @@ export const useTaskCell = () => {
 
     const onMouseMoveRef = useRef<((e: MouseEvent) => void) | null>(null);
     const onMouseUpRef = useRef<(() => void) | null>(null);
+
+    const onMouseUpCallbacks = useRef<Set<() => void>>(new Set());
+
+    const registerOnMouseUp = useCallback((callback: () => void) => {
+        onMouseUpCallbacks.current.add(callback);
+        return () => { onMouseUpCallbacks.current.delete(callback); };
+    }, []);
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -152,6 +159,7 @@ export const useTaskCell = () => {
         document.body.classList.remove('is-resizing');
         isResizing.current = false;
         activeTask.current = null;
+        onMouseUpCallbacks.current.forEach(cb => cb());
     };
 
     onMouseMoveRef.current = onMouseMove;
@@ -167,5 +175,5 @@ export const useTaskCell = () => {
         return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
     };
 
-    return { getDarkerColor, onResizeTop, onResizeBottom, isResizing };
+    return { getDarkerColor, onResizeTop, onResizeBottom, isResizing, registerOnMouseUp };
 };

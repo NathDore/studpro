@@ -30,7 +30,7 @@
     overflow-wrap: break-word;
     overflow: hidden;
     line-height: 1.1;
-    color: #171c1f;
+    color: #d8d8d8;
 }
 
 .task-name {
@@ -80,18 +80,6 @@
 .resize-bar:hover .visual-resize-bar {
     opacity: 1;
     width: 60%;
-}
-
-.note-expanded-text {
-    font-size: 14px;
-    line-height: 1.1;
-    font-weight: 400;
-    color: #171c1f;
-    padding: 3px 6px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 7;
 }
 
 .line-separator {

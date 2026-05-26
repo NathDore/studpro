@@ -12,7 +12,7 @@ interface TaskLayerProps {
 
 export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
     const { setRef, cellWidth } = useCellWidth();
-    const { onResizeTop, onResizeBottom, isResizing } = useTaskCell();
+    const { onResizeTop, onResizeBottom, isResizing, registerOnMouseUp } = useTaskCell();
 
     if (tasks.length <= 0) return null;
 
@@ -30,6 +30,7 @@ export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
                         isResizing={isResizing}
                         onResizeTop={onResizeTop}
                         onResizeBottom={onResizeBottom}
+                        registerOnMouseUp={registerOnMouseUp}
                     />
                 })
             }

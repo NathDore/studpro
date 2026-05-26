@@ -2,8 +2,10 @@ import type { Task } from '../../../../../types/Task';
 import type { TaskPosition } from './utils/taskUtils';
 import { useTaskDisplay } from './hook/useTaskDisplay';
 import './TaskCell.css';
-import { computeNoteLayout } from './Note/utils/noteUtils';
 import { NoteIconLayer } from './Note/NoteIconLayer/NoteIconLayer';
+import { ExpandedNoteLayer } from './Note/ExpandedNoteLayer/ExpandedNoteLayer';
+import { useNoteLayout } from './Note/hook/useNoteLayout';
+import { useEffect } from 'react';
 
 interface TaskCellProps {
     position: TaskPosition;
@@ -12,6 +14,7 @@ interface TaskCellProps {
     isResizing: React.RefObject<boolean>;
     onResizeTop: (e: MouseEvent, task: Task, position: TaskPosition) => void;
     onResizeBottom: (e: MouseEvent, task: Task, position: TaskPosition) => void;
+    registerOnMouseUp: (callback: () => void) => () => void;
 }
 
 export const TaskCell = ({
@@ -21,15 +24,20 @@ export const TaskCell = ({
     isResizing,
     onResizeTop,
     onResizeBottom,
+    registerOnMouseUp
 }: TaskCellProps) => {
+    const { titleRef, noteRefs, layout, measured, refreshNoteLayout } = useNoteLayout({ task, position });
     const { displayInline } = useTaskDisplay(task, position);
-
-    const layout = computeNoteLayout(task.notes, position.height);
 
     const handleClick = (e: React.MouseEvent) => {
         if (isResizing.current) return;
         onTaskCellClick(task);
     };
+
+    useEffect(() => {
+        const unregister = registerOnMouseUp(refreshNoteLayout);
+        return unregister;
+    }, []);
 
     return (
         <div
@@ -48,12 +56,23 @@ export const TaskCell = ({
                 className={`task ${displayInline ? 'task-inline' : ''}`}
                 style={{ backgroundColor: task.course.color }}
             >
-                <p className={`task-text task-name user-select-none ${displayInline ? 'task-name-inline' : ''}`}>
+                <p ref={titleRef} className={`task-text task-name user-select-none ${displayInline ? 'task-name-inline' : ''}`}>
                     {task.course.name}
                 </p>
 
+                {!measured && task.notes.map((n) => (
+                    <div
+                        key={n.id}
+                        ref={(el) => { if (el) noteRefs.current.set(n.id, el); }}
+                        className="note-expanded-text"
+                        style={{ visibility: 'hidden', position: 'absolute' }}
+                    >
+                        {n.text}
+                    </div>
+                ))}
+
                 {
-                    layout.expanded.length > 0 && layout.expanded.map((n) => <div className='note-expanded-text' key={n.id}>{n.text}</div>)
+                    layout.expanded.length > 0 && <ExpandedNoteLayer noteRefs={noteRefs} notes={layout.expanded} />
                 }
 
                 {
