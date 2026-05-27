@@ -3,7 +3,7 @@ import type { Course } from "../../../../../types/Course";
 import { COURSE_DATA } from "../../../data/Task_data";
 import type { CalendarDay } from "../../../types/CalendarDay";
 import type { Time } from "../../../types/Time";
-import { getEndTime, getStartTime, toHours24, toMinutes, fromDate } from "../../../utils/timeUtils";
+import { getEndTime, getStartTime, toHours24, toMinutes, fromDate, getDuration } from "../../../utils/timeUtils";
 import { getMonday } from "../../../utils/dateUtils";
 import type { Task } from "../../../../../types/Task";
 import { useTaskStore } from "../../../../../store/taskStore";
@@ -97,6 +97,9 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
                 end: endTimeDate
             }
 
+            const durationMinutes = getDuration(newTask.start, newTask.end);
+            console.log(durationMinutes);
+
             addTask(newTask);
         } else {
             if (!task) return;
@@ -111,6 +114,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
 
             updateTask(updatedTask);
         }
+
 
         onClose();
     }

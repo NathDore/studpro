@@ -92,6 +92,20 @@ export const toHours24 = (time: Time): number => {
     return time.hour + 12;
 }
 
+export const getDuration = (start: Date, end: Date): number => {
+    const startTime = fromDate(start);
+    const endTime = fromDate(end);
+
+    let startMinutes = toMinutes(startTime);
+    let endMinutes = toMinutes(endTime);
+
+    if (endTime.period == 'AM' && endTime.hour === 12) {
+        endMinutes = 24 * 60;
+    }
+
+    return endMinutes - startMinutes;
+}
+
 export const fromDate = (date: Date): Time => {
     const hours24 = date.getHours();
     const minutes = date.getMinutes();

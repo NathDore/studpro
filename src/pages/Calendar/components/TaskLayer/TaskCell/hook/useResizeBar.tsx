@@ -138,7 +138,6 @@ export const useResizeBar = ({ calendarBounds }: UseResizeBarProps) => {
     }
 
     const clampToCalendarBounds = (direction: Direction, position: number) => {
-        console.log('position:', position, 'height:', calendarBounds.height);
         if (direction === 'top') {
             position = position <= 0 ? 0 : position;
         } else {
