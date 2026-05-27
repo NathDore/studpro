@@ -27,7 +27,7 @@ export const TaskCell = ({
     registerOnMouseUp
 }: TaskCellProps) => {
     const { titleRef, noteRefs, layout, measured, refreshNoteLayout } = useNoteLayout({ task, position });
-    const { displayInline } = useTaskFlexLayout(task, position);
+    const { displayInline, refreshFlexLayout } = useTaskFlexLayout(task);
 
     const handleClick = (e: React.MouseEvent) => {
         if (isResizing.current) return;
@@ -35,7 +35,10 @@ export const TaskCell = ({
     };
 
     useEffect(() => {
-        const unregister = registerOnMouseUp(refreshNoteLayout);
+        const unregister = () => {
+            registerOnMouseUp(refreshNoteLayout);
+            registerOnMouseUp(refreshFlexLayout);
+        }
         return unregister;
     }, []);
 
