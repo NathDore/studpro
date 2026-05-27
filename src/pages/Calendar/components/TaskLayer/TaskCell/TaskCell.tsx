@@ -35,11 +35,13 @@ export const TaskCell = ({
     };
 
     useEffect(() => {
-        const unregister = () => {
-            registerOnMouseUp(refreshNoteLayout);
-            registerOnMouseUp(refreshFlexLayout);
+        const unregisterNoteLayout = registerOnMouseUp(refreshNoteLayout);
+        const unregisterFlexLayout = registerOnMouseUp(refreshFlexLayout);
+
+        return () => {
+            unregisterNoteLayout();
+            unregisterFlexLayout();
         }
-        return unregister;
     }, []);
 
     return (

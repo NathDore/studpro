@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 40px repeat(7, 1fr);
     height: 60px;
+    overflow: hidden
 }
 
 .time-cell {
@@ -13,7 +14,7 @@
 
 .time-cell-text {
     position: relative;
-    bottom: -10px;
+    bottom: 8px;
     left: -4px;
     font-size: 12px;
     font-weight: 500;
@@ -23,6 +24,8 @@
 .hour-cell {
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
+    border-top: 1px solid transparent;
+    border-left: 1px solid transparent;
     cursor: default;
     background-color: #FDFCF9;
 }
