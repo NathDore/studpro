@@ -5,10 +5,15 @@ import { CELL_HEIGHT } from "../../../../constants";
 import { getTaskPosition, type TaskPosition } from "../utils/taskUtils";
 import { useCellWidth } from "../../hook/useCellWidth";
 import { TASK_GAP } from "../../constants";
+import type { CalendarBounds } from "../../../CalendarGrid/hook/useCalendarSize";
 
 type Direction = 'top' | 'bottom';
 
-export const useResizeBar = () => {
+interface UseResizeBarProps {
+    calendarBounds: CalendarBounds;
+}
+
+export const useResizeBar = ({ calendarBounds }: UseResizeBarProps) => {
     const isResizing = useRef(false);
     const direction = useRef<Direction>('top');
     const startY = useRef(0);
@@ -100,24 +105,60 @@ export const useResizeBar = () => {
         adjacentTask.current = getAdjacentTask('bottom', tasks, task);
     };
 
+    const clampToMinHeight = (direction: Direction, deltaY: number): number => {
+        const heightOf15min = CELL_HEIGHT / 4;
+
+        let position: number = direction === 'top' ? startTop.current + deltaY : startTop.current + startHeight.current + deltaY;
+
+        if (direction === 'top') {
+            const clampHeight = (startTop.current + startHeight.current) - heightOf15min;
+            if (position > clampHeight) position = clampHeight;
+        } else {
+            const clampHeight = (startTop.current + heightOf15min);
+            if (position < clampHeight) position = clampHeight;
+        }
+
+        return position;
+    }
+
+    const clampToAdjacentTask = (direction: Direction, position: number): number => {
+        if (!adjacentTask.current) return position;
+
+        const adjacentTaskPos = getTaskPosition(adjacentTask.current, cellWidth);
+
+        if (direction === 'top') {
+            const clampPos = (adjacentTaskPos.top + adjacentTaskPos.height) + TASK_GAP;
+            if (position < clampPos) position = clampPos;
+        } else {
+            const clampPos = adjacentTaskPos.top - TASK_GAP;
+            if (position > clampPos) position = clampPos;
+        }
+
+        return position;
+    }
+
+    const clampToCalendarBounds = (direction: Direction, position: number) => {
+        console.log('position:', position, 'height:', calendarBounds.height);
+        if (direction === 'top') {
+            position = position <= 0 ? 0 : position;
+        } else {
+            position = position >= calendarBounds.height ? calendarBounds.height : position;
+        }
+
+        return position;
+    }
+
     const onMouseMove = (e: MouseEvent) => {
         if (!isResizing.current || !activeTask.current) return;
 
         const deltaY = e.clientY - startY.current;
         const newStart = new Date(activeTask.current.start);
         const newEnd = new Date(activeTask.current.end);
-        const heightOf15min = CELL_HEIGHT / 4;
 
         if (direction.current === 'top') {
-            let newTop = startTop.current + deltaY;
-            const clampHeight = (startTop.current + startHeight.current) - heightOf15min;
-            if (newTop > clampHeight) newTop = clampHeight;
-
-            if (adjacentTask.current) {
-                const adjacentTaskPos = getTaskPosition(adjacentTask.current, cellWidth);
-                const clampPos = (adjacentTaskPos.top + adjacentTaskPos.height) + TASK_GAP;
-                if (newTop < clampPos) newTop = clampPos;
-            }
+            let newTop = clampToMinHeight('top', deltaY);
+            newTop = clampToAdjacentTask('top', newTop);
+            newTop = clampToCalendarBounds('top', newTop);
 
             const newHours = newTop / CELL_HEIGHT;
             newStart.setHours(Math.floor(newHours));
@@ -125,15 +166,9 @@ export const useResizeBar = () => {
         }
 
         if (direction.current === 'bottom') {
-            let newBottom = startTop.current + startHeight.current + deltaY;
-            const clampHeight = (startTop.current + heightOf15min);
-            if (newBottom < clampHeight) newBottom = clampHeight;
-
-            if (adjacentTask.current) {
-                const adjacentTaskPos = getTaskPosition(adjacentTask.current, cellWidth);
-                const clampPos = adjacentTaskPos.top - TASK_GAP;
-                if (newBottom > clampPos) newBottom = clampPos;
-            }
+            let newBottom = clampToMinHeight('bottom', deltaY);
+            newBottom = clampToAdjacentTask('bottom', newBottom);
+            newBottom = clampToCalendarBounds('bottom', newBottom);
 
             const newHours = newBottom / CELL_HEIGHT;
             newEnd.setHours(Math.floor(newHours));
