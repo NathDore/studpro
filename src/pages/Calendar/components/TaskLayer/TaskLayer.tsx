@@ -3,7 +3,7 @@ import { TaskCell } from './TaskCell/TaskCell';
 import { getTaskPosition, type TaskPosition } from './TaskCell/utils/taskUtils';
 import './TaskLayer.css';
 import { useCellWidth } from './hook/useCellWidth';
-import { useTaskCell } from './TaskCell/hook/useTaskCell';
+import { useResizeBar } from './TaskCell/hook/useResizeBar';
 
 interface TaskLayerProps {
     tasks: Task[];
@@ -12,7 +12,7 @@ interface TaskLayerProps {
 
 export const TaskLayer = ({ tasks, onTaskCellClick }: TaskLayerProps) => {
     const { setRef, cellWidth } = useCellWidth();
-    const { onResizeTop, onResizeBottom, isResizing, registerOnMouseUp } = useTaskCell();
+    const { onResizeTop, onResizeBottom, isResizing, registerOnMouseUp } = useResizeBar();
 
     if (tasks.length <= 0) return null;
 

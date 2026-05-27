@@ -1,6 +1,6 @@
 import type { Task } from '../../../../../types/Task';
 import type { TaskPosition } from './utils/taskUtils';
-import { useTaskDisplay } from './hook/useTaskDisplay';
+import { useTaskFlexLayout } from './hook/useTaskFlexLayout';
 import './TaskCell.css';
 import { NoteIconLayer } from './Note/NoteIconLayer/NoteIconLayer';
 import { ExpandedNoteLayer } from './Note/ExpandedNoteLayer/ExpandedNoteLayer';
@@ -27,7 +27,7 @@ export const TaskCell = ({
     registerOnMouseUp
 }: TaskCellProps) => {
     const { titleRef, noteRefs, layout, measured, refreshNoteLayout } = useNoteLayout({ task, position });
-    const { displayInline } = useTaskDisplay(task, position);
+    const { displayInline } = useTaskFlexLayout(task, position);
 
     const handleClick = (e: React.MouseEvent) => {
         if (isResizing.current) return;

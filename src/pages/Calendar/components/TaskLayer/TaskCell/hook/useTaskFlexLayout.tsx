@@ -3,7 +3,7 @@ import type { TaskPosition } from '../utils/taskUtils';
 import { fromDate, toMinutes } from '../../../../utils/timeUtils';
 import type { Task } from '../../../../../../types/Task';
 
-export function useTaskDisplay(task: Task, position: TaskPosition) {
+export function useTaskFlexLayout(task: Task, position: TaskPosition) {
     const textRef = useRef<HTMLParagraphElement>(null);
     const [maxLines, setMaxLines] = useState<number>(1);
 
