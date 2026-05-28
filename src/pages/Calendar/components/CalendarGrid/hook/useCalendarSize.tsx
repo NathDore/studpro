@@ -18,7 +18,7 @@ export const useCalendarSize = ({ calendarRef }: UseCalendarProps) => {
 
         const bounds = calendarRef.current.getBoundingClientRect();
         const { top, bottom } = bounds;
-        setCalendarBounds({ top, bottom, height: calendarRef.current.scrollHeight });
+        setCalendarBounds({ top, bottom, height: (calendarRef.current.scrollHeight - 1) });
     }
 
     useEffect(() => {
