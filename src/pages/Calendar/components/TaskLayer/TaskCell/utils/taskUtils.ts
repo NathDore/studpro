@@ -14,7 +14,11 @@ export const getTaskPosition = (task: Task, cellWidth: number): TaskPosition => 
     const left = TIME_CELL_WIDTH + dayIndex * cellWidth;
     const top = (task.start.getHours() + task.start.getMinutes() / 60) * CELL_HEIGHT;
 
-    const durationInHours = (task.end.getTime() - task.start.getTime()) / (1000 * 60 * 60);
+    const endTime = task.end.getHours() === 0
+        ? task.end.getTime() + 24 * 60 * 60 * 1000
+        : task.end.getTime();
+
+    const durationInHours = (endTime - task.start.getTime()) / (1000 * 60 * 60);
     const height = durationInHours * CELL_HEIGHT;
     const width = cellWidth;
 

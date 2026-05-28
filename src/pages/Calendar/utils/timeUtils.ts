@@ -15,62 +15,50 @@ export const getTimes = (): Time[] => {
     });
 }
 
-export const getStartTime = (endTime: Time): Time | null => {
-    if (!endTime?.hour) return null;
+export const getStartTime = (time: Time): Time => {
+    let period = time.period;
+    let hour = time.hour - 1;
 
-    let period = endTime.period;
-    let time = (endTime.hour - 1).toString();
-
-    if (endTime.hour === 1 && endTime.period === 'PM') {
-        return {
-            id: endTime.id,
-            hour: 12,
-            minutes: 0,
-            period: 'PM'
-        };
-    } else if (endTime.period === 'PM' && endTime.hour === 12) {
+    if (time.hour === 1 && period === 'PM') {
+        hour = 12;
+    } else if (time.hour === 12 && period === 'PM') {
         period = 'AM';
-    } else if (endTime.period === 'AM' && endTime.hour === 1) {
-        period = 'AM';
-        time = '12';
+    } else if (time.hour === 1 && period === 'AM') {
+        hour = 12;
+    } else if (time.hour === 12 && period === 'AM') {
+        period = 'PM';
     }
 
     return {
-        id: endTime.id,
-        hour: Number(time),
-        minutes: 0,
+        id: time.id,
+        hour,
+        minutes: time.minutes,
         period
     };
 }
 
-export const getEndTime = (startTime: Time): Time | null => {
-    if (!startTime?.hour) return null;
+export const getNextHour = (time: Time): Time => {
+    let period = time.period;
+    let hour = time.hour + 1;
 
-    let newHour = startTime.hour + 1;
-    let newPeriod = startTime.period;
-
-    if (startTime.hour === 11 && startTime.period === 'PM') {
-        return {
-            id: startTime.id,
-            hour: 12,
-            minutes: 0,
-            period: 'AM'
-        };
-    }
-    else if (startTime.hour === 11 && startTime.period === 'AM') {
-        newPeriod = 'PM';
-    } else if (startTime.hour === 12 && startTime.period === 'PM') {
-        newHour = 1;
-        newPeriod = 'AM';
-    } else if (startTime.hour === 12 && startTime.period === 'AM') {
-        newHour = 1;
+    if (time.hour === 11 && period === 'PM') {
+        hour = 12;
+        period = 'PM';
+    } else if (time.hour === 11 && period === 'AM') {
+        hour = 12;
+        period = 'PM';
+    } else if (time.hour === 12 && period === 'PM') {
+        hour = 1;
+        period = 'PM';
+    } else if (time.hour === 12 && period === 'AM') {
+        hour = 1;
     }
 
     return {
-        id: startTime.id,
-        hour: newHour,
-        minutes: 0,
-        period: newPeriod
+        id: time.id,
+        hour,
+        minutes: time.minutes,
+        period: period
     };
 }
 
@@ -99,7 +87,19 @@ export const getDuration = (start: Date, end: Date): number => {
     let startMinutes = toMinutes(startTime);
     let endMinutes = toMinutes(endTime);
 
-    if (endTime.period == 'AM' && endTime.hour === 12) {
+    if (endTime.period === 'AM' && endTime.hour === 12) {
+        endMinutes = 24 * 60;
+    }
+
+    return endMinutes - startMinutes;
+}
+
+export const getTaskDuration = (start: Date, end: Date): number => {
+    const startMinutes = toMinutes(fromDate(start));
+    let endMinutes = toMinutes(fromDate(end));
+
+
+    if (end.getHours() === 0) {
         endMinutes = 24 * 60;
     }
 

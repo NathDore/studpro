@@ -32,12 +32,7 @@ export const CalendarPage = ({ }: CalendarPageProps) => {
         const startTime = getStartTime(time);
         if (!startTime) return;
 
-        const endTime: Time = {
-            id: time.id,
-            hour: time.hour,
-            minutes: 0,
-            period: time.period
-        };
+        const endTime: Time = time
 
         setMode('create');
         setSelectedTask(undefined);

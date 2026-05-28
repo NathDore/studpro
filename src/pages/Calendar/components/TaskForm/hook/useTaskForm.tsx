@@ -3,7 +3,7 @@ import type { Course } from "../../../../../types/Course";
 import { COURSE_DATA } from "../../../data/Task_data";
 import type { CalendarDay } from "../../../types/CalendarDay";
 import type { Time } from "../../../types/Time";
-import { getEndTime, getStartTime, toHours24, toMinutes, fromDate, getDuration } from "../../../utils/timeUtils";
+import { getStartTime, toHours24, toMinutes, fromDate, getDuration, getNextHour } from "../../../utils/timeUtils";
 import { getMonday } from "../../../utils/dateUtils";
 import type { Task } from "../../../../../types/Task";
 import { useTaskStore } from "../../../../../store/taskStore";
@@ -55,18 +55,28 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
     const onStartTimeChange = (time: Time) => {
         setStartTime(time);
 
-        if (toMinutes(time) >= toMinutes(endTime)) {
-            const newEndTime = getEndTime(time);
-            if (newEndTime) setEndTime(newEndTime);
+        const tempStart = new Date();
+        tempStart.setHours(toHours24(time), time.minutes);
+
+        const tempEnd = new Date();
+        tempEnd.setHours(toHours24(endTime), endTime.minutes);
+
+        if (getDuration(tempStart, tempEnd) <= 0) {
+            setEndTime(getNextHour(time));
         }
     }
 
     const onEndTimeChange = (time: Time) => {
         setEndTime(time);
 
-        if (toMinutes(time) <= toMinutes(startTime)) {
-            const newStartTime = getStartTime(time);
-            if (newStartTime) setStartTime(newStartTime);
+        const tempStart = new Date();
+        tempStart.setHours(toHours24(startTime), startTime.minutes);
+
+        const tempEnd = new Date();
+        tempEnd.setHours(toHours24(time), time.minutes);
+
+        if (getDuration(tempStart, tempEnd) <= 0) {
+            setStartTime(getStartTime(time));
         }
     }
 
@@ -97,9 +107,6 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
                 end: endTimeDate
             }
 
-            const durationMinutes = getDuration(newTask.start, newTask.end);
-            console.log(durationMinutes);
-
             addTask(newTask);
         } else {
             if (!task) return;
@@ -114,7 +121,6 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
 
             updateTask(updatedTask);
         }
-
 
         onClose();
     }
