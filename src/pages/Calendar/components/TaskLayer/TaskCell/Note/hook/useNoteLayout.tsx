@@ -14,6 +14,7 @@ interface UseNoteLayoutProps {
 }
 
 const ICON_ROW_HEIGHT = 20;
+const ICON_ROW_BOTTOM_PADDING = 5;
 
 export const useNoteLayout = ({ task, position }: UseNoteLayoutProps) => {
     const titleRef = useRef<HTMLParagraphElement>(null);
@@ -55,7 +56,7 @@ export const useNoteLayout = ({ task, position }: UseNoteLayoutProps) => {
             ? parseFloat(getComputedStyle(containerEl).gap)
             : 0;
 
-        let remaining = stableHeight - titleHeight - taskPadding - ICON_ROW_HEIGHT;
+        let remaining = stableHeight - titleHeight - taskPadding - ICON_ROW_HEIGHT - ICON_ROW_BOTTOM_PADDING;
         const expanded: Note[] = [];
         const collapsed: Note[] = [];
 
