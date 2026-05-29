@@ -7,6 +7,7 @@
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    max-height: 82.1px;
     -webkit-line-clamp: 5;
     text-overflow: ellipsis;
     user-select: none;
