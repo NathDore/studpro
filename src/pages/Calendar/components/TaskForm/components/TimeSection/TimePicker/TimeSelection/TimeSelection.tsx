@@ -24,7 +24,7 @@ export const TimeSelection = ({ displaySelection, time, setTime, type }: TimeSel
         setTime({ id: time.id, hour: time.hour, minutes: time.minutes, period: period });
     }
 
-    const isDisabled = (h: number) => type === 'start' && h === 12 && time.period === 'AM';
+    const isDisabled = (h: number) => type === 'end' && h === 12 && time.period === 'AM';
 
     return (
         <div className={`time-selection-container ${!displaySelection ? 'time-selection-hidden' : ''}`}>
