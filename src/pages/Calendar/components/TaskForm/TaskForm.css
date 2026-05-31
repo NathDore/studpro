@@ -150,3 +150,12 @@
 .modal-content textarea:focus {
     outline: none;
 }
+
+/* button */
+.remove-button {
+    background-color: #C0392B;
+}
+
+.confirm-button {
+    background-color: #4A7C99;
+}

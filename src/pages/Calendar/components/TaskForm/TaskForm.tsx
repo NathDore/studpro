@@ -50,11 +50,15 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
                     <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
                 </div>
                 <div className='section-button-container'>
-                    <button className='section-label section-button' onClick={onClose}>Cancel</button>
-                    <button className='section-label section-button' onClick={() => onSubmit(mode, task)}>Add task</button>
+                    <button className='section-label section-button confirm-button' onClick={() => onSubmit(mode, task)}>
+                        {
+                            mode === 'update' ? "Modify" : "Add task"
+                        }
+                    </button>
                     {
-                        mode === 'update' && <button className='section-label section-button' onClick={() => { if (task) onRemove(task?.id) }}>Remove</button>
+                        mode === 'update' && <button className='section-label section-button remove-button' onClick={() => { if (task) onRemove(task?.id) }}>Remove</button>
                     }
+                    <button className='section-label section-button' onClick={onClose}>Cancel</button>
                 </div>
             </div>
         </div>
