@@ -6,6 +6,7 @@ import { CourseSection } from './components/CourseSection/CourseSection';
 import { DateSection } from './components/DateSection/DateSection';
 import { TimeSection } from './components/TimeSection/TimeSection';
 import './TaskForm.css';
+import { NoteSection } from './components/NoteSection/NoteSection';
 
 interface TaskFormProps {
     mode: 'create' | 'update',
@@ -45,7 +46,7 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
                 </div>
                 <div className='modal-content-containter'>
                     <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
-                    <DescriptionSection descriptionError={errors.description} description={description} onDescriptionChange={onDescriptionChange} />
+                    <NoteSection onConfirmNotes={() => { console.log('On confirm') }} />
                     <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
                     <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
                 </div>
