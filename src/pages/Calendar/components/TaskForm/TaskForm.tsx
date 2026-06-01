@@ -53,7 +53,7 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
                 </div>
                 <div className='modal-content-containter'>
                     <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
-                    <NoteSection ref={noteSectionRef} />
+                    <NoteSection ref={noteSectionRef} initialNotes={task?.notes} />
                     <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
                     <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
                 </div>

@@ -1,8 +1,12 @@
 import { useState } from "react";
 import type { Note } from "../../../../../../../types/Note";
 
-export const useNoteSection = () => {
-    const [notes, setNotes] = useState<Note[]>([]);
+interface useNoteSectionProps {
+    initialNotes?: Note[];
+}
+
+export const useNoteSection = ({ initialNotes }: useNoteSectionProps) => {
+    const [notes, setNotes] = useState<Note[]>(initialNotes ? initialNotes : []);
     const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null);
 
     const onAddNote = (content: string) => {

@@ -4,15 +4,17 @@ import './NoteSection.css';
 import type { Note } from '../../../../../../types/Note';
 import { TrashIcon } from '../../../../../../components/icons/TrashIcon';
 
-interface NoteSectionProps { }
+interface NoteSectionProps {
+    initialNotes?: Note[];
+}
 
 export interface NoteSectionHandle {
     confirm: () => Note[];
 }
 
 export const NoteSection = forwardRef<NoteSectionHandle, NoteSectionProps>(
-    ({ }, ref) => {
-        const { notes, selectedNoteId, onAddNote, onRemoveNote, onSelectNote, onModifyNote, onCancelEdit } = useNoteSection();
+    ({ initialNotes }, ref) => {
+        const { notes, selectedNoteId, onAddNote, onRemoveNote, onSelectNote, onModifyNote, onCancelEdit } = useNoteSection({ initialNotes });
 
         useImperativeHandle(ref, () => ({
             confirm: () => notes

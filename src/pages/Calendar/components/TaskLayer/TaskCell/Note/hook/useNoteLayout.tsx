@@ -34,8 +34,12 @@ export const useNoteLayout = ({ task, position }: UseNoteLayoutProps) => {
     };
 
     useEffect(() => {
+        const currentIds = new Set(task.notes.map(n => n.id));
+        for (const id of noteRefs.current.keys()) {
+            if (!currentIds.has(id)) noteRefs.current.delete(id);
+        }
         setMeasured(false);
-    }, [stableHeight]);
+    }, [stableHeight, task.notes]);
 
     useEffect(() => {
         if (!titleRef.current) return;
