@@ -7,6 +7,8 @@ import { DateSection } from './components/DateSection/DateSection';
 import { TimeSection } from './components/TimeSection/TimeSection';
 import './TaskForm.css';
 import { NoteSection } from './components/NoteSection/NoteSection';
+import type { NoteSectionHandle } from './components/NoteSection/NoteSection';
+import { useRef } from 'react';
 
 interface TaskFormProps {
     mode: 'create' | 'update',
@@ -19,8 +21,6 @@ interface TaskFormProps {
 
 export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEndTime, onClose }: TaskFormProps) => {
     const {
-        description,
-        onDescriptionChange,
         course,
         onCourseChange,
         courses,
@@ -37,6 +37,13 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
         onRemove
     } = useTaskForm({ calendarDay, initialStartTime, initialEndTime, onClose, task });
 
+    const noteSectionRef = useRef<NoteSectionHandle>(null);
+
+    const handleSubmit = () => {
+        const notes = noteSectionRef.current?.confirm() ?? [];
+        onSubmit(mode, task, notes);
+    };
+
     return (
         <div className="modal-overlay" onClick={onClose}>
 
@@ -46,12 +53,12 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
                 </div>
                 <div className='modal-content-containter'>
                     <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
-                    <NoteSection onConfirmNotes={() => { console.log('On confirm') }} />
+                    <NoteSection ref={noteSectionRef} />
                     <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
                     <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
                 </div>
                 <div className='section-button-container'>
-                    <button className='section-label section-button confirm-button' onClick={() => onSubmit(mode, task)}>
+                    <button className='section-label section-button confirm-button' onClick={handleSubmit} >
                         {
                             mode === 'update' ? "Modify" : "Add task"
                         }
@@ -62,29 +69,6 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
                     <button className='section-label section-button' onClick={onClose}>Cancel</button>
                 </div>
             </div>
-        </div>
-    );
-}
-
-interface DescriptionSectionProps {
-    description: string;
-    onDescriptionChange: (description: string) => void;
-    descriptionError?: string;
-}
-
-const DescriptionSection = ({ description, onDescriptionChange, descriptionError }: DescriptionSectionProps) => {
-    return (
-        <div className='section-column'>
-            <p className='section-label'>Description</p>
-            <textarea
-                className={`section-input section-text ${descriptionError ? 'border-error' : ''} description-input`}
-                placeholder='e.g Sprint planning, Design meeting...'
-                value={description}
-                onChange={(e) => onDescriptionChange(e.target.value)}
-            />
-            {
-                descriptionError ? <div className='section-error' style={{ height: 25 }}>{descriptionError}</div> : <div style={{ height: 25 }} />
-            }
-        </div>
+        </div >
     );
 }

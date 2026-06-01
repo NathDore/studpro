@@ -8,6 +8,7 @@ import { getMonday } from "../../../utils/dateUtils";
 import type { Task } from "../../../../../types/Task";
 import { useTaskStore } from "../../../../../store/taskStore";
 import { taskExist } from "../../../utils/taskValidation";
+import type { Note } from "../../../../../types/Note";
 
 const courses: Course[] = COURSE_DATA;
 
@@ -28,7 +29,6 @@ const maxDate = new Date(monday);
 maxDate.setDate(monday.getDate() + 6);
 
 export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClose, task }: useTaskFormProps) => {
-    const [description, setDescription] = useState<string>(task?.notes[0].text ?? '');
     const [course, setCourse] = useState<Course>(task?.course ?? courses[0]);
     const [date, setDate] = useState<Date>(calendarDay.fullDate);
     const [startTime, setStartTime] = useState<Time>(task?.start ? fromDate(task.start) : initialStartTime);
@@ -36,13 +36,6 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
     const [errors, setErrors] = useState<TaskFormError>({});
 
     const { addTask, updateTask, removeTask, tasks } = useTaskStore();
-
-    const onDescriptionChange = (description: string) => {
-        setDescription(description);
-        if (errors.description) {
-            setErrors(prev => ({ ...prev, description: undefined }));
-        }
-    }
 
     const onCourseChange = (course: Course) => {
         setCourse(course);
@@ -80,12 +73,8 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
         }
     }
 
-    const onSubmit = (mode: 'create' | 'update', task?: Task) => {
+    const onSubmit = (mode: 'create' | 'update', task?: Task, notes: Note[] = []) => {
         const currentErrors: TaskFormError = {};
-
-        if (!description.trim()) {
-            currentErrors.description = "A description is required.";
-        }
 
         if (Object.keys(currentErrors).length > 0) {
             setErrors(currentErrors);
@@ -102,15 +91,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
             const newTask: Task = {
                 id: crypto.randomUUID(),
                 course,
-                notes: [
-                    { id: crypto.randomUUID(), text: description },
-                    { id: crypto.randomUUID(), text: 'Review the lecture slides from week 6. Write a short summary (1-2 paragraphs) on the main differences between supervised and unsupervised learning. Make sure to include at least 2 examples for each.' },
-                    {
-                        id: crypto.randomUUID(), text: 'Complete exercises 3.1 to 3.5. Show all steps and calculations. Due before next Thursday class.'
-                    },
-                    { id: crypto.randomUUID(), text: 'Read chapter 4 and take notes on the key concepts.' },
-                    { id: crypto.randomUUID(), text: 'Fifth note to test.' },
-                ],
+                notes,
                 start: startTimeDate,
                 end: endTimeDate
             }
@@ -122,7 +103,7 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
             const updatedTask: Task = {
                 id: task?.id,
                 course,
-                notes: [{ id: task.notes[0].id, text: description }, { id: task.notes[1].id, text: 'Another note to test' }],
+                notes,
                 start: startTimeDate,
                 end: endTimeDate
             }
@@ -142,8 +123,6 @@ export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onC
     }
 
     return {
-        description,
-        onDescriptionChange,
         course,
         onCourseChange,
         courses,

@@ -27,6 +27,7 @@
     border: 1px solid #D3D1C7;
     border-radius: 6px;
     padding: 8px 10px;
+    cursor: pointer;
 }
 
 .note-item-text {
@@ -98,4 +99,31 @@
 
 .note-add-button:hover {
     border: 1px solid rgb(173, 173, 173);
+}
+
+.note-item-selected {
+    border: 1px solid #8FACBD;
+    background: #ddeaf1;
+}
+
+.note-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.note-modify-button {
+    flex-shrink: 0;
+    padding: 7px 12px;
+    border: 1px solid #8FACBD;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2C2C2A;
+}
+
+.note-modify-button:hover {
+    border: 1px solid #4A7C99;
 }
