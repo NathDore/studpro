@@ -1,7 +1,6 @@
-
 import { useRef } from 'react';
 import './DatePicker.css';
-import { CalendarIcon } from '../../../../../../../components/icons/CalendarIcon';
+import { CalendarIcon } from '../../../../../../../../components/icons/CalendarIcon';
 
 interface DatePickerProps {
     date: Date;

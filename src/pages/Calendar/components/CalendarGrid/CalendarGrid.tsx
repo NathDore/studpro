@@ -4,7 +4,7 @@ import type { Task } from '../../../../types/Task';
 import { TaskLayer } from '../TaskLayer/TaskLayer';
 import { useRef } from 'react';
 import { Scrollbar } from '../Scrollbar/Scrollbar';
-import { CalendarRow } from './CalendarRow/CalendarRow';
+import { CalendarRow } from './components/CalendarRow/CalendarRow';
 import { getTimes } from '../../utils/timeUtils';
 import type { Time } from '../../types/Time';
 import { useCalendarSize } from './hook/useCalendarSize';

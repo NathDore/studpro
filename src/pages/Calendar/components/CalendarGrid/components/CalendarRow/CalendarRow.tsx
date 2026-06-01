@@ -1,6 +1,6 @@
-import { useCalendarDay } from "../../../hook/useCalendarDay";
-import type { CalendarDay } from "../../../types/CalendarDay";
-import type { Time } from "../../../types/Time";
+import { useCalendarDay } from "../../../../hook/useCalendarDay";
+import type { CalendarDay } from "../../../../types/CalendarDay";
+import type { Time } from "../../../../types/Time";
 import './CalendarRow.css';
 
 interface CalendarRowProps {

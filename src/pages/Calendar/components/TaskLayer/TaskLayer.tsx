@@ -1,9 +1,9 @@
 import type { Task } from '../../../../types/Task'
-import { TaskCell } from './TaskCell/TaskCell';
-import { getTaskPosition, type TaskPosition } from './TaskCell/utils/taskUtils';
+import { TaskCell } from './components/TaskCell/TaskCell';
+import { getTaskPosition, type TaskPosition } from './components/TaskCell/utils/taskUtils';
 import './TaskLayer.css';
 import { useCellWidth } from './hook/useCellWidth';
-import { useResizeBar } from './TaskCell/hook/useResizeBar';
+import { useResizeBar } from './components/TaskCell/hook/useResizeBar';
 import type { CalendarBounds } from '../CalendarGrid/hook/useCalendarSize';
 
 interface TaskLayerProps {

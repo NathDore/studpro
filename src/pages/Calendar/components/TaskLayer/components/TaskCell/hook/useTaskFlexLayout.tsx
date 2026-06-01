@@ -1,5 +1,5 @@
-import { getTaskDuration } from '../../../../utils/timeUtils';
-import type { Task } from '../../../../../../types/Task';
+import { getTaskDuration } from '../../../../../utils/timeUtils';
+import type { Task } from '../../../../../../../types/Task';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export function useTaskFlexLayout(task: Task) {

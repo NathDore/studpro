@@ -1,5 +1,5 @@
 import './TimeSection.css';
-import { TimePicker } from "./TimePicker/TimePicker";
+import { TimePicker } from './components/TimePicker/TimePicker';
 import type { Time } from '../../../../types/Time';
 
 interface TimeSectionProps {

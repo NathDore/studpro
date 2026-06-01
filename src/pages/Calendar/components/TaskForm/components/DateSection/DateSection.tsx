@@ -1,5 +1,5 @@
 import './DateSection.css';
-import { DatePicker } from './DatePicker/DatePicker';
+import { DatePicker } from './components/DatePicker/DatePicker';
 
 interface DateSectionProps {
     date: Date;

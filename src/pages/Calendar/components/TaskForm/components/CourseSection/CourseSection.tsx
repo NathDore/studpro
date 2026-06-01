@@ -1,6 +1,6 @@
 import './CourseSection.css';
 import { PlusIcon } from '../../../../../../components/icons/PlusIcon';
-import { CourseDropDown } from './CourseDropDown/CourseDropDown';
+import { CourseDropDown } from './components/CourseDropDown/CourseDropDown';
 import type { Course } from '../../../../../../types/Course';
 
 interface CourseSectionProps {
