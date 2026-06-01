@@ -11,7 +11,6 @@ export function useTaskFlexLayout(task: Task) {
 
     useEffect(() => {
         const durationMinutes = getTaskDuration(task.start, task.end);
-        console.log(durationMinutes);
         setDisplayInline(durationMinutes <= DURATION_INLINE);
     }, [])
 

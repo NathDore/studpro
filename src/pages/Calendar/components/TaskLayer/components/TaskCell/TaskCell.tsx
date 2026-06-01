@@ -76,18 +76,21 @@ export const TaskCell = ({
                     </div>
                 ))}
 
-                {
-                    layout.expanded.length > 0 && <ExpandedNoteLayer noteRefs={noteRefs} notes={layout.expanded} />
-                }
+                {displayInline ? (
+                    layout.collapsed.length > 0 && (
+                        <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+                            <NoteIconLayer notes={layout.collapsed} />
+                        </div>
+                    )
+                ) : (
+                    <>
+                        {layout.expanded.length > 0 && <ExpandedNoteLayer noteRefs={noteRefs} notes={layout.expanded} />}
 
-                {
-                    layout.collapsed.length > 0 && layout.expanded.length > 0 && <div className='line-separator' />
-                }
+                        {layout.collapsed.length > 0 && layout.expanded.length > 0 && <div className='line-separator' />}
 
-                {
-                    layout.collapsed.length > 0 && <NoteIconLayer notes={layout.collapsed} />
-                }
-
+                        {layout.collapsed.length > 0 && <NoteIconLayer notes={layout.collapsed} />}
+                    </>
+                )}
             </div>
 
             <div

@@ -1,8 +1,8 @@
-import type { Note } from "../../../../../../../types/Note";
+import type { Note } from "../../../../../../../../types/Note";
 import { NoteIconShip } from "../NoteIconShip/NoteIconShip";
 import './NoteIconLayer.css';
 
-const MAX_VISIBLE_ICONS = 3;
+const MAX_VISIBLE_ICONS = 1;
 
 interface NoteIconLayerProps {
     notes: Note[];
