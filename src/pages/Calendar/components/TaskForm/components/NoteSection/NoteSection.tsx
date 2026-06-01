@@ -2,6 +2,7 @@ import { useRef, forwardRef, useImperativeHandle } from 'react';
 import { useNoteSection } from './hook/useNoteSection'
 import './NoteSection.css';
 import type { Note } from '../../../../../../types/Note';
+import { TrashIcon } from '../../../../../../components/icons/TrashIcon';
 
 interface NoteSectionProps { }
 
@@ -58,7 +59,7 @@ export const NoteSection = forwardRef<NoteSectionHandle, NoteSectionProps>(
                                 onClick={(e) => { e.stopPropagation(); onRemoveNote(n.id); }}
                                 className='note-item-remove'
                             >
-                                Delete
+                                <TrashIcon className='note-item-remove-icon' />
                             </button>
                         </div>
                     )}
