@@ -2,6 +2,8 @@ import { getTaskDuration } from '../../../../../utils/timeUtils';
 import type { Task } from '../../../../../../../types/Task';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+const DURATION_INLINE = 60;
+
 export function useTaskFlexLayout(task: Task) {
     const [displayInline, setDisplayInline] = useState(false);
 
@@ -9,12 +11,13 @@ export function useTaskFlexLayout(task: Task) {
 
     useEffect(() => {
         const durationMinutes = getTaskDuration(task.start, task.end);
-        setDisplayInline(durationMinutes <= 50);
+        console.log(durationMinutes);
+        setDisplayInline(durationMinutes <= DURATION_INLINE);
     }, [])
 
     refreshFlexLayoutRef.current = () => {
         const durationMinutes = getTaskDuration(task.start, task.end);
-        setDisplayInline(durationMinutes <= 50);
+        setDisplayInline(durationMinutes <= DURATION_INLINE);
     }
 
     const refreshFlexLayout = useCallback(() => refreshFlexLayoutRef.current(), []);
