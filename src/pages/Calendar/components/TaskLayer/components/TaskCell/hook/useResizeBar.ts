@@ -3,7 +3,6 @@ import type { Task } from "../../../../../../../types/Task";
 import { useTaskStore } from "../../../../../../../store/taskStore";
 import { CELL_HEIGHT } from "../../../../../../../constants";
 import { getTaskPosition, type TaskPosition } from "../utils/taskUtils";
-import { useCellWidth } from "../../../hook/useCellWidth";
 import { TASK_GAP } from "../../../constants";
 import type { CalendarBounds } from "../../../../CalendarGrid/hook/useCalendarSize";
 
@@ -11,9 +10,10 @@ type Direction = 'top' | 'bottom';
 
 interface UseResizeBarProps {
     calendarBounds: CalendarBounds;
+    cellWidth: number;
 }
 
-export const useResizeBar = ({ calendarBounds }: UseResizeBarProps) => {
+export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) => {
     const isResizing = useRef(false);
     const direction = useRef<Direction>('top');
     const startY = useRef(0);
@@ -23,7 +23,6 @@ export const useResizeBar = ({ calendarBounds }: UseResizeBarProps) => {
     const adjacentTask = useRef<Task | null>(null);
 
     const { updateTask, tasks } = useTaskStore();
-    const { cellWidth } = useCellWidth();
 
     const onMouseMoveRef = useRef<((e: MouseEvent) => void) | null>(null);
     const onMouseUpRef = useRef<(() => void) | null>(null);

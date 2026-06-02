@@ -1,4 +1,3 @@
-import './CalendarGrid.css';
 import type { CalendarDay } from '../../../../types/CalendarDay';
 import type { Task } from '../../../../types/Task';
 import type { Time } from '../../../../types/Time';
@@ -8,27 +7,27 @@ import { Scrollbar } from '../Scrollbar/Scrollbar';
 import { CalendarRow } from './components/CalendarRow/CalendarRow';
 import { getTimes } from '../../utils/timeUtils';
 import { useCalendarSize } from './hook/useCalendarSize';
+import './CalendarGrid.css';
 
 interface CalendarGridProps {
+    days: CalendarDay[];
     onHourCellClick: (calendar: CalendarDay, time: Time) => void;
     onTaskCellClick: (task: Task) => void;
     tasks: Task[];
 }
 
-export const CalendarGrid = ({ onHourCellClick, tasks, onTaskCellClick }: CalendarGridProps) => {
+export const CalendarGrid = ({ days, onHourCellClick, tasks, onTaskCellClick }: CalendarGridProps) => {
     const times = getTimes();
     const calendarRef = useRef<HTMLDivElement>(null);
     const { calendarBounds } = useCalendarSize({ calendarRef });
 
     return (
         <div className='calendar' ref={calendarRef}>
-            {
-                times?.map(time => <CalendarRow onHourCellClick={onHourCellClick} key={time.id} time={time} />)
-            }
-
+            {times.map(time => (
+                <CalendarRow days={days} onHourCellClick={onHourCellClick} key={time.id} time={time} />
+            ))}
             <TaskLayer tasks={tasks} onTaskCellClick={onTaskCellClick} calendarBounds={calendarBounds} />
             <Scrollbar calendarRef={calendarRef} />
         </div>
-    )
-}
-
+    );
+};

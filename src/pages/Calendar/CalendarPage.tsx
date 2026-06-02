@@ -18,7 +18,7 @@ export const CalendarPage = () => {
     return (
         <div className="flex-1 flex flex-col overflow-hidden pb-2 pt-8 px-20 md:pt-6 md:px-4 sm:pt-4 sm:px-1">
             <CalendarHeader days={days} />
-            <CalendarGrid onHourCellClick={onHourCellClick} tasks={tasks} onTaskCellClick={onTaskCellClick} />
+            <CalendarGrid days={days} onHourCellClick={onHourCellClick} tasks={tasks} onTaskCellClick={onTaskCellClick} />
             {displayForm && (
                 <TaskForm
                     mode={mode}

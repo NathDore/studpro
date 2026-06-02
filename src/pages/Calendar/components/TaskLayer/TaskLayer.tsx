@@ -14,7 +14,7 @@ interface TaskLayerProps {
 
 export const TaskLayer = ({ tasks, onTaskCellClick, calendarBounds }: TaskLayerProps) => {
     const { setRef, cellWidth } = useCellWidth();
-    const { onResizeTop, onResizeBottom, isResizing, registerOnMouseUp } = useResizeBar({ calendarBounds });
+    const { onResizeTop, onResizeBottom, isResizing, registerOnMouseUp } = useResizeBar({ calendarBounds, cellWidth });
 
     if (tasks.length <= 0) return null;
 
