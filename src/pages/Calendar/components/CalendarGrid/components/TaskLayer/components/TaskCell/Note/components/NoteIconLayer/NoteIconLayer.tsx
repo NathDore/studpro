@@ -1,6 +1,5 @@
-import type { Note } from "../../../../../../../../types/Note";
-import { NoteIconShip } from "../NoteIconShip/NoteIconShip";
-import './NoteIconLayer.css';
+import type { Note } from "../../../../../../../../../../../types/Note";
+import { NoteIconShip } from "./components/NoteIconShip";
 
 const MAX_VISIBLE_ICONS = 1;
 
@@ -13,11 +12,13 @@ export const NoteIconLayer = ({ notes }: NoteIconLayerProps) => {
     const hiddenCount = notes.length - visibleNotes.length;
 
     return (
-        <div className='note-container'>
+        <div className='flex flex-row gap-[2px] text-[#d8d8d8]'>
             {visibleNotes.map((n) => <NoteIconShip key={n.id} note={n} />)}
             {hiddenCount > 0 && (
-                <span className='note-overflow-badge'>+{hiddenCount}</span>
+                <span className='text-[10px] font-semibold text-inherit opacity-80 self-center px-[2px] whitespace-nowrap'>
+                    +{hiddenCount}
+                </span>
             )}
         </div>
-    )
-}
+    );
+};

@@ -1,5 +1,4 @@
-import './DateSection.css';
-import { DatePicker } from './components/DatePicker/DatePicker';
+import { DatePicker } from './components/DatePicker';
 
 interface DateSectionProps {
     date: Date;
@@ -10,9 +9,9 @@ interface DateSectionProps {
 
 export const DateSection = ({ date, onDateChange, minDate, maxDate }: DateSectionProps) => {
     return (
-        <div className='section-column'>
-            <p className='section-label'>Date</p>
+        <div className='flex flex-col gap-[1px]'>
+            <p className='text-[14px] font-medium text-[#2C2C2A] select-none cursor-default'>Date</p>
             <DatePicker date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
         </div>
     );
-}
+};

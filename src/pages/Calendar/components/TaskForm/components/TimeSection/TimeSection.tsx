@@ -1,4 +1,3 @@
-import './TimeSection.css';
 import { TimePicker } from './components/TimePicker/TimePicker';
 import type { Time } from '../../../../../../types/Time';
 
@@ -11,19 +10,18 @@ interface TimeSectionProps {
 
 export const TimeSection = ({ startTime, onStartTimeChange, endTime, onEndTimeChange }: TimeSectionProps) => {
     return (
-        <div className='section-column'>
-            <div style={{ height: 5 }} />
-            <div className='section-row'>
+        <div className='flex flex-col gap-[1px]'>
+            <div className='h-[5px]' />
+            <div className='flex flex-row gap-4'>
                 <div>
-                    <p className='section-label'>Start</p>
+                    <p className='text-[14px] font-medium text-[#2C2C2A] select-none cursor-default'>Start</p>
                     <TimePicker time={startTime} setTime={onStartTimeChange} type='start' />
                 </div>
                 <div>
-                    <p className='section-label'>End</p>
+                    <p className='text-[14px] font-medium text-[#2C2C2A] select-none cursor-default'>End</p>
                     <TimePicker time={endTime} setTime={onEndTimeChange} type='end' />
                 </div>
             </div>
         </div>
     );
-}
-
+};

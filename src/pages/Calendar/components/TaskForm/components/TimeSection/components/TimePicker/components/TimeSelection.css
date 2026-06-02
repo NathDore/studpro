@@ -1,0 +1,26 @@
+/* TimeSelection.css — garde uniquement ce qui est impossible en Tailwind */
+.hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.user-selection:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: lightgray;
+}
+
+.selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: rgb(153, 200, 254);
+    outline: 1px solid lightgray;
+}

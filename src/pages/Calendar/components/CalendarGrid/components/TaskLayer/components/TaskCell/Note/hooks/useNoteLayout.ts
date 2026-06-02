@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Note } from "../../../../../../../../types/Note";
-import type { TaskPosition } from "../../utils/taskUtils";
-import type { Task } from "../../../../../../../../types/Task";
+import type { Note } from "../../../../../../../../../../types/Note";
+import type { TaskPosition } from "../../TaskCell.types";
+import type { Task } from "../../../../../../../../../../types/Task";
+import { ICON_ROW_BOTTOM_PADDING, ICON_ROW_HEIGHT } from "../../../../../../../../../../constants";
 
 export interface NoteLayout {
     expanded: Note[];
@@ -12,9 +13,6 @@ interface UseNoteLayoutProps {
     task: Task;
     position: TaskPosition
 }
-
-const ICON_ROW_HEIGHT = 20;
-const ICON_ROW_BOTTOM_PADDING = 5;
 
 export const useNoteLayout = ({ task, position }: UseNoteLayoutProps) => {
     const titleRef = useRef<HTMLParagraphElement>(null);

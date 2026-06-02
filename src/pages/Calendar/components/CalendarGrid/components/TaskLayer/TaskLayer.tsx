@@ -1,9 +1,9 @@
 import type { Task } from '../../../../../../types/Task';
 import { TaskCell } from './components/TaskCell/TaskCell';
-import { getTaskPosition, type TaskPosition } from './components/TaskCell/utils/taskUtils';
-import './TaskLayer.css';
-import { useCellWidth } from './hook/useCellWidth';
-import { useResizeBar } from './components/TaskCell/hook/useResizeBar';
+import { getTaskPosition } from './components/TaskCell/utils/taskPositionUtils';
+import type { TaskPosition } from './components/TaskCell/TaskCell.types';
+import { useCellWidth } from './hooks/useCellWidth';
+import { useResizeBar } from './components/TaskCell/hooks/useResizeBar';
 import type { CalendarBounds } from '../../hooks/useCalendarSize';
 
 interface TaskLayerProps {
@@ -19,12 +19,12 @@ export const TaskLayer = ({ tasks, onTaskCellClick, calendarBounds }: TaskLayerP
     if (tasks.length <= 0) return null;
 
     return (
-        <div ref={setRef} className='task-layer'>
-            {
-                tasks.map(task => {
-                    const position: TaskPosition = getTaskPosition(task, cellWidth);
+        <div ref={setRef} className='absolute top-0 left-0 w-full h-[calc(24*30px)] pointer-events-none'>
+            {tasks.map(task => {
+                const position: TaskPosition = getTaskPosition(task, cellWidth);
 
-                    return <TaskCell
+                return (
+                    <TaskCell
                         key={task.id}
                         task={task}
                         position={position}
@@ -34,8 +34,8 @@ export const TaskLayer = ({ tasks, onTaskCellClick, calendarBounds }: TaskLayerP
                         onResizeBottom={onResizeBottom}
                         registerOnMouseUp={registerOnMouseUp}
                     />
-                })
-            }
+                );
+            })}
         </div>
-    )
-}
+    );
+};

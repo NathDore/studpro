@@ -1,7 +1,6 @@
 import { useState, type MouseEventHandler } from "react";
 import { ClockIcon } from "../../../../../../../../components/icons/ClockIcon";
-import './TimePicker.css';
-import { TimeSelection } from "./components/TimeSelection/TimeSelection";
+import { TimeSelection } from "./components/TimeSelection";
 import type { Time } from "../../../../../../../../types/Time";
 
 interface TimePickerProps {
@@ -16,26 +15,30 @@ export const TimePicker = ({ time, setTime, type }: TimePickerProps) => {
     const handleOnClick: MouseEventHandler<HTMLDivElement> = (e) => {
         e.preventDefault();
         setDisplaySelection(prev => !prev);
-    }
+    };
 
     return (
-        <div onClick={handleOnClick} className='section-input section-row time-picker-container pointer-cursor'>
-            <div className='flex-row'>
-                <div className='default-cursor section-text time-picker-commun time-picker pointer-cursor user-selection-none'>
+        <div
+            onClick={handleOnClick}
+            className='relative flex flex-row items-center justify-between flex-1 p-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400'
+        >
+            <div className='flex flex-row items-center'>
+                <span className='text-[14px] h-5 flex items-center text-[rgb(40,40,40)] font-medium w-[2ch] select-none cursor-default'>
                     {String(time.hour).padStart(2, '0')}
-                </div>
-                <span className='default-cursor section-text time-picker-commun pointer-cursor user-selection-none'>:</span>
-                <div className='default-cursor section-text time-picker-commun time-picker pointer-cursor user-selection-none'>
+                </span>
+                <span className='text-[14px] h-5 flex items-center text-[rgb(40,40,40)] font-medium select-none cursor-default'>:</span>
+                <span className='text-[14px] h-5 flex items-center text-[rgb(40,40,40)] font-medium w-[2ch] select-none cursor-default'>
                     {String(time.minutes).padStart(2, '0')}
-                </div>
-                <div style={{ width: 2 }} />
-                <span className='default-cursor section-text time-picker-commun pointer-cursor user-selection-none'>{time.period}</span>
+                </span>
+                <div className='w-[2px]' />
+                <span className='text-[14px] h-5 flex items-center text-[rgb(40,40,40)] font-medium select-none cursor-default'>
+                    {time.period}
+                </span>
             </div>
 
-            <ClockIcon className='section-icon section-text time-picker-commun pointer-cursor' />
+            <ClockIcon className='w-5 stroke-[1.1px] text-[#2C2C2A] cursor-pointer' />
 
             <TimeSelection displaySelection={displaySelection} time={time} setTime={setTime} type={type} />
         </div>
-    )
-}
-
+    );
+};

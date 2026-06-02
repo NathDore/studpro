@@ -1,12 +1,6 @@
 import type { Task } from "../../../../../../../../../types/Task";
+import type { TaskPosition } from "../TaskCell.types";
 import { TIME_CELL_WIDTH, CELL_HEIGHT } from "../../../../../../../../../constants";
-
-export interface TaskPosition {
-    left: number;
-    top: number;
-    height: number;
-    width: number;
-}
 
 export const getTaskPosition = (task: Task, cellWidth: number): TaskPosition => {
     const dayIndex = task.start.getDay() === 0 ? 6 : task.start.getDay() - 1;
