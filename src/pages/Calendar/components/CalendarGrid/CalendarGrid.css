@@ -1,33 +1,7 @@
 .calendar {
-    position: relative;
-    flex: 1;
-    overflow-y: auto;
     scrollbar-width: none;
-    line-height: 0
 }
 
 .calendar::-webkit-scrollbar {
     display: none;
 }
-
-@keyframes flash {
-    0% {
-        background-color: transparent;
-    }
-
-    30% {
-        background-color: lightgray;
-    }
-
-    100% {
-        background-color: transparent;
-    }
-}
-
-.hour-cell:active {
-    animation: flash 1.2s ease-out;
-}
-
-@media (max-width: 768px) {}
-
-@media (max-width: 480px) {}

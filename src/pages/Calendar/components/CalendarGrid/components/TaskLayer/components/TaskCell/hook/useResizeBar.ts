@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef } from "react";
-import type { Task } from "../../../../../../../types/Task";
-import { useTaskStore } from "../../../../../../../store/taskStore";
-import { CELL_HEIGHT } from "../../../../../../../constants";
+import type { Task } from "../../../../../../../../../types/Task";
+import { useTaskStore } from "../../../../../../../../../store/taskStore";
+import { CELL_HEIGHT } from "../../../../../../../../../constants";
 import { getTaskPosition, type TaskPosition } from "../utils/taskUtils";
 import { TASK_GAP } from "../../../constants";
-import type { CalendarBounds } from "../../../../CalendarGrid/hook/useCalendarSize";
+import type { CalendarBounds } from "../../../../../hooks/useCalendarSize";
 
 type Direction = 'top' | 'bottom';
 

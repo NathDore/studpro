@@ -1,10 +1,10 @@
-import type { Task } from '../../../../types/Task'
+import type { Task } from '../../../../../../types/Task';
 import { TaskCell } from './components/TaskCell/TaskCell';
 import { getTaskPosition, type TaskPosition } from './components/TaskCell/utils/taskUtils';
 import './TaskLayer.css';
 import { useCellWidth } from './hook/useCellWidth';
 import { useResizeBar } from './components/TaskCell/hook/useResizeBar';
-import type { CalendarBounds } from '../CalendarGrid/hook/useCalendarSize';
+import type { CalendarBounds } from '../../hooks/useCalendarSize';
 
 interface TaskLayerProps {
     tasks: Task[];

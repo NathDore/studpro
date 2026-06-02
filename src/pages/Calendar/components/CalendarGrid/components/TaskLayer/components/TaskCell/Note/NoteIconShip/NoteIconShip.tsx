@@ -1,5 +1,5 @@
-import { NotesIcon } from "../../../../../../../../components/icons/NotesIcon";
-import type { Note } from "../../../../../../../../types/Note";
+import { NotesIcon } from "../../../../../../../../../../components/icons/NotesIcon";
+import type { Note } from "../../../../../../../../../../types/Note";
 import { useNoteTooltip } from "../NoteTooltip/hook/useNoteTooltip";
 import { NoteTooltip } from "../NoteTooltip/NoteTooltip";
 import './NoteIconShip.css';

@@ -1,33 +1,8 @@
-.row {
-    display: grid;
-    grid-template-columns: 40px repeat(7, 1fr);
-    height: 30px;
-    overflow: hidden
-}
-
-.time-cell {
-    display: flex;
-    justify-content: end;
-    align-items: end;
-    border-right: 1px solid lightgray;
-}
-
-.time-cell-text {
-    position: relative;
-    bottom: 8px;
-    left: -4px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #4e5f69;
-}
-
 .hour-cell {
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
     border-top: 1px solid transparent;
     border-left: 1px solid transparent;
-    cursor: default;
-    background-color: #FDFCF9;
 }
 
 .hour-cell:hover {
@@ -37,4 +12,22 @@
 
 body.is-resizing .hour-cell {
     pointer-events: none;
+}
+
+@keyframes flash {
+    0% {
+        background-color: transparent;
+    }
+
+    30% {
+        background-color: lightgray;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.hour-cell:active {
+    animation: flash 1.2s ease-out;
 }
