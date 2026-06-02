@@ -5,7 +5,7 @@ import { NavBar } from "../components/NavBar/NavBar";
 
 function Root() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <div className="flex flex-col h-full min-h-screen">
             <NavBar />
             <Outlet />
         </div>
