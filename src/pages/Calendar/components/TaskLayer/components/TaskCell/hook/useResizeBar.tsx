@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import type { Task } from "../../../../../../../types/Task";
 import { useTaskStore } from "../../../../../../../store/taskStore";
-import { CELL_HEIGHT } from "../../../../../constants";
+import { CELL_HEIGHT } from "../../../../../../../constants";
 import { getTaskPosition, type TaskPosition } from "../utils/taskUtils";
 import { useCellWidth } from "../../../hook/useCellWidth";
 import { TASK_GAP } from "../../../constants";

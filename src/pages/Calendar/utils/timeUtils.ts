@@ -1,4 +1,4 @@
-import type { Time } from '../types/Time';
+import type { Time } from '../../../types/Time';
 
 export const getTimes = (): Time[] => {
     return Array.from({ length: 24 }, (_, i) => {

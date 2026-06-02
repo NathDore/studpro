@@ -1,61 +1,34 @@
-import './CalendarPage.css';
+import { useCalendarPage } from './hooks/useCalendarPage';
 import { CalendarHeader } from './components/CalendarHeader/CalendarHeader';
 import { CalendarGrid } from './components/CalendarGrid/CalendarGrid';
-import type { CalendarDay } from './types/CalendarDay';
-import type { Time } from './types/Time';
-import type { Task } from '../../types/Task';
-import { useCalendarDay } from './hook/useCalendarDay';
-import { useState } from 'react';
 import { TaskForm } from './components/TaskForm/TaskForm';
-import { fromDate, getStartTime } from './utils/timeUtils';
-import { useTaskStore } from '../../store/taskStore';
 
-interface CalendarPageProps { }
-
-interface SelectedSlot {
-    calendarDay: CalendarDay;
-    time: Time;
-    endTime: Time;
-}
-
-export const CalendarPage = ({ }: CalendarPageProps) => {
-    const { convertDateToCalendarDay } = useCalendarDay();
-    const { tasks } = useTaskStore();
-
-    const [displayForm, setDisplayForm] = useState<SelectedSlot | null>(null);
-    const [mode, setMode] = useState<'create' | 'update'>('create');
-    const [selectedTask, setSelectedTask] = useState<Task | undefined>();
-
-    const onHourCellClick = (calendarDay: CalendarDay, time: Time) => {
-        if (!time?.hour || !calendarDay.fullDate) return;
-
-        const startTime = getStartTime(time);
-        if (!startTime) return;
-
-        const endTime: Time = time
-
-        setMode('create');
-        setSelectedTask(undefined);
-        setDisplayForm({ calendarDay, time: startTime, endTime });
-    }
-
-    const onTaskCellClick = (task: Task) => {
-        const calendarDay: CalendarDay = convertDateToCalendarDay(task.start);
-        const startTime: Time = fromDate(task.start);
-        const endTime: Time = fromDate(task.end);
-
-        setMode('update');
-        setSelectedTask(task);
-        setDisplayForm({ calendarDay, time: startTime, endTime });
-    }
+export const CalendarPage = () => {
+    const {
+        days,
+        tasks,
+        displayForm,
+        mode,
+        selectedTask,
+        onHourCellClick,
+        onTaskCellClick,
+        closeForm,
+    } = useCalendarPage();
 
     return (
-        <div className='page-container'>
-            <CalendarHeader />
+        <div className="flex-1 flex flex-col overflow-hidden pb-2 pt-8 px-20 md:pt-6 md:px-4 sm:pt-4 sm:px-1">
+            <CalendarHeader days={days} />
             <CalendarGrid onHourCellClick={onHourCellClick} tasks={tasks} onTaskCellClick={onTaskCellClick} />
-            {
-                displayForm && <TaskForm mode={mode} task={selectedTask} calendarDay={displayForm.calendarDay} initialStartTime={displayForm.time} initialEndTime={displayForm.endTime} onClose={() => setDisplayForm(null)} />
-            }
+            {displayForm && (
+                <TaskForm
+                    mode={mode}
+                    task={selectedTask}
+                    calendarDay={displayForm.calendarDay}
+                    initialStartTime={displayForm.time}
+                    initialEndTime={displayForm.endTime}
+                    onClose={closeForm}
+                />
+            )}
         </div>
-    )
-}
+    );
+};

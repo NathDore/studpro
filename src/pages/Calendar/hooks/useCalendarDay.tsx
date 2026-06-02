@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import type { CalendarDay } from "../types/CalendarDay"
-import { getMonday } from "../utils/dateUtils";
+import type { CalendarDay } from "../../../types/CalendarDay";
+import { getMonday } from "../../../utils/dateUtils";
 
 const DAY_NAMES: CalendarDay['day'][] = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 

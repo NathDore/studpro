@@ -1,7 +1,7 @@
 import type { Task } from '../../../../types/Task';
 import { useTaskForm } from './hook/useTaskForm';
-import type { CalendarDay } from '../../types/CalendarDay';
-import type { Time } from '../../types/Time';
+import type { CalendarDay } from '../../../../types/CalendarDay';
+import type { Time } from '../../../../types/Time';
 import { CourseSection } from './components/CourseSection/CourseSection';
 import { DateSection } from './components/DateSection/DateSection';
 import { TimeSection } from './components/TimeSection/TimeSection';

@@ -1,6 +1,6 @@
 import './TimeSection.css';
 import { TimePicker } from './components/TimePicker/TimePicker';
-import type { Time } from '../../../../types/Time';
+import type { Time } from '../../../../../../types/Time';
 
 interface TimeSectionProps {
     startTime: Time;

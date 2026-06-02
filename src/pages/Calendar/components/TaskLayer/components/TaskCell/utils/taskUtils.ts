@@ -1,5 +1,5 @@
 import type { Task } from "../../../../../../../types/Task";
-import { TIME_CELL_WIDTH, CELL_HEIGHT } from "../../../../../constants";
+import { TIME_CELL_WIDTH, CELL_HEIGHT } from "../../../../../../../constants";
 
 export interface TaskPosition {
     left: number;

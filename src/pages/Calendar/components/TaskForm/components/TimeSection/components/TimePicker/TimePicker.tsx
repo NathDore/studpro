@@ -2,7 +2,7 @@ import { useState, type MouseEventHandler } from "react";
 import { ClockIcon } from "../../../../../../../../components/icons/ClockIcon";
 import './TimePicker.css';
 import { TimeSelection } from "./components/TimeSelection/TimeSelection";
-import type { Time } from "../../../../../../types/Time";
+import type { Time } from "../../../../../../../../types/Time";
 
 interface TimePickerProps {
     time: Time;

@@ -1,5 +1,5 @@
 import './TimeSelection.css';
-import type { Time } from '../../../../../../../../types/Time';
+import type { Time } from '../../../../../../../../../../types/Time';
 
 interface TimeSelectionProps {
     displaySelection: boolean;
