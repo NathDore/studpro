@@ -6,6 +6,8 @@ import { useCellWidth } from './hooks/useCellWidth';
 import { useResizeBar } from './components/TaskCell/hooks/useResizeBar';
 import type { CalendarBounds } from '../../hooks/useCalendarSize';
 
+const CONTAINER_CLASS = 'absolute top-0 left-0 w-full h-[calc(24*30px)] pointer-events-none';
+
 interface TaskLayerProps {
     tasks: Task[];
     onTaskCellClick: (task: Task) => void;
@@ -14,12 +16,12 @@ interface TaskLayerProps {
 
 export const TaskLayer = ({ tasks, onTaskCellClick, calendarBounds }: TaskLayerProps) => {
     const { setRef, cellWidth } = useCellWidth();
-    const { onResizeTop, onResizeBottom, isResizing, registerOnMouseUp } = useResizeBar({ calendarBounds, cellWidth });
+    const { onResizeTop, onResizeBottom, isResizing } = useResizeBar({ calendarBounds, cellWidth });
 
     if (tasks.length <= 0) return null;
 
     return (
-        <div ref={setRef} className='absolute top-0 left-0 w-full h-[calc(24*30px)] pointer-events-none'>
+        <div ref={setRef} className={CONTAINER_CLASS}>
             {tasks.map(task => {
                 const position: TaskPosition = getTaskPosition(task, cellWidth);
 
@@ -32,7 +34,6 @@ export const TaskLayer = ({ tasks, onTaskCellClick, calendarBounds }: TaskLayerP
                         isResizing={isResizing}
                         onResizeTop={onResizeTop}
                         onResizeBottom={onResizeBottom}
-                        registerOnMouseUp={registerOnMouseUp}
                     />
                 );
             })}

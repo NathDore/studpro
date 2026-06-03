@@ -28,13 +28,6 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
     const onMouseMoveRef = useRef<((e: MouseEvent) => void) | null>(null);
     const onMouseUpRef = useRef<(() => void) | null>(null);
 
-    const onMouseUpCallbacks = useRef<Set<() => void>>(new Set());
-
-    const registerOnMouseUp = useCallback((callback: () => void) => {
-        onMouseUpCallbacks.current.add(callback);
-        return () => { onMouseUpCallbacks.current.delete(callback); };
-    }, []);
-
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             onMouseMoveRef.current?.(e);
@@ -193,11 +186,10 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
         document.body.classList.remove('is-resizing');
         isResizing.current = false;
         activeTask.current = null;
-        onMouseUpCallbacks.current.forEach(cb => cb());
     };
 
     onMouseMoveRef.current = onMouseMove;
     onMouseUpRef.current = onMouseUp;
 
-    return { onResizeTop, onResizeBottom, isResizing, registerOnMouseUp };
+    return { onResizeTop, onResizeBottom, isResizing };
 };

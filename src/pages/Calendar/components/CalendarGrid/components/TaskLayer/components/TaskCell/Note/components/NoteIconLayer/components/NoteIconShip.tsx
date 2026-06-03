@@ -3,6 +3,9 @@ import { useNoteTooltip } from "../../NoteTooltip/hook/useNoteTooltip";
 import { NoteTooltip } from "../../NoteTooltip/NoteTooltip";
 import type { Note } from "../../../../../../../../../../../../types/Note";
 
+const CONTAINER_CLASS = 'flex justify-center items-center';
+const ICON_CLASS = 'w-5 h-5 cursor-pointer stroke-[1.1px] text-[#d8d8d8] bg-[#c7c7c73a]';
+
 interface NoteIconShipProps {
     note: Note;
 }
@@ -12,12 +15,12 @@ export const NoteIconShip = ({ note }: NoteIconShipProps) => {
 
     return (
         <div
-            className="flex justify-center items-center"
+            className={CONTAINER_CLASS}
             ref={iconRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <NotesIcon className='w-5 h-5 cursor-pointer stroke-[1.1px] text-[#d8d8d8] bg-[#c7c7c73a]' />
+            <NotesIcon className={ICON_CLASS} />
             {tooltipPos && (
                 <NoteTooltip
                     description={note.text}

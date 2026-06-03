@@ -1,11 +1,19 @@
 import type { Task } from '../../../../../../../../types/Task';
 import type { TaskPosition } from './TaskCell.types';
-import { useTaskFlexLayout } from './hooks/useTaskFlexLayout';
-import './TaskCell.css';
 import { NoteIconLayer } from './Note/components/NoteIconLayer/NoteIconLayer';
 import { ExpandedNoteLayer } from './Note/components/ExpandedNoteLayer/ExpandedNoteLayer';
-import { useNoteLayout } from './Note/hooks/useNoteLayout';
-import { useEffect } from 'react';
+import { useTaskCell } from './hooks/useTaskCell';
+import './TaskCell.css';
+
+const WRAPPER_CLASS = 'group pointer-events-auto absolute flex justify-center';
+const EXPANDED_NOTES_CLASS = 'flex flex-col gap-1 flex-1 overflow-hidden';
+const RESIZE_BAR_HANDLE_CLASS = 'visual-resize-bar w-[40%] h-1 rounded-full bg-[rgba(255,255,255,0.55)] opacity-0 group-hover:opacity-100 group-hover:w-[60%] transition-[opacity,width] duration-[180ms] ease-in-out';
+
+const RESIZE_BAR_HEIGHT: Record<'minimal' | 'inline' | 'full', string> = {
+    minimal: 'h-2',
+    inline: 'h-4',
+    full: 'h-5'
+};
 
 interface TaskCellProps {
     position: TaskPosition;
@@ -14,7 +22,6 @@ interface TaskCellProps {
     isResizing: React.RefObject<boolean>;
     onResizeTop: (e: MouseEvent, task: Task, position: TaskPosition) => void;
     onResizeBottom: (e: MouseEvent, task: Task, position: TaskPosition) => void;
-    registerOnMouseUp: (callback: () => void) => () => void;
 }
 
 export const TaskCell = ({
@@ -23,95 +30,90 @@ export const TaskCell = ({
     onTaskCellClick,
     isResizing,
     onResizeTop,
-    onResizeBottom,
-    registerOnMouseUp
+    onResizeBottom
 }: TaskCellProps) => {
-    const { titleRef, noteRefs, layout, measured, refreshNoteLayout } = useNoteLayout({ task, position });
-    const { displayInline, refreshFlexLayout } = useTaskFlexLayout(task);
+    const { layout, expandedNotes, iconships } = useTaskCell({ task });
+
+    const resizeBarHeight = RESIZE_BAR_HEIGHT[layout];
+    const topResizeBarClassName = `z-10 absolute left-0 w-full cursor-ns-resize flex items-center justify-center top-[-7px] ${resizeBarHeight}`;
+    const bottomResizeBarClassName = `z-10 absolute left-0 w-full cursor-ns-resize flex items-center justify-center bottom-[-7px] ${resizeBarHeight}`;
+
+    const contentClassName = `task rounded-[5px] w-[98%] overflow-hidden relative cursor-pointer flex
+        transition-[filter,box-shadow] duration-[180ms] ease-in-out
+        hover:brightness-[1.15] hover:shadow-[inset_0_0_0_1px_rgba(59,59,59,0.5)]
+        ${layout === 'inline'
+            ? 'flex-row items-center justify-between px-2 py-0'
+            : 'flex-col px-2 py-[5px]'
+        }`;
+
+    const titleClassName = `task-text text-[14px] overflow-hidden leading-[1.1] text-[#d8d8d8] break-words font-semibold
+        ${layout === 'inline'
+            ? 'whitespace-nowrap text-ellipsis shrink-0 min-w-0 max-w-full'
+            : 'mb-2'
+        }`;
+
+    const iconsClassName = `flex items-center
+        ${layout === 'inline'
+            ? 'shrink-0 gap-1'
+            : 'mt-auto pt-1'
+        }`;
 
     const handleClick = () => {
         if (isResizing.current) return;
         onTaskCellClick(task);
     };
 
-    useEffect(() => {
-        const unregisterNoteLayout = registerOnMouseUp(refreshNoteLayout);
-        const unregisterFlexLayout = registerOnMouseUp(refreshFlexLayout);
-
-        return () => {
-            unregisterNoteLayout();
-            unregisterFlexLayout();
-        };
-    }, []);
-
     return (
-        <div
-            className='pointer-events-auto absolute flex justify-center'
-            style={{ left: position.left, top: position.top, height: position.height, width: position.width }}
-            onMouseUp={handleClick}
-        >
-            {/* Resize top */}
-            <div
-                className='task z-10 absolute left-0 w-full h-5 cursor-ns-resize flex items-center justify-center top-[-7px]'
-                onMouseDown={(e) => onResizeTop(e.nativeEvent, task, position)}
-            >
-                <div className='visual-resize-bar w-[40%] h-1 rounded-full bg-[rgba(255,255,255,0.55)] opacity-0' />
+        <div className={WRAPPER_CLASS} style={{ ...position }} onMouseUp={handleClick}>
+
+            {/* Top resize bar */}
+            <div className={topResizeBarClassName} onMouseDown={(e) => onResizeTop(e.nativeEvent, task, position)}>
+                <div className={RESIZE_BAR_HANDLE_CLASS} />
             </div>
 
-            {/* Task body */}
-            <div
-                className={`task rounded-[5px] w-[98%] overflow-hidden relative cursor-pointer
-                    ${displayInline
-                        ? 'flex flex-row justify-between items-center px-2 py-0'
-                        : 'px-2 py-[5px]'
-                    }`}
-                style={{ backgroundColor: task.course.color }}
-            >
-                <p
-                    ref={titleRef}
-                    className={`task-text cursor-pointer text-[14px] overflow-hidden leading-[1.1] text-[#d8d8d8] break-words
-                        ${displayInline
-                            ? 'font-semibold mb-0 shrink-0 min-w-0 whitespace-nowrap overflow-hidden text-ellipsis max-w-full'
-                            : 'font-semibold mb-2'
-                        }`}
-                >
-                    {task.course.name}
-                </p>
+            {/* Task Cell content */}
+            <div className={contentClassName} style={{ backgroundColor: task.course.color }}>
 
-                {!measured && task.notes.map((n) => (
-                    <div
-                        key={n.id}
-                        ref={(el) => { if (el) noteRefs.current.set(n.id, el); }}
-                        className='note-expanded-text invisible absolute'
-                    >
-                        {n.text}
-                    </div>
-                ))}
-
-                {displayInline ? (
-                    layout.collapsed.length > 0 && (
-                        <div className='shrink-0 flex items-center'>
-                            <NoteIconLayer notes={layout.collapsed} />
-                        </div>
-                    )
-                ) : (
+                {layout === 'inline' && (
                     <>
-                        {layout.expanded.length > 0 && <ExpandedNoteLayer noteRefs={noteRefs} notes={layout.expanded} />}
-                        {layout.collapsed.length > 0 && layout.expanded.length > 0 && (
-                            <div className='w-full h-px mb-[5px] border-b border-[rgba(211,211,211,0.274)]' />
-                        )}
-                        {layout.collapsed.length > 0 && <NoteIconLayer notes={layout.collapsed} />}
+                        {/* Title */}
+                        <p className={titleClassName}>
+                            {task.course.name}
+                        </p>
+
+                        {/* Icons */}
+                        <div className={iconsClassName}>
+                            <NoteIconLayer notes={iconships} />
+                        </div>
                     </>
                 )}
+
+                {layout === 'full' && (
+                    <>
+                        {/* Title */}
+                        <p className={titleClassName}>
+                            {task.course.name}
+                        </p>
+
+                        {/* Expanded notes */}
+                        <div className={EXPANDED_NOTES_CLASS}>
+                            <ExpandedNoteLayer notes={expandedNotes} />
+                        </div>
+
+                        {/* Icons */}
+                        <div className={iconsClassName}>
+                            <NoteIconLayer notes={iconships} />
+                        </div>
+                    </>
+                )}
+
             </div>
 
-            {/* Resize bottom */}
-            <div
-                className='resize-bar z-10 absolute left-0 w-full h-5 cursor-ns-resize flex items-center justify-center bottom-[-7px]'
-                onMouseDown={(e) => onResizeBottom(e.nativeEvent, task, position)}
-            >
-                <div className='visual-resize-bar w-[40%] h-1 rounded-full bg-[rgba(255,255,255,0.55)] opacity-0' />
+            {/* Bottom resize bar */}
+            <div className={bottomResizeBarClassName} onMouseDown={(e) => onResizeBottom(e.nativeEvent, task, position)}>
+                <div className={RESIZE_BAR_HANDLE_CLASS} />
             </div>
+
         </div>
     );
 };
