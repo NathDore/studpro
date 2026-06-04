@@ -5,7 +5,6 @@ import { TaskLayer } from './components/TaskLayer/TaskLayer';
 import { Scrollbar } from './components/Scrollbar/Scrollbar';
 import { CalendarRow } from './components/CalendarRow/CalendarRow';
 import { useCalendarGrid } from './hooks/useCalendarGrid';
-import './CalendarGrid.css';
 
 interface CalendarGridProps {
     days: CalendarDay[];
@@ -14,12 +13,14 @@ interface CalendarGridProps {
     tasks: Task[];
 }
 
+const CONTAINER_CLASS = 'relative flex-1 overflow-y-auto leading-none scrollbar-none [&::-webkit-scrollbar]:hidden';
+
 export const CalendarGrid = ({ days, onHourCellClick, tasks, onTaskCellClick }: CalendarGridProps) => {
-    const { times, calendarRef, calendarBounds } = useCalendarGrid();
+    const { TIMES, calendarRef, calendarBounds } = useCalendarGrid();
 
     return (
-        <div className='calendar relative flex-1 overflow-y-auto leading-none' ref={calendarRef}>
-            {times.map(time => (
+        <div className={CONTAINER_CLASS} ref={calendarRef}>
+            {TIMES.map(time => (
                 <CalendarRow days={days} onHourCellClick={onHourCellClick} key={time.id} time={time} />
             ))}
             <TaskLayer tasks={tasks} onTaskCellClick={onTaskCellClick} calendarBounds={calendarBounds} />

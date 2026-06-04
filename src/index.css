@@ -2,6 +2,7 @@
 
 @theme {
     --animate-tooltip-fade-in: tooltip-fade-in 0.15s ease;
+    --animate-flash: flash 1.2s ease-out;
 
     @keyframes tooltip-fade-in {
         from {
@@ -12,6 +13,20 @@
         to {
             opacity: 1;
             transform: translateX(0);
+        }
+    }
+
+    @keyframes flash {
+        0% {
+            background-color: transparent;
+        }
+
+        30% {
+            background-color: lightgray;
+        }
+
+        100% {
+            background-color: transparent;
         }
     }
 }

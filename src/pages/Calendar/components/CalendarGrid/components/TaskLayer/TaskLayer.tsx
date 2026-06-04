@@ -1,10 +1,10 @@
-import type { Task } from '../../../../../../types/Task';
 import { TaskCell } from './components/TaskCell/TaskCell';
 import { getTaskPosition } from './components/TaskCell/utils/taskPositionUtils';
-import type { TaskPosition } from './components/TaskCell/TaskCell.types';
 import { useCellWidth } from './hooks/useCellWidth';
 import { useResizeBar } from './components/TaskCell/hooks/useResizeBar';
-import type { CalendarBounds } from '../../hooks/useCalendarSize';
+import type { CalendarBounds } from '../../CalendarGrid.types';
+import type { TaskPosition } from './components/TaskCell/TaskCell.types';
+import type { Task } from '../../../../../../types/Task';
 
 const CONTAINER_CLASS = 'absolute top-0 left-0 w-full h-[calc(24*30px)] pointer-events-none';
 
