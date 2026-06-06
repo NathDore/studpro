@@ -13,7 +13,7 @@ export const useTaskCell = ({ task }: UseTaskCellProps) => {
     const [expandedNotes, setExpandedNotes] = useState<Note[]>([]);
 
     useEffect(() => {
-        const taskDuration = getTaskDuration(task.start, task.end);
+        const taskDuration = getTaskDuration(task.startTime, task.endTime);
         const totalNotes = task.notes.length;
 
         if (taskDuration <= 30) {
@@ -29,7 +29,7 @@ export const useTaskCell = ({ task }: UseTaskCellProps) => {
 
             const RESERVED_HOURS_TITLE = 1;
             const RESERVED_HOURS_ICONS = 1;
-            const taskHours = getTaskHours(task.start, task.end);
+            const taskHours = getTaskHours(task.startTime, task.endTime);
             const availableHoursForNotes = taskHours - RESERVED_HOURS_TITLE - RESERVED_HOURS_ICONS;
 
             const expandedCount = Math.min(availableHoursForNotes, totalNotes);

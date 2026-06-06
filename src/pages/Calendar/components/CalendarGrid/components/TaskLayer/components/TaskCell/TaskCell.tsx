@@ -1,5 +1,5 @@
 import type { Task } from '../../../../../../../../types/Task';
-import type { TaskPosition } from './TaskCell.types';
+import type { TaskPosition } from '../../../../../../Calendar.types';
 import { NoteIconLayer } from './Note/components/NoteIconLayer/NoteIconLayer';
 import { ExpandedNoteLayer } from './Note/components/ExpandedNoteLayer/ExpandedNoteLayer';
 import { useTaskCell } from './hooks/useTaskCell';

@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getTimes } from '../../../utils/timeUtils';
-import type { Time } from '../../../../../types/Time';
 import type { CalendarBounds } from '../CalendarGrid.types';
-
-const TIMES: Time[] = getTimes();
 
 export const useCalendarGrid = () => {
     const [calendarBounds, setCalendarBounds] = useState<CalendarBounds>({ top: 0, bottom: 0, height: 0 });
@@ -30,5 +26,5 @@ export const useCalendarGrid = () => {
         return () => observer.disconnect();
     }, [])
 
-    return { TIMES, calendarRef, calendarBounds };
+    return { calendarRef, calendarBounds };
 };

@@ -1,47 +1,55 @@
-import type { CalendarTime, CalendarTimeDays } from "../../../types/CalendarTime";
-import type { Task } from "../../../types/Task";
-import { getMonday } from "../../../utils/dateUtils";
+import { timeDuration } from "../../../utils/taskUtils";
+import type { CalendarTime } from "../Calendar.types";
 
-const DAY_NAMES: CalendarTimeDays[] = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+export const getDayTimes = (): CalendarTime[] => {
+    return Array.from({ length: 24 }, (_, i) => {
+        const hour = i + 1;
+        const displayHour = hour === 24 ? 12 : hour > 12 ? hour - 12 : hour;
+        const period = hour === 24 ? 'AM' : hour < 12 ? 'AM' : 'PM';
 
-export const fillDays = (): CalendarTime[] => {
-    const currentDate = new Date();
-    const monday = getMonday(currentDate);
-
-    const newDays: CalendarTime[] = [];
-
-    for (let i = 0; i < 7; i++) {
-        const currentDay = new Date(monday);
-        currentDay.setDate(monday.getDate() + i);
-
-        newDays.push({
+        return {
             id: crypto.randomUUID(),
-            fullDate: currentDay,
-            isCurrentDay: currentDate.getDate() === currentDay.getDate(),
-            date: currentDay.getDate().toString(),
-            day: DAY_NAMES[i],
-            period: 'AM',
-            hours: 0,
-            minutes: 0
-        });
-    }
-
-    return newDays;
+            period,
+            hour: displayHour,
+            minutes: 0,
+        };
+    });
 }
 
-export const getDayFromTask = (task: Task): CalendarTime => {
-    const currentDate = new Date();
-    const dayIndex = task.start.getDay();
-    const adjustedIndex = dayIndex === 0 ? 6 : dayIndex - 1;
+export const getNextHour = (time: CalendarTime): CalendarTime => {
+    let period = time.period;
+    let hour = time.hour + 1;
+
+    if (time.hour === 11 && period === 'PM') {
+        hour = 12;
+        period = 'PM';
+    } else if (time.hour === 11 && period === 'AM') {
+        hour = 12;
+        period = 'PM';
+    } else if (time.hour === 12 && period === 'PM') {
+        hour = 1;
+        period = 'PM';
+    } else if (time.hour === 12 && period === 'AM') {
+        hour = 1;
+    }
 
     return {
-        id: crypto.randomUUID(),
-        fullDate: task.start,
-        isCurrentDay: task.start.getDate() === currentDate.getDate(),
-        date: task.start.getDate().toString(),
-        day: DAY_NAMES[adjustedIndex],
-        period: 'AM',
-        hours: 0,
-        minutes: 0
+        id: time.id,
+        hour,
+        minutes: time.minutes,
+        period: period
+    };
+}
+
+export const getDuration = (startTime: CalendarTime, endTime: CalendarTime): number => {
+    let startDurationMinutes = timeDuration(startTime);
+    let endDurationMinutes = timeDuration(endTime);
+
+    if (endTime.period === 'AM' && endTime.hour === 12) {
+        endDurationMinutes = 24 * 60;
     }
+
+
+
+    return endDurationMinutes - startDurationMinutes;
 }

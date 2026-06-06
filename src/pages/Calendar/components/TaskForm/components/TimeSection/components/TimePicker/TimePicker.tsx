@@ -1,11 +1,11 @@
 import { useState, type MouseEventHandler } from "react";
 import { ClockIcon } from "../../../../../../../../components/icons/ClockIcon";
 import { TimeSelection } from "./components/TimeSelection";
-import type { Time } from "../../../../../../../../types/Time";
+import type { CalendarTime } from "../../../../../../Calendar.types";
 
 interface TimePickerProps {
-    time: Time;
-    setTime: (time: Time) => void;
+    time: CalendarTime;
+    setTime: (time: CalendarTime) => void;
     type: 'start' | 'end';
 }
 

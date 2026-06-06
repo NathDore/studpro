@@ -1,9 +1,9 @@
 import { TaskCell } from './components/TaskCell/TaskCell';
-import { getTaskPosition } from './components/TaskCell/utils/taskPositionUtils';
+import { getTaskPositionInCalendar } from '../../../../../../utils/taskUtils';
 import { useCellWidth } from './hooks/useCellWidth';
 import { useResizeBar } from './components/TaskCell/hooks/useResizeBar';
 import type { CalendarBounds } from '../../CalendarGrid.types';
-import type { TaskPosition } from './components/TaskCell/TaskCell.types';
+import type { TaskPosition } from '../../../../Calendar.types';
 import type { Task } from '../../../../../../types/Task';
 
 const CONTAINER_CLASS = 'absolute top-0 left-0 w-full h-[calc(24*30px)] pointer-events-none';
@@ -23,7 +23,7 @@ export const TaskLayer = ({ tasks, onTaskCellClick, calendarBounds }: TaskLayerP
     return (
         <div ref={setRef} className={CONTAINER_CLASS}>
             {tasks.map(task => {
-                const position: TaskPosition = getTaskPosition(task, cellWidth);
+                const position: TaskPosition = getTaskPositionInCalendar(task, cellWidth);
 
                 return (
                     <TaskCell

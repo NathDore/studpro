@@ -1,22 +1,21 @@
-import { useState } from "react";
 import type { Course } from "../../../../../types/Course";
-import { COURSE_DATA } from "../../../data/Task_data";
-import type { Time } from "../../../../../types/Time";
-import { getStartTime, toHours24, fromDate, getDuration, getNextHour } from "../../../utils/timeUtils";
-import { getMonday } from "../../../../../utils/dateUtils";
 import type { Task } from "../../../../../types/Task";
+import type { Note } from "../../../../../types/Note";
+import type { CalendarDay, CalendarTime } from "../../../Calendar.types";
+import { useState } from "react";
+import { COURSE_DATA } from "../../../data/Task_data";
+import { getNextHour, getDuration } from "../../../utils/calendarTimeUtils";
+import { getMonday } from "../../../../../utils/dateUtils";
 import { useTaskStore } from "../../../../../store/taskStore";
 import { taskExist } from "../../../../../utils/taskValidation";
-import type { Note } from "../../../../../types/Note";
-import type { CalendarTime } from "../../../../../types/CalendarTime";
 
 const courses: Course[] = COURSE_DATA;
 
 interface useTaskFormProps {
     task?: Task;
-    day: CalendarTime;
-    initialStartTime: Time;
-    initialEndTime: Time;
+    day: CalendarDay;
+    initialStartTime: CalendarTime;
+    initialEndTime: CalendarTime;
     onClose: () => void;
 }
 
@@ -31,8 +30,8 @@ maxDate.setDate(monday.getDate() + 6);
 export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, task }: useTaskFormProps) => {
     const [course, setCourse] = useState<Course>(task?.course ?? courses[0]);
     const [date, setDate] = useState<Date>(day.fullDate);
-    const [startTime, setStartTime] = useState<Time>(task?.start ? fromDate(task.start) : initialStartTime);
-    const [endTime, setEndTime] = useState<Time>(task?.end ? fromDate(task.end) : initialEndTime);
+    const [startTime, setStartTime] = useState<CalendarTime>(task?.startTime ? task.startTime : initialStartTime);
+    const [endTime, setEndTime] = useState<CalendarTime>(task?.endTime ? task.endTime : initialEndTime);
     const [errors, setErrors] = useState<TaskFormError>({});
 
     const { addTask, updateTask, removeTask, tasks } = useTaskStore();
@@ -45,31 +44,20 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, ta
         setDate(date);
     }
 
-    const onStartTimeChange = (time: Time) => {
+    const onStartTimeChange = (time: CalendarTime) => {
         setStartTime(time);
 
-        const tempStart = new Date();
-        tempStart.setHours(toHours24(time), time.minutes);
-
-        const tempEnd = new Date();
-        tempEnd.setHours(toHours24(endTime), endTime.minutes);
-
-        if (getDuration(tempStart, tempEnd) <= 0) {
+        if (getDuration(time, endTime) <= 0) {
             setEndTime(getNextHour(time));
         }
     }
 
-    const onEndTimeChange = (time: Time) => {
+    const onEndTimeChange = (time: CalendarTime) => {
         setEndTime(time);
 
-        const tempStart = new Date();
-        tempStart.setHours(toHours24(startTime), startTime.minutes);
-
-        const tempEnd = new Date();
-        tempEnd.setHours(toHours24(time), time.minutes);
-
-        if (getDuration(tempStart, tempEnd) <= 0) {
-            setStartTime(getStartTime(time));
+        if (getDuration(startTime, time) <= 0) {
+            setStartTime(time);
+            setEndTime(getNextHour(time));
         }
     }
 
@@ -84,16 +72,17 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, ta
         const startTimeDate = new Date(date);
         const endTimeDate = new Date(date);
 
-        startTimeDate.setHours(toHours24(startTime), startTime.minutes);
-        endTimeDate.setHours(toHours24(endTime), endTime.minutes);
+        startTimeDate.setHours(startTime.hour, startTime.minutes);
+        endTimeDate.setHours(endTime.hour, endTime.minutes);
 
         if (mode === 'create') {
             const newTask: Task = {
                 id: crypto.randomUUID(),
+                day,
+                startTime,
+                endTime,
                 course,
                 notes,
-                start: startTimeDate,
-                end: endTimeDate
             }
 
             addTask(newTask);
@@ -102,10 +91,11 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, ta
 
             const updatedTask: Task = {
                 id: task?.id,
+                day,
+                startTime,
+                endTime,
                 course,
                 notes,
-                start: startTimeDate,
-                end: endTimeDate
             }
 
             updateTask(updatedTask);

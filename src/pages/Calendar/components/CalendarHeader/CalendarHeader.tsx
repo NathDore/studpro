@@ -1,7 +1,7 @@
-import type { CalendarTime } from '../../../../types/CalendarTime';
+import type { CalendarDay } from '../../Calendar.types';
 
 interface CalendarHeaderProps {
-    days: CalendarTime[];
+    days: CalendarDay[];
 }
 
 export const CalendarHeader = ({ days }: CalendarHeaderProps) => {
@@ -14,7 +14,7 @@ export const CalendarHeader = ({ days }: CalendarHeaderProps) => {
 };
 
 interface DayColProps {
-    day: CalendarTime;
+    day: CalendarDay;
 }
 
 const DayCol = ({ day }: DayColProps) => {

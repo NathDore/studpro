@@ -1,21 +1,20 @@
 import type { Task } from '../../../../types/Task';
+import type { NoteSectionHandle } from './components/NoteSection/NoteSection';
+import type { CalendarDay, CalendarTime } from '../../Calendar.types';
 import { useTaskForm } from './hooks/useTaskForm';
-import type { Time } from '../../../../types/Time';
 import { CourseSection } from './components/CourseSection/CourseSection';
 import { DateSection } from './components/DateSection/DateSection';
 import { TimeSection } from './components/TimeSection/TimeSection';
 import { NoteSection } from './components/NoteSection/NoteSection';
-import type { NoteSectionHandle } from './components/NoteSection/NoteSection';
 import { useRef } from 'react';
-import type { CalendarTime } from '../../../../types/CalendarTime';
 
 interface TaskFormProps {
     mode: 'create' | 'update';
     task?: Task;
+    day: CalendarDay;
+    initialStartTime: CalendarTime;
+    initialEndTime: CalendarTime;
     onClose: () => void;
-    day: CalendarTime;
-    initialStartTime: Time;
-    initialEndTime: Time;
 }
 
 export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, onClose }: TaskFormProps) => {
@@ -58,7 +57,7 @@ export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, on
                     <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
                     <NoteSection ref={noteSectionRef} initialNotes={task?.notes} />
                     <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
-                    <TimeSection startTime={startTime} onStartTimeChange={onStartTimeChange} endTime={endTime} onEndTimeChange={onEndTimeChange} />
+                    <TimeSection startTime={startTime} endTime={endTime} onStartTimeChange={onStartTimeChange} onEndTimeChange={onEndTimeChange} />
                 </div>
 
                 {/* Footer */}

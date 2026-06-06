@@ -1,5 +1,4 @@
-import type { CalendarTime } from '../../../../../../types/CalendarTime';
-import type { Time } from '../../../../../../types/Time';
+import type { CalendarDay, CalendarTime } from '../../../../Calendar.types';
 import './CalendarRow.css';
 
 const CONTAINER_CLASS = 'grid grid-cols-[40px_repeat(7,1fr)] h-[30px] overflow-hidden';
@@ -8,22 +7,23 @@ const TIME_LABEL_CLASS = 'relative bottom-2 -left-1 text-[12px] font-medium text
 const HOUR_CELL_CLASS = 'hour-cell bg-[#FDFCF9] cursor-default border-r border-b border-r-[lightgray] border-b-[lightgray] border-t border-l border-t-transparent border-l-transparent hover:border hover:border-[#535557] hover:bg-[#deebf5] active:animate-flash';
 
 interface CalendarRowProps {
-    days: CalendarTime[];
-    time: Time;
-    onHourCellClick: (calendar: CalendarTime, time: Time) => void;
+    days: CalendarDay[];
+    startTime: CalendarTime;
+    endTime: CalendarTime;
+    onHourCellClick: (calendar: CalendarDay, startTime: CalendarTime, endTime: CalendarTime) => void;
 }
 
-export const CalendarRow = ({ days, time, onHourCellClick }: CalendarRowProps) => {
+export const CalendarRow = ({ days, startTime, endTime, onHourCellClick }: CalendarRowProps) => {
     return (
         <div className={CONTAINER_CLASS}>
             <div className={TIME_CELL_CLASS}>
                 <p className={TIME_LABEL_CLASS}>
-                    {time.hour.toString()} {time.period}
+                    {startTime.hour.toString()} {startTime.period}
                 </p>
             </div>
             {days.map((day) => (
                 <div
-                    onClick={() => onHourCellClick(day, time)}
+                    onClick={() => onHourCellClick(day, startTime, endTime)}
                     className={HOUR_CELL_CLASS}
                     key={day.id}
                 />

@@ -1,11 +1,11 @@
 import { TimePicker } from './components/TimePicker/TimePicker';
-import type { Time } from '../../../../../../types/Time';
+import type { CalendarTime } from '../../../../Calendar.types';
 
 interface TimeSectionProps {
-    startTime: Time;
-    endTime: Time;
-    onStartTimeChange: (time: Time) => void;
-    onEndTimeChange: (time: Time) => void;
+    startTime: CalendarTime;
+    endTime: CalendarTime;
+    onStartTimeChange: (time: CalendarTime) => void;
+    onEndTimeChange: (time: CalendarTime) => void;
 }
 
 export const TimeSection = ({ startTime, onStartTimeChange, endTime, onEndTimeChange }: TimeSectionProps) => {

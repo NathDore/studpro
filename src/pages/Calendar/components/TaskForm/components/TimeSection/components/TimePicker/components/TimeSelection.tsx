@@ -1,10 +1,10 @@
 import './TimeSelection.css';
-import type { Time } from '../../../../../../../../../types/Time';
+import type { CalendarTime } from '../../../../../../../Calendar.types';
 
 interface TimeSelectionProps {
     displaySelection: boolean;
-    time: Time;
-    setTime: (time: Time) => void;
+    time: CalendarTime;
+    setTime: (time: CalendarTime) => void;
     type: 'start' | 'end';
 }
 
