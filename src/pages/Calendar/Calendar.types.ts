@@ -1,8 +1,8 @@
-import type { CalendarDay } from "../../types/CalendarDay";
+import type { CalendarTime } from "../../types/CalendarTime";
 import type { Time } from "../../types/Time";
 
 export interface SelectedSlot {
-    calendarDay: CalendarDay;
+    day: CalendarTime;
     time: Time;
     endTime: Time;
 }

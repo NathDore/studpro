@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { Course } from "../../../../../types/Course";
 import { COURSE_DATA } from "../../../data/Task_data";
-import type { CalendarDay } from "../../../../../types/CalendarDay";
 import type { Time } from "../../../../../types/Time";
 import { getStartTime, toHours24, fromDate, getDuration, getNextHour } from "../../../utils/timeUtils";
 import { getMonday } from "../../../../../utils/dateUtils";
@@ -9,12 +8,13 @@ import type { Task } from "../../../../../types/Task";
 import { useTaskStore } from "../../../../../store/taskStore";
 import { taskExist } from "../../../../../utils/taskValidation";
 import type { Note } from "../../../../../types/Note";
+import type { CalendarTime } from "../../../../../types/CalendarTime";
 
 const courses: Course[] = COURSE_DATA;
 
 interface useTaskFormProps {
     task?: Task;
-    calendarDay: CalendarDay;
+    day: CalendarTime;
     initialStartTime: Time;
     initialEndTime: Time;
     onClose: () => void;
@@ -28,9 +28,9 @@ const monday = getMonday(new Date());
 const maxDate = new Date(monday);
 maxDate.setDate(monday.getDate() + 6);
 
-export const useTaskForm = ({ calendarDay, initialStartTime, initialEndTime, onClose, task }: useTaskFormProps) => {
+export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, task }: useTaskFormProps) => {
     const [course, setCourse] = useState<Course>(task?.course ?? courses[0]);
-    const [date, setDate] = useState<Date>(calendarDay.fullDate);
+    const [date, setDate] = useState<Date>(day.fullDate);
     const [startTime, setStartTime] = useState<Time>(task?.start ? fromDate(task.start) : initialStartTime);
     const [endTime, setEndTime] = useState<Time>(task?.end ? fromDate(task.end) : initialEndTime);
     const [errors, setErrors] = useState<TaskFormError>({});

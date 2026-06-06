@@ -1,6 +1,5 @@
 import type { Task } from '../../../../types/Task';
 import { useTaskForm } from './hooks/useTaskForm';
-import type { CalendarDay } from '../../../../types/CalendarDay';
 import type { Time } from '../../../../types/Time';
 import { CourseSection } from './components/CourseSection/CourseSection';
 import { DateSection } from './components/DateSection/DateSection';
@@ -8,17 +7,18 @@ import { TimeSection } from './components/TimeSection/TimeSection';
 import { NoteSection } from './components/NoteSection/NoteSection';
 import type { NoteSectionHandle } from './components/NoteSection/NoteSection';
 import { useRef } from 'react';
+import type { CalendarTime } from '../../../../types/CalendarTime';
 
 interface TaskFormProps {
     mode: 'create' | 'update';
     task?: Task;
     onClose: () => void;
-    calendarDay: CalendarDay;
+    day: CalendarTime;
     initialStartTime: Time;
     initialEndTime: Time;
 }
 
-export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEndTime, onClose }: TaskFormProps) => {
+export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, onClose }: TaskFormProps) => {
     const {
         course,
         onCourseChange,
@@ -33,7 +33,7 @@ export const TaskForm = ({ mode, task, calendarDay, initialStartTime, initialEnd
         maxDate,
         onSubmit,
         onRemove
-    } = useTaskForm({ calendarDay, initialStartTime, initialEndTime, onClose, task });
+    } = useTaskForm({ day, initialStartTime, initialEndTime, onClose, task });
 
     const noteSectionRef = useRef<NoteSectionHandle>(null);
 

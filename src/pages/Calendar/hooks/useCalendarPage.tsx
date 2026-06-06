@@ -1,45 +1,44 @@
 import { useState } from 'react';
-import type { SelectedSlot, CalendarMode } from '../Calendar.types';
-import type { CalendarDay } from '../../../types/CalendarDay';
-import type { Time } from '../../../types/Time';
-import type { Task } from '../../../types/Task';
-import { useCalendarDay } from './useCalendarDay';
 import { useTaskStore } from '../../../store/taskStore';
 import { fromDate, getStartTime } from '../utils/timeUtils';
+import { fillDays, getDayFromTask } from '../utils/calendarTimeUtils';
+import type { CalendarTime } from '../../../types/CalendarTime';
+import type { SelectedSlot, CalendarMode } from '../Calendar.types';
+import type { Time } from '../../../types/Time';
+import type { Task } from '../../../types/Task';
 
 export const useCalendarPage = () => {
-    const { days, convertDateToCalendarDay } = useCalendarDay();
+    const DAYS: CalendarTime[] = fillDays();
     const { tasks } = useTaskStore();
 
     const [displayForm, setDisplayForm] = useState<SelectedSlot | null>(null);
     const [mode, setMode] = useState<CalendarMode>('create');
     const [selectedTask, setSelectedTask] = useState<Task | undefined>();
 
-    const onHourCellClick = (calendarDay: CalendarDay, time: Time) => {
-        if (!time?.hour || !calendarDay.fullDate) return;
+    const onHourCellClick = (day: CalendarTime, time: Time) => {
+        if (!time?.hour || !day.fullDate) return;
 
         const startTime = getStartTime(time);
         if (!startTime) return;
 
         setMode('create');
         setSelectedTask(undefined);
-        setDisplayForm({ calendarDay, time: startTime, endTime: time });
+        setDisplayForm({ day, time: startTime, endTime: time });
     };
 
     const onTaskCellClick = (task: Task) => {
-        const calendarDay = convertDateToCalendarDay(task.start);
+        const day = getDayFromTask(task);
         const startTime = fromDate(task.start);
         const endTime = fromDate(task.end);
-
         setMode('update');
         setSelectedTask(task);
-        setDisplayForm({ calendarDay, time: startTime, endTime });
+        setDisplayForm({ day, time: startTime, endTime });
     };
 
     const closeForm = () => setDisplayForm(null);
 
     return {
-        days,
+        DAYS,
         tasks,
         displayForm,
         mode,

@@ -1,4 +1,4 @@
-import type { CalendarDay } from '../../../../../../types/CalendarDay';
+import type { CalendarTime } from '../../../../../../types/CalendarTime';
 import type { Time } from '../../../../../../types/Time';
 import './CalendarRow.css';
 
@@ -8,9 +8,9 @@ const TIME_LABEL_CLASS = 'relative bottom-2 -left-1 text-[12px] font-medium text
 const HOUR_CELL_CLASS = 'hour-cell bg-[#FDFCF9] cursor-default border-r border-b border-r-[lightgray] border-b-[lightgray] border-t border-l border-t-transparent border-l-transparent hover:border hover:border-[#535557] hover:bg-[#deebf5] active:animate-flash';
 
 interface CalendarRowProps {
-    days: CalendarDay[];
+    days: CalendarTime[];
     time: Time;
-    onHourCellClick: (calendar: CalendarDay, time: Time) => void;
+    onHourCellClick: (calendar: CalendarTime, time: Time) => void;
 }
 
 export const CalendarRow = ({ days, time, onHourCellClick }: CalendarRowProps) => {

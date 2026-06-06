@@ -1,4 +1,4 @@
-import type { CalendarDay } from '../../../../types/CalendarDay';
+import type { CalendarTime } from '../../../../types/CalendarTime';
 import type { Task } from '../../../../types/Task';
 import type { Time } from '../../../../types/Time';
 import { TaskLayer } from './components/TaskLayer/TaskLayer';
@@ -7,8 +7,8 @@ import { CalendarRow } from './components/CalendarRow/CalendarRow';
 import { useCalendarGrid } from './hooks/useCalendarGrid';
 
 interface CalendarGridProps {
-    days: CalendarDay[];
-    onHourCellClick: (calendar: CalendarDay, time: Time) => void;
+    days: CalendarTime[];
+    onHourCellClick: (calendar: CalendarTime, time: Time) => void;
     onTaskCellClick: (task: Task) => void;
     tasks: Task[];
 }
