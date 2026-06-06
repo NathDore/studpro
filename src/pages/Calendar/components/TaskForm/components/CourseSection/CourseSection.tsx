@@ -1,5 +1,5 @@
 import { PlusIcon } from '../../../../../../components/icons/PlusIcon';
-import { CourseDropDown } from './components/CourseDropDown';
+import { CourseDropDown } from './CourseDropDown';
 import type { Course } from '../../../../../../types/Course';
 
 const CONTAINER_CLASS = 'flex flex-col gap-[1px]';

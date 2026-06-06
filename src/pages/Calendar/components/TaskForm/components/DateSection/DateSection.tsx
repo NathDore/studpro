@@ -1,4 +1,4 @@
-import { DatePicker } from './components/DatePicker';
+import { DatePicker } from './DatePicker';
 
 const CONTAINER_CLASS = 'flex flex-col gap-[1px]';
 const LABEL_CLASS = 'text-[14px] font-medium text-[#2C2C2A] select-none cursor-default';

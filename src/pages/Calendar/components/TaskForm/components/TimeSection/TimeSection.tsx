@@ -1,4 +1,4 @@
-import { TimePicker } from './components/TimePicker/TimePicker';
+import { TimePicker } from './TimePicker';
 import type { CalendarTime } from '../../../../Calendar.types';
 
 const CONTAINER_CLASS = 'flex flex-col gap-[1px]';

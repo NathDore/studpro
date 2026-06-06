@@ -1,4 +1,4 @@
-import type { CalendarTime } from '../../../../../../../Calendar.types';
+import type { CalendarTime } from '../../../../../../Calendar.types';
 
 const CONTAINER_CLASS = 'absolute w-full max-h-[155px] top-full left-0 flex flex-row bg-white border border-gray-300 z-10';
 const COLUMN_CLASS = 'hide-scrollbar flex-1 flex flex-col items-center overflow-scroll';

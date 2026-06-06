@@ -1,7 +1,7 @@
-import type { Task } from '../../../../../../../../types/Task';
-import type { TaskPosition } from '../../../../../../Calendar.types';
-import { NoteIconLayer } from './Note/components/NoteIconLayer/NoteIconLayer';
-import { ExpandedNoteLayer } from './Note/components/ExpandedNoteLayer/ExpandedNoteLayer';
+import type { Task } from '../../../../../../../types/Task';
+import type { TaskPosition } from '../../../../../Calendar.types';
+import { NoteIconLayer } from './components/NoteIconLayer/NoteIconLayer';
+import { ExpandedNoteLayer } from './components/ExpandedNoteLayer/ExpandedNoteLayer';
 import { useTaskCell } from './hooks/useTaskCell';
 import './TaskCell.css';
 

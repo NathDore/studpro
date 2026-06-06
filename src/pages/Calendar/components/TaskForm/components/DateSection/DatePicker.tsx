@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { CalendarIcon } from '../../../../../../../components/icons/CalendarIcon';
+import { CalendarIcon } from '../../../../../../components/icons/CalendarIcon';
 
 const CONTAINER_CLASS = 'relative flex flex-row justify-between items-center p-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400';
 const DATE_ROW_CLASS = 'flex flex-row';

@@ -1,5 +1,5 @@
-import type { Note } from "../../../../../../../../../../../types/Note";
-import { ExpandedNoteItem } from "./components/ExpandedNoteItem";
+import type { Note } from "../../../../../../../../../types/Note";
+import { ExpandedNoteItem } from "./ExpandedNoteItem";
 
 const CONTAINER_CLASS = 'flex flex-col gap-[5px]';
 

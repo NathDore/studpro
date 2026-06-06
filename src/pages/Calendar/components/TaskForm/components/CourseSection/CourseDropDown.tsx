@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Course } from "../../../../../../../types/Course";
+import type { Course } from "../../../../../../types/Course";
 
 const CONTAINER_CLASS = 'flex-1 relative';
 const TRIGGER_CLASS = 'flex justify-between items-center p-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400';

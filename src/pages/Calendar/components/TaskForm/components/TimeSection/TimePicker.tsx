@@ -1,7 +1,7 @@
 import { useState, type MouseEventHandler } from "react";
-import { ClockIcon } from "../../../../../../../../components/icons/ClockIcon";
-import { TimeSelection } from "./components/TimeSelection";
-import type { CalendarTime } from "../../../../../../Calendar.types";
+import { ClockIcon } from "../../../../../../components/icons/ClockIcon";
+import { TimeSelection } from "./TimeSelection";
+import type { CalendarTime } from "../../../../Calendar.types";
 
 const CONTAINER_CLASS = 'relative flex flex-row items-center justify-between flex-1 p-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400';
 const TIME_ROW_CLASS = 'flex flex-row items-center';

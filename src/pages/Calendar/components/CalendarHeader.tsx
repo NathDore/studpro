@@ -1,4 +1,4 @@
-import type { CalendarDay } from '../../Calendar.types';
+import type { CalendarDay } from '../Calendar.types';
 
 const HEADER_CLASS = 'sticky top-0 z-10 h-[50px] grid grid-cols-[40px_repeat(7,1fr)]';
 const HEADER_EMPTY_CELL_CLASS = 'flex flex-col justify-center items-center bg-[#F7F5F0]';

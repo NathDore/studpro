@@ -1,5 +1,5 @@
-import type { Note } from "../../../../../../../../../../../types/Note";
-import { NoteIconShip } from "./components/NoteIconShip";
+import type { Note } from "../../../../../../../../../types/Note";
+import { NoteIconShip } from "./NoteIconShip";
 
 const MAX_VISIBLE_ICONS = 1;
 
