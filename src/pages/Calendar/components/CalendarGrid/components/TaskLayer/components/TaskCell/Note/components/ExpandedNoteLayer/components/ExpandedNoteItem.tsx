@@ -1,5 +1,5 @@
 import type { Note } from "../../../../../../../../../../../../types/Note";
-import { useNoteTooltip } from "../../NoteTooltip/hook/useNoteTooltip";
+import { useNoteTooltip } from "../../NoteTooltip/hooks/useNoteTooltip";
 import { NoteTooltip } from "../../NoteTooltip/NoteTooltip";
 
 const CONTAINER_CLASS = 'note-expanded-text text-[14px] leading-[1.2] font-normal text-[#d8d8d8] px-[6px] py-[3px] overflow-hidden line-clamp-1 select-none bg-[rgba(211,211,211,0.158)]';

@@ -15,6 +15,11 @@ export interface CalendarTime {
     minutes: number;
 }
 
+export interface CalendarBounds {
+    top: number;
+    bottom: number;
+    height: number;
+}
 
 export type CalendarMode = 'create' | 'update';
 

@@ -2,7 +2,7 @@ import { TaskCell } from './components/TaskCell/TaskCell';
 import { getTaskPositionInCalendar } from '../../../../../../utils/taskUtils';
 import { useCellWidth } from './hooks/useCellWidth';
 import { useResizeBar } from './components/TaskCell/hooks/useResizeBar';
-import type { CalendarBounds } from '../../CalendarGrid.types';
+import type { CalendarBounds } from '../../../../Calendar.types';
 import type { TaskPosition } from '../../../../Calendar.types';
 import type { Task } from '../../../../../../types/Task';
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { CalendarBounds } from '../CalendarGrid.types';
+import type { CalendarBounds } from '../../../Calendar.types';
 
 export const useCalendarGrid = () => {
     const [calendarBounds, setCalendarBounds] = useState<CalendarBounds>({ top: 0, bottom: 0, height: 0 });

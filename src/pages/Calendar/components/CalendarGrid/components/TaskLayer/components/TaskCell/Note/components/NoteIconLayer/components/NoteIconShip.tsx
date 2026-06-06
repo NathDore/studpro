@@ -1,5 +1,5 @@
 import { NotesIcon } from "../../../../../../../../../../../../components/icons/NotesIcon";
-import { useNoteTooltip } from "../../NoteTooltip/hook/useNoteTooltip";
+import { useNoteTooltip } from "../../NoteTooltip/hooks/useNoteTooltip";
 import { NoteTooltip } from "../../NoteTooltip/NoteTooltip";
 import type { Note } from "../../../../../../../../../../../../types/Note";
 
