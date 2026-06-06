@@ -1,6 +1,12 @@
 import { useRef } from 'react';
 import { CalendarIcon } from '../../../../../../../components/icons/CalendarIcon';
 
+const CONTAINER_CLASS = 'relative flex flex-row justify-between items-center p-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400';
+const DATE_ROW_CLASS = 'flex flex-row';
+const DATE_PART_CLASS = 'text-[15px] font-medium text-[#2C2C2A] select-none cursor-default';
+const ICON_CLASS = 'w-5 stroke-[1.1px] text-[#2C2C2A] cursor-pointer';
+const HIDDEN_INPUT_CLASS = 'absolute top-full left-0 w-0 h-0 opacity-0 pointer-events-none';
+
 interface DatePickerProps {
     date: Date;
     onDateChange: (date: Date) => void;
@@ -26,23 +32,20 @@ export const DatePicker = ({ date, onDateChange, minDate, maxDate }: DatePickerP
     };
 
     return (
-        <div
-            onClick={onCalendarClick}
-            className='relative flex flex-row justify-between items-center p-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400'
-        >
-            <div className='flex flex-row'>
-                <span className='text-[15px] font-medium text-[#2C2C2A] select-none cursor-default'>{year}</span>
-                <span className='text-[15px] font-medium text-[#2C2C2A] select-none cursor-default'>-</span>
-                <span className='text-[15px] font-medium text-[#2C2C2A] select-none cursor-default'>{month}</span>
-                <span className='text-[15px] font-medium text-[#2C2C2A] select-none cursor-default'>-</span>
-                <span className='text-[15px] font-medium text-[#2C2C2A] select-none cursor-default'>{day}</span>
+        <div onClick={onCalendarClick} className={CONTAINER_CLASS}>
+            <div className={DATE_ROW_CLASS}>
+                <span className={DATE_PART_CLASS}>{year}</span>
+                <span className={DATE_PART_CLASS}>-</span>
+                <span className={DATE_PART_CLASS}>{month}</span>
+                <span className={DATE_PART_CLASS}>-</span>
+                <span className={DATE_PART_CLASS}>{day}</span>
             </div>
 
-            <CalendarIcon className='w-5 stroke-[1.1px] text-[#2C2C2A] cursor-pointer' />
+            <CalendarIcon className={ICON_CLASS} />
 
             <input
                 ref={dateInputRef}
-                className='absolute top-full left-0 w-0 h-0 opacity-0 pointer-events-none'
+                className={HIDDEN_INPUT_CLASS}
                 type='date'
                 value={`${year}-${month}-${day}`}
                 onChange={onNativeChange}

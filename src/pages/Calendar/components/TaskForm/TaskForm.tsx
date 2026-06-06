@@ -8,6 +8,16 @@ import { TimeSection } from './components/TimeSection/TimeSection';
 import { NoteSection } from './components/NoteSection/NoteSection';
 import { useRef } from 'react';
 
+const OVERLAY_CLASS = 'fixed inset-0 bg-[rgba(0,0,0,0.4)] flex items-center justify-center z-[100]';
+const MODAL_CLASS = 'bg-white rounded-[12px] w-full max-w-[440px] flex flex-col';
+const HEADER_CLASS = 'bg-[#8FAcbd] w-full rounded-t-[12px] px-6 py-2 flex items-center border-b border-gray-300 gap-4';
+const HEADER_TITLE_CLASS = 'text-[18px] font-bold text-[#2C2C2A] select-none cursor-default';
+const CONTENT_CLASS = 'px-6 py-4 flex flex-col gap-2';
+const FOOTER_CLASS = 'flex flex-row justify-end items-center gap-[10px] px-6 py-4';
+const BUTTON_BASE_CLASS = 'text-[14px] font-medium text-[#2C2C2A] py-[5px] px-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400';
+const BUTTON_SUBMIT_CLASS = `${BUTTON_BASE_CLASS} bg-[#4A7C99]`;
+const BUTTON_REMOVE_CLASS = `${BUTTON_BASE_CLASS} bg-[#C0392B]`;
+
 interface TaskFormProps {
     mode: 'create' | 'update';
     task?: Task;
@@ -42,18 +52,18 @@ export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, on
     };
 
     return (
-        <div className="fixed inset-0 bg-[rgba(0,0,0,0.4)] flex items-center justify-center z-[100]" onClick={onClose}>
-            <div className="bg-white rounded-[12px] w-full max-w-[440px] flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className={OVERLAY_CLASS} onClick={onClose}>
+            <div className={MODAL_CLASS} onClick={(e) => e.stopPropagation()}>
 
                 {/* Header */}
-                <div className="bg-[#8FAcbd] w-full rounded-t-[12px] px-6 py-2 flex items-center border-b border-gray-300 gap-4">
-                    <p className="text-[18px] font-bold text-[#2C2C2A] select-none cursor-default">
+                <div className={HEADER_CLASS}>
+                    <p className={HEADER_TITLE_CLASS}>
                         {mode === 'create' ? 'New task' : 'Edit task'}
                     </p>
                 </div>
 
                 {/* Content */}
-                <div className="px-6 py-4 flex flex-col gap-2">
+                <div className={CONTENT_CLASS}>
                     <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
                     <NoteSection ref={noteSectionRef} initialNotes={task?.notes} />
                     <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
@@ -61,28 +71,20 @@ export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, on
                 </div>
 
                 {/* Footer */}
-                <div className="flex flex-row justify-end items-center gap-[10px] px-6 py-4">
-                    <button
-                        className="text-[14px] font-medium text-[#2C2C2A] py-[5px] px-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400 bg-[#4A7C99]"
-                        onClick={handleSubmit}
-                    >
+                <div className={FOOTER_CLASS}>
+                    <button className={BUTTON_SUBMIT_CLASS} onClick={handleSubmit}>
                         {mode === 'update' ? 'Modify' : 'Add task'}
                     </button>
                     {mode === 'update' && (
-                        <button
-                            className="text-[14px] font-medium text-[#2C2C2A] py-[5px] px-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400 bg-[#C0392B]"
-                            onClick={() => { if (task) onRemove(task.id); }}
-                        >
+                        <button className={BUTTON_REMOVE_CLASS} onClick={() => { if (task) onRemove(task.id); }}>
                             Remove
                         </button>
                     )}
-                    <button
-                        className="text-[14px] font-medium text-[#2C2C2A] py-[5px] px-[10px] border border-gray-300 rounded-[5px] cursor-pointer hover:border-gray-400"
-                        onClick={onClose}
-                    >
+                    <button className={BUTTON_BASE_CLASS} onClick={onClose}>
                         Cancel
                     </button>
                 </div>
+
             </div>
         </div>
     );
