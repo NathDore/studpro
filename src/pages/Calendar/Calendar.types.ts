@@ -8,9 +8,11 @@ export interface CalendarDay {
     day: CalendarTimeDays;
 }
 
+export type CalendarPeriod = 'AM' | 'PM';
+
 export interface CalendarTime {
     id: string;
-    period: 'AM' | 'PM';
+    period: CalendarPeriod;
     hour: number;
     minutes: number;
 }
@@ -34,4 +36,13 @@ export interface TaskPosition {
     top: number;
     height: number;
     width: number;
+}
+
+export type TimePickerInputType = 'start' | 'end';
+
+export interface TimePickerInputs {
+    startHour: number;
+    endHour: number;
+    startMinutes: number;
+    endMinutes: number;
 }

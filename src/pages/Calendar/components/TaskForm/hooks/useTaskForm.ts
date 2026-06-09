@@ -1,7 +1,7 @@
 import type { Course } from "../../../../../types/Course";
 import type { Task } from "../../../../../types/Task";
 import type { Note } from "../../../../../types/Note";
-import type { CalendarDay, CalendarTime } from "../../../Calendar.types";
+import type { CalendarDay, CalendarTime, TimePickerInputs, TimePickerInputType } from "../../../Calendar.types";
 import { useState } from "react";
 import { COURSE_DATA } from "../../../data/Task_data";
 import { getNextHour, getDuration } from "../../../utils/calendarTimeUtils";
@@ -23,6 +23,23 @@ interface TaskFormError {
     description?: string;
 }
 
+interface TimePickerValidation {
+    isValidHour: boolean;
+    isValidMinutes: boolean;
+    invalidInterval: boolean;
+}
+
+const validateTimePickerInput = (time: CalendarTime, startTime: CalendarTime, endTime: CalendarTime): TimePickerValidation => {
+    const hour: number = Number(time.hour);
+    const minutes: number = Number(time.minutes);
+
+    return {
+        isValidHour: Number.isInteger(hour) && hour >= 1 && hour <= 12,
+        isValidMinutes: Number.isInteger(minutes) && minutes >= 0 && minutes <= 59,
+        invalidInterval: getDuration(startTime, endTime) <= 0
+    };
+}
+
 const monday = getMonday(new Date());
 const maxDate = new Date(monday);
 maxDate.setDate(monday.getDate() + 6);
@@ -31,8 +48,18 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, ta
     const [course, setCourse] = useState<Course>(task?.course ?? courses[0]);
     const [date, setDate] = useState<Date>(day.fullDate);
     const [startTime, setStartTime] = useState<CalendarTime>(task?.startTime ? task.startTime : initialStartTime);
+
+    const [timePickerInputs, setTimePickerInputs] = useState<TimePickerInputs>({
+        startHour: task?.startTime ? task.startTime.hour : initialStartTime.hour,
+        endHour: task?.endTime ? task.endTime.hour : initialEndTime.hour,
+        startMinutes: task?.startTime ? task.startTime.minutes : initialStartTime.minutes,
+        endMinutes: task?.endTime ? task.endTime.minutes : initialEndTime.minutes
+    });
+
     const [endTime, setEndTime] = useState<CalendarTime>(task?.endTime ? task.endTime : initialEndTime);
+
     const [errors, setErrors] = useState<TaskFormError>({});
+
 
     const { addTask, updateTask, removeTask, tasks } = useTaskStore();
 
@@ -45,19 +72,53 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, ta
     }
 
     const onStartTimeChange = (time: CalendarTime) => {
-        setStartTime(time);
+        const timePickerValidation: TimePickerValidation = validateTimePickerInput(time, time, endTime);
 
-        if (getDuration(time, endTime) <= 0) {
-            setEndTime(getNextHour(time));
+        if (timePickerValidation.isValidHour && timePickerValidation.isValidMinutes) {
+            setStartTime(time);
+
+            if (timePickerValidation.invalidInterval) {
+                const validEndTime: CalendarTime = getNextHour(time);
+                setEndTime(validEndTime);
+                setTimePickerInputs(prev => ({ ...prev, endHour: validEndTime.hour }));
+            }
+        } else {
+            setTimePickerInputs(prev => ({ ...prev, startHour: startTime.hour, startMinutes: startTime.minutes }));
         }
     }
 
     const onEndTimeChange = (time: CalendarTime) => {
-        setEndTime(time);
+        const timePickerValidation: TimePickerValidation = validateTimePickerInput(time, startTime, time);
 
-        if (getDuration(startTime, time) <= 0) {
-            setStartTime(time);
-            setEndTime(getNextHour(time));
+        if (timePickerValidation.isValidHour && timePickerValidation.isValidMinutes) {
+            setEndTime(time);
+
+            if (timePickerValidation.invalidInterval) {
+                setStartTime(time);
+                setTimePickerInputs(prev => ({ ...prev, startHour: time.hour }));
+
+                const validEndTime: CalendarTime = getNextHour(time);
+                setEndTime(validEndTime);
+                setTimePickerInputs(prev => ({ ...prev, endHour: validEndTime.hour }));
+            }
+        } else {
+            setTimePickerInputs(prev => ({ ...prev, endHour: endTime.hour, endMinutes: endTime.minutes }));
+        }
+    }
+
+    const onHourInputChange = (type: TimePickerInputType, hour: number) => {
+        if (type === 'start') {
+            setTimePickerInputs(prev => ({ ...prev, startHour: hour }));
+        } else {
+            setTimePickerInputs(prev => ({ ...prev, endHour: hour }));
+        }
+    }
+
+    const onMinutesInputChange = (type: TimePickerInputType, minutes: number) => {
+        if (type === 'start') {
+            setTimePickerInputs(prev => ({ ...prev, startMinutes: minutes }));
+        } else {
+            setTimePickerInputs(prev => ({ ...prev, endMinutes: minutes }));
         }
     }
 
@@ -122,6 +183,9 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, ta
         onStartTimeChange,
         endTime,
         onEndTimeChange,
+        timePickerInputs,
+        onHourInputChange,
+        onMinutesInputChange,
         minDate: monday,
         maxDate,
         errors,

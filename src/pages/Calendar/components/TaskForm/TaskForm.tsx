@@ -2,14 +2,14 @@ import type { Task } from '../../../../types/Task';
 import type { NoteSectionHandle } from './components/NoteSection/NoteSection';
 import type { CalendarDay, CalendarTime } from '../../Calendar.types';
 import { useTaskForm } from './hooks/useTaskForm';
-import { CourseSection } from './components/CourseSection/CourseSection';
 import { DateSection } from './components/DateSection/DateSection';
 import { TimeSection } from './components/TimeSection/TimeSection';
 import { NoteSection } from './components/NoteSection/NoteSection';
 import { useRef } from 'react';
+import { TaskFormContent } from './components/TaskFormContent';
 
 const OVERLAY_CLASS = 'fixed inset-0 bg-[rgba(0,0,0,0.4)] flex items-center justify-center z-[100]';
-const MODAL_CLASS = 'bg-white rounded-[12px] w-full max-w-[440px] flex flex-col';
+const MODAL_CLASS = 'bg-white rounded-[12px] w-full max-w-[90%] min-h-[90%] flex flex-col';
 const HEADER_CLASS = 'bg-[#8FAcbd] w-full rounded-t-[12px] px-6 py-2 flex items-center border-b border-gray-300 gap-4';
 const HEADER_TITLE_CLASS = 'text-[18px] font-bold text-[#2C2C2A] select-none cursor-default';
 const CONTENT_CLASS = 'px-6 py-4 flex flex-col gap-2';
@@ -38,6 +38,9 @@ export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, on
         onStartTimeChange,
         endTime,
         onEndTimeChange,
+        timePickerInputs,
+        onHourInputChange,
+        onMinutesInputChange,
         minDate,
         maxDate,
         onSubmit,
@@ -63,15 +66,37 @@ export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, on
                 </div>
 
                 {/* Content */}
-                <div className={CONTENT_CLASS}>
+                <TaskFormContent
+                    task={task}
+                    course={course}
+                    onCourseChange={onCourseChange}
+                    courses={courses}
+                    startTime={startTime}
+                    onStartTimeChange={onStartTimeChange}
+                    endTime={endTime}
+                    onEndTimeChange={onEndTimeChange}
+                    timePickerInputs={timePickerInputs}
+                    onHourInputChange={onHourInputChange}
+                    onMinutesInputChange={onMinutesInputChange}
+                />
+            </div>
+        </div>
+    );
+};
+
+/* Content */
+/*
+<div className={CONTENT_CLASS}>
                     <CourseSection course={course} onCourseChange={onCourseChange} courses={courses} />
                     <NoteSection ref={noteSectionRef} initialNotes={task?.notes} />
                     <DateSection date={date} onDateChange={onDateChange} minDate={minDate} maxDate={maxDate} />
                     <TimeSection startTime={startTime} endTime={endTime} onStartTimeChange={onStartTimeChange} onEndTimeChange={onEndTimeChange} />
-                </div>
+</div>
+*/
 
-                {/* Footer */}
-                <div className={FOOTER_CLASS}>
+/* Footer */
+/*
+<div className={FOOTER_CLASS}>
                     <button className={BUTTON_SUBMIT_CLASS} onClick={handleSubmit}>
                         {mode === 'update' ? 'Modify' : 'Add task'}
                     </button>
@@ -83,9 +108,5 @@ export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, on
                     <button className={BUTTON_BASE_CLASS} onClick={onClose}>
                         Cancel
                     </button>
-                </div>
-
-            </div>
-        </div>
-    );
-};
+</div>
+*/

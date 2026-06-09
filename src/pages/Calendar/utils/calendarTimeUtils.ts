@@ -18,7 +18,7 @@ export const getDayTimes = (): CalendarTime[] => {
 
 export const getNextHour = (time: CalendarTime): CalendarTime => {
     let period = time.period;
-    let hour = time.hour + 1;
+    let hour = Number(time.hour) + 1;
 
     if (time.hour === 11 && period === 'PM') {
         hour = 12;
