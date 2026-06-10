@@ -3,7 +3,6 @@ import type { NoteSectionHandle } from './components/NoteSection/NoteSection';
 import type { CalendarDay, CalendarTime } from '../../Calendar.types';
 import { useTaskForm } from './hooks/useTaskForm';
 import { DateSection } from './components/DateSection/DateSection';
-import { TimeSection } from './components/TimeSection/TimeSection';
 import { NoteSection } from './components/NoteSection/NoteSection';
 import { useRef } from 'react';
 import { TaskFormContent } from './components/TaskFormContent';

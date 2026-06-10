@@ -1,5 +1,5 @@
 import { timeDuration } from "../../../utils/taskUtils";
-import type { CalendarTime } from "../Calendar.types";
+import type { CalendarTime, TimePickerValidation } from "../Calendar.types";
 
 export const getDayTimes = (): CalendarTime[] => {
     return Array.from({ length: 24 }, (_, i) => {
@@ -49,7 +49,16 @@ export const getDuration = (startTime: CalendarTime, endTime: CalendarTime): num
         endDurationMinutes = 24 * 60;
     }
 
-
-
     return endDurationMinutes - startDurationMinutes;
+}
+
+export const validateTimePickerInput = (time: CalendarTime, startTime: CalendarTime, endTime: CalendarTime): TimePickerValidation => {
+    const hour: number = Number(time.hour);
+    const minutes: number = Number(time.minutes);
+
+    return {
+        isValidHour: Number.isInteger(hour) && hour >= 1 && hour <= 12,
+        isValidMinutes: Number.isInteger(minutes) && minutes >= 0 && minutes <= 59,
+        invalidInterval: getDuration(startTime, endTime) <= 0
+    };
 }

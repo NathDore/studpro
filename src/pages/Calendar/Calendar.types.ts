@@ -46,3 +46,9 @@ export interface TimePickerInputs {
     startMinutes: number;
     endMinutes: number;
 }
+
+export interface TimePickerValidation {
+    isValidHour: boolean;
+    isValidMinutes: boolean;
+    invalidInterval: boolean;
+}
