@@ -24,25 +24,19 @@ interface UseTaskFormProps {
 
 export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, task }: UseTaskFormProps) => {
     const [course, setCourse] = useState<Course>(task?.course ?? courses[0]);
-    const [date, setDate] = useState<Date>(day.fullDate);
 
     const timeState = useTimeState({ initialStartTime, initialEndTime, task });
     const noteState = useNoteState({ initialNotes: task?.notes });
     const actions = useTaskActions({ day, startTime: timeState.startTime, endTime: timeState.endTime, onClose });
 
     const onCourseChange = (course: Course) => setCourse(course);
-    const onDateChange = (date: Date) => setDate(date);
 
     return {
         course,
         onCourseChange,
         courses,
-        date,
-        onDateChange,
         ...timeState,
         ...noteState,
-        ...actions,
-        minDate: monday,
-        maxDate,
+        ...actions
     };
 };
