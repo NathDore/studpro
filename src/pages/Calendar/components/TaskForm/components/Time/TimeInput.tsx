@@ -2,7 +2,7 @@ import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from "../../../../../
 import type { CalendarPeriod, CalendarTime, TimePickerInputType } from "../../../../Calendar.types";
 import { TIME_BOX_INPUT_CLASS } from "./styles-time-section";
 
-const TIME_INPUT_PERIOD_ROW_CLASS = `flex flex-row ${BORDER_CLASS} h-[35px] rounded-[5px]`;
+const TIME_INPUT_PERIOD_ROW_CLASS = `flex flex-row ${BORDER_CLASS} h-7 rounded-[5px]`;
 const TIME_INPUT_PERIOD_BOX_CLASS = `${TIME_BOX_INPUT_CLASS} border-none rounded-[0px] cursor-pointer select-none`;
 const TIME_INPUT_SELECTED_AM_CLASS = `bg-gray-300 rounded-l-[5px]`;
 const TIME_INPUT_SELECTED_PM_CLASS = `bg-gray-300 rounded-r-[5px]`;
@@ -40,16 +40,16 @@ export const TimeInput = ({ id, hour, minutes, period, onTimeChange, type, onHou
         <div className={`flex flex-1 flex-row gap-1.25`}>
             <div className={`flex flex-row gap-0.5`}>
                 <input
-                    className={`${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} font-medium text-center ${BORDER_CLASS} h-8.75 p-1.25 w-7.5`}
+                    className={`${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} font-medium text-center ${BORDER_CLASS} h-7 p-1.25 w-7.5 outline-none focus:border-gray-500`}
                     value={hour}
                     onChange={handleOnHourChange}
                     onBlur={handleHourBlur}
                     onFocus={(e) => e.target.select()}
                     onMouseUp={(e) => e.preventDefault()}
                 />
-                <p className={`flex flex-row items-center h-8.75 cursor-default select-none`}>:</p>
+                <p className={`flex flex-row items-center h-7 cursor-default select-none`}>:</p>
                 <input
-                    className={`${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} font-medium text-center ${BORDER_CLASS} h-8.75 p-1.25 w-7.5`}
+                    className={`${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} font-medium text-center ${BORDER_CLASS} h-7 p-1.25 w-7.5 outline-none focus:border-gray-500`}
                     value={minutes}
                     onChange={handleOnMinutesChange}
                     onBlur={handleMinutesBlur}

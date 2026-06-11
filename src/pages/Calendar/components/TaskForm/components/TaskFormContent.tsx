@@ -7,13 +7,6 @@ import { NoteInput } from './Note/NoteInput';
 import { NoteList } from './Note/NoteList';
 import { TimePicker } from './Time/TimePicker';
 
-const enableBGColor = false;
-
-const CONTENT_CONTAINER_CLASS = 'p-2 w-full h-full flex flex-1 flex-col';
-const TOP_SECTION_CLASS = `${enableBGColor ? 'bg-red-500' : ''} flex-[3] flex flex-row justify-between px-[20px]`;
-const MIDDLE_SECTION_CLASS = `${enableBGColor ? 'bg-green-500' : ''} flex-[87] border border-gray-200 rounded-lg`;
-const BOTTOM_SECTION_CLASS = 'bg-blue-500 flex-[10]';
-
 interface TaskFormContentProps {
     task?: Task;
     course: Course;
@@ -33,6 +26,8 @@ interface TaskFormContentProps {
     selectedNote?: Note;
     onSelectNote: (note: Note) => void;
     unSelectNote: () => void;
+    noteText: string;
+    onNoteTextChanged: (text: string) => void;
 }
 
 export const TaskFormContent = ({
@@ -53,11 +48,15 @@ export const TaskFormContent = ({
     onEditNote,
     selectedNote,
     onSelectNote,
-    unSelectNote
+    unSelectNote,
+    noteText,
+    onNoteTextChanged
 }: TaskFormContentProps) => {
     return (
-        <div className={CONTENT_CONTAINER_CLASS}>
-            <div className={TOP_SECTION_CLASS}>
+        <div className={`p-2 w-full h-full flex flex-1 flex-col gap-8`}>
+
+            {/* Top section */}
+            <div className={`flex flex-1 flex-row justify-between items-center px-5 py-1`}>
                 <CoursePicker course={course} onCourseChange={onCourseChange} courses={courses} />
                 <TimePicker
                     startTime={startTime}
@@ -69,15 +68,27 @@ export const TaskFormContent = ({
                     onMinutesInputChange={onMinutesInputChange}
                 />
             </div>
-            <div className={MIDDLE_SECTION_CLASS}>
-                <NoteList notes={notes} onSelectNote={onSelectNote} onRemoveNote={onRemoveNote} />
+
+            {/* Middle section */}
+            <div className={`flex flex-col flex-87 rounded-lg px-5 py-1 gap-1.5`}>
+                <NoteList
+                    notes={notes}
+                    onSelectNote={onSelectNote}
+                    onRemoveNote={onRemoveNote}
+                    selectedNote={selectedNote}
+                />
+
                 <NoteInput
                     selectedNote={selectedNote}
                     onAddNote={onAddNote}
                     onEditNote={onEditNote}
-                    unSelectNote={unSelectNote} />
+                    unSelectNote={unSelectNote}
+                    noteText={noteText}
+                    onNoteTextChanged={onNoteTextChanged} />
             </div>
-            <div className={BOTTOM_SECTION_CLASS}>Bottom section</div>
+
+            {/* Bottom section */}
+            <div className={`bg-blue-500 flex-10 px-5 py-1`}>Bottom section</div>
         </div>
     )
 }

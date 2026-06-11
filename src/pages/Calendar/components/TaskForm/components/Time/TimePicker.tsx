@@ -24,7 +24,7 @@ export const TimePicker = ({ startTime, onStartTimeChange, endTime, onEndTimeCha
 
     return (
         <div className={`flex flex-row gap-4`}>
-            <div className={`flex flex-col gap-1`}>
+            <div className={`flex flex-col gap-0.5`}>
                 <p className={TIME_TEXT_CLASS}>Start</p>
                 <TimeInput
                     id={startTime.id}
@@ -36,7 +36,7 @@ export const TimePicker = ({ startTime, onStartTimeChange, endTime, onEndTimeCha
                     onHourInputChange={onHourInputChange}
                     onMinutesInputChange={onMinutesInputChange} />
             </div>
-            <div className={`flex flex-col gap-1`}>
+            <div className={`flex flex-col gap-0.5`}>
                 <p className={TIME_TEXT_CLASS}>End</p>
                 <TimeInput
                     id={endTime.id}

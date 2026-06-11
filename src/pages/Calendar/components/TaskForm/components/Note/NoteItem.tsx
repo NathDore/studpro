@@ -1,27 +1,32 @@
+import { MyButton } from '../../../../../../components/buttons/MyButton';
 import { TrashIcon } from '../../../../../../components/icons/TrashIcon';
+import { BORDER_CLASS, TEXT_SIZE_CLASS } from '../../../../../../styles/styles-class';
 import type { Note } from '../../../../../../types/Note'
 
 interface NoteItemProps {
     note: Note;
     onSelectNote: (note: Note) => void;
     onRemoveNote: (noteId: string) => void;
+    isSelected: boolean;
 }
 
-const CONTAINER_CLASS = `flex flex-row items-center justify-between gap-5 border rounded-[6px] px-[10px] py-2 cursor-pointer`;
-const TEXT_CLASS = `text-[13px]`;
-const REMOVE_BUTTON_CLASS = 'shrink-0 cursor-pointer text-[#888780] hover:text-[#C0392B]';
-const TRASH_ICON_CLASS = 'w-[15px] h-[15px] block';
+export const NoteItem = ({ note, onSelectNote, onRemoveNote, isSelected }: NoteItemProps) => {
 
-export const NoteItem = ({ note, onSelectNote, onRemoveNote }: NoteItemProps) => {
+    const handleSelectNote = () => {
+        onSelectNote(note)
+    }
+
+    const handleOnDeleteNote = (e: any) => {
+        e.stopPropagation();
+        onRemoveNote(note.id);
+    }
+
     return (
-        <div key={note.id} className={CONTAINER_CLASS}>
-            <p className={TEXT_CLASS}>{note.text}</p>
-            <button
-                onClick={(e) => { e.stopPropagation(); }}
-                className={REMOVE_BUTTON_CLASS}
-            >
-                <TrashIcon className={TRASH_ICON_CLASS} />
-            </button>
+        <div onClick={handleSelectNote} className={`flex flex-row items-center justify-between gap-5 ${BORDER_CLASS} rounded-md px-2.5 py-2 cursor-pointer ${isSelected ? 'border-[#8FACBD] bg-[#ddeaf1]' : ''}`}>
+            <p className={`${TEXT_SIZE_CLASS} select-none`}>{note.text}</p>
+            <MyButton onClick={handleOnDeleteNote} className={`border-none`}>
+                <TrashIcon className={'w-3.75 h-3.75 block text-[#C0392B]'} />
+            </MyButton>
         </div>
     )
 }

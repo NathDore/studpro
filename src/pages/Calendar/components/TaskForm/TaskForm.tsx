@@ -43,7 +43,9 @@ export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, on
         minDate,
         maxDate,
         onSubmit,
-        onRemove
+        onRemove,
+        noteText,
+        onNoteTextChanged
     } = useTaskForm({ day, initialStartTime, initialEndTime, onClose, task });
 
     const noteSectionRef = useRef<NoteSectionHandle>(null);
@@ -84,6 +86,8 @@ export const TaskForm = ({ mode, task, day, initialStartTime, initialEndTime, on
                     selectedNote={selectedNote}
                     onSelectNote={onSelectNote}
                     unSelectNote={unSelectNote}
+                    noteText={noteText}
+                    onNoteTextChanged={onNoteTextChanged}
                 />
             </div>
         </div>

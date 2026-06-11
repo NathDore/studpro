@@ -5,6 +5,8 @@ interface UseNoteStateProps {
     initialNotes?: Note[];
 }
 
+const NOTE_MAX_LENGTH = 300;
+
 const DEFAULT_NOTES: Note[] = [
     {
         id: "default-note-1",
@@ -23,8 +25,14 @@ const DEFAULT_NOTES: Note[] = [
 export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
     const [notes, setNotes] = useState<Note[]>(initialNotes ?? DEFAULT_NOTES);
     const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
+    const [noteText, setNoteText] = useState<string>('');
+
+    const isNoteTextEmpty = noteText.trim() === '';
+    const isNoteTextTooLong = noteText.length > NOTE_MAX_LENGTH;
+    const isNoteTextValid = !isNoteTextEmpty && !isNoteTextTooLong;
 
     const onAddNote = (note: Note) => {
+        if (!isNoteTextValid) return;
         setNotes(prev => [...prev, note]);
     };
 
@@ -33,16 +41,23 @@ export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
     };
 
     const onEditNote = (updatedNote: Note) => {
+        if (!isNoteTextValid) return;
         setNotes(prev => prev.map(n => n.id === updatedNote.id ? updatedNote : n));
     };
 
     const onSelectNote = (note: Note) => {
         setSelectedNote(note);
-    }
+        setNoteText(note.text);
+    };
 
     const unSelectNote = () => {
         setSelectedNote(undefined);
-    }
+        setNoteText('');
+    };
+
+    const onNoteTextChanged = (text: string) => {
+        setNoteText(text);
+    };
 
     return {
         notes,
@@ -51,6 +66,11 @@ export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
         onEditNote,
         selectedNote,
         onSelectNote,
-        unSelectNote
+        unSelectNote,
+        noteText,
+        onNoteTextChanged,
+        isNoteTextValid,
+        isNoteTextTooLong,
+        NOTE_MAX_LENGTH,
     };
 };
