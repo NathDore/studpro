@@ -6,6 +6,7 @@ import { COURSE_DATA } from "../../../data/Task_data";
 import { getMonday } from "../../../../../utils/dateUtils";
 import { useTimeState } from "./useTimeState";
 import { useTaskActions } from "./useTaskAction";
+import { useNoteState } from "./useNoteState";
 
 const courses: Course[] = COURSE_DATA;
 
@@ -26,6 +27,7 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, ta
     const [date, setDate] = useState<Date>(day.fullDate);
 
     const timeState = useTimeState({ initialStartTime, initialEndTime, task });
+    const noteState = useNoteState({ initialNotes: task?.notes });
     const actions = useTaskActions({ day, startTime: timeState.startTime, endTime: timeState.endTime, onClose });
 
     const onCourseChange = (course: Course) => setCourse(course);
@@ -38,6 +40,7 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, ta
         date,
         onDateChange,
         ...timeState,
+        ...noteState,
         ...actions,
         minDate: monday,
         maxDate,
