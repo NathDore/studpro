@@ -25,7 +25,7 @@ export const CalendarPage = () => {
             {displayForm && (
                 <TaskForm
                     mode={mode}
-                    task={selectedTask}
+                    selectedTask={selectedTask}
                     day={displayForm.day}
                     initialStartTime={displayForm.startTime}
                     initialEndTime={displayForm.endTime}

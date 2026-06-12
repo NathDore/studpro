@@ -1,6 +1,5 @@
 import { useTaskStore } from "../../../../../store/taskStore";
 import { taskExist } from "../../../../../utils/taskValidation";
-import type { Task } from "../../../../../types/Task";
 import type { Note } from "../../../../../types/Note";
 import type { Course } from "../../../../../types/Course";
 import type { CalendarDay, CalendarTime } from "../../../Calendar.types";
@@ -15,37 +14,29 @@ interface UseTaskActionsProps {
 export const useTaskActions = ({ day, startTime, endTime, onClose }: UseTaskActionsProps) => {
     const { addTask, updateTask, removeTask, tasks } = useTaskStore();
 
-    const onSubmit = (mode: 'create' | 'update', formData: { course: Course, notes: Note[] }, task?: Task) => {
-        const { course, notes } = formData;
-
+    const onSubmit = (mode: 'create' | 'update', course: Course, notes: Note[], id: string) => {
         if (mode === 'create') {
-            const newTask: Task = {
-                id: crypto.randomUUID(),
+            addTask({
+                id,
                 day,
                 startTime,
                 endTime,
                 course,
                 notes,
-            };
-
-            addTask(newTask);
+            });
         } else {
-            if (!task) return;
-
-            const updatedTask: Task = {
-                id: task.id,
+            updateTask({
+                id,
                 day,
                 startTime,
                 endTime,
                 course,
                 notes,
-            };
-
-            updateTask(updatedTask);
+            });
         }
 
         onClose();
-    };
+    }
 
     const onRemove = (taskId: string) => {
         if (!taskExist(tasks, taskId)) return;

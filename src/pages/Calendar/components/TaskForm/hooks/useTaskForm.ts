@@ -15,18 +15,18 @@ const maxDate = new Date(monday);
 maxDate.setDate(monday.getDate() + 6);
 
 interface UseTaskFormProps {
-    task?: Task;
+    selectedTask?: Task;
     day: CalendarDay;
     initialStartTime: CalendarTime;
     initialEndTime: CalendarTime;
     onClose: () => void;
 }
 
-export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, task }: UseTaskFormProps) => {
-    const [course, setCourse] = useState<Course>(task?.course ?? courses[0]);
+export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, selectedTask }: UseTaskFormProps) => {
+    const [course, setCourse] = useState<Course>(selectedTask?.course ?? courses[0]);
 
-    const timeState = useTimeState({ initialStartTime, initialEndTime, task });
-    const noteState = useNoteState({ initialNotes: task?.notes });
+    const timeState = useTimeState({ initialStartTime, initialEndTime, selectedTask });
+    const noteState = useNoteState({ initialNotes: selectedTask?.notes });
     const actions = useTaskActions({ day, startTime: timeState.startTime, endTime: timeState.endTime, onClose });
 
     const onCourseChange = (course: Course) => setCourse(course);

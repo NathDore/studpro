@@ -7,21 +7,21 @@ import type { Task } from "../../../../../types/Task";
 interface UseTimeStateProps {
     initialStartTime: CalendarTime;
     initialEndTime: CalendarTime;
-    task?: Task;
+    selectedTask?: Task;
 }
 
-export const useTimeState = ({ initialStartTime, initialEndTime, task }: UseTimeStateProps) => {
+export const useTimeState = ({ initialStartTime, initialEndTime, selectedTask }: UseTimeStateProps) => {
     const [startTime, setStartTime] = useState<CalendarTime>(
-        task?.startTime ?? initialStartTime
+        selectedTask?.startTime ?? initialStartTime
     );
     const [endTime, setEndTime] = useState<CalendarTime>(
-        task?.endTime ?? initialEndTime
+        selectedTask?.endTime ?? initialEndTime
     );
     const [timePickerInputs, setTimePickerInputs] = useState<TimePickerInputs>({
-        startHour: task?.startTime?.hour ?? initialStartTime.hour,
-        endHour: task?.endTime?.hour ?? initialEndTime.hour,
-        startMinutes: task?.startTime?.minutes ?? initialStartTime.minutes,
-        endMinutes: task?.endTime?.minutes ?? initialEndTime.minutes,
+        startHour: selectedTask?.startTime?.hour ?? initialStartTime.hour,
+        endHour: selectedTask?.endTime?.hour ?? initialEndTime.hour,
+        startMinutes: selectedTask?.startTime?.minutes ?? initialStartTime.minutes,
+        endMinutes: selectedTask?.endTime?.minutes ?? initialEndTime.minutes,
     });
 
     const onStartTimeChange = (time: CalendarTime) => {

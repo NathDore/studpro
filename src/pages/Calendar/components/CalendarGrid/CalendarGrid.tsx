@@ -11,7 +11,6 @@ interface CalendarGridProps {
     day_times: CalendarTime[];
     onHourCellClick: (calendar: CalendarDay, startTime: CalendarTime, endTime: CalendarTime) => void;
     onTaskCellClick: (task: Task) => void;
-
 }
 
 const CONTAINER_CLASS = 'relative flex-1 overflow-y-auto leading-none scrollbar-none [&::-webkit-scrollbar]:hidden';
