@@ -11,6 +11,8 @@ interface NoteInputProps {
     onNoteTextChanged: (text: string) => void;
 }
 
+const FLEX_CLASS = `flex flex-row flex-10 sm:flex-10 md:flex-10 lg:flex-10 xl:flex-10 2xl:flex-10`;
+
 export const NoteInput = ({ selectedNote, onAddNote, onEditNote, unSelectNote, noteText, onNoteTextChanged }: NoteInputProps) => {
 
     const handleAddNote = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -31,7 +33,7 @@ export const NoteInput = ({ selectedNote, onAddNote, onEditNote, unSelectNote, n
     }
 
     return (
-        <div className={`flex-30 flex flex-row gap-1.5`}>
+        <div className={`${FLEX_CLASS} gap-1.5`}>
             <textarea className={`${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} ${BORDER_CLASS} rounded-md flex-1 p-3 outline-none focus:border-gray-500`}
                 value={noteText}
                 onChange={handleOnNoteTextChanged}

@@ -33,6 +33,8 @@ interface TaskFormContentProps {
     mode: CalendarMode
 }
 
+const FLEX_TOP_CLASS = `flex flex-1 flex-col sm:flex-col md:flex-row`
+
 export const TaskFormContent = ({
     course,
     onCourseChange,
@@ -61,7 +63,7 @@ export const TaskFormContent = ({
         <div className={`py-2 px-8 w-full h-full flex flex-1 flex-col gap-8`}>
 
             {/* Top section */}
-            <div className={`flex flex-1 flex-row justify-between items-center  py-1`}>
+            <div className={`${FLEX_TOP_CLASS} justify-between items-center  py-1`}>
                 <CoursePicker course={course} onCourseChange={onCourseChange} courses={courses} />
                 <TimePicker
                     startTime={startTime}

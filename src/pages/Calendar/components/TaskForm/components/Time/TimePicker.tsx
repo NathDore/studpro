@@ -12,6 +12,8 @@ interface TimePickerProps {
     onMinutesInputChange: (timePickerInputType: TimePickerInputType, minutes: number) => void;
 }
 
+const FLEX_CLASS = `flex flex-col sm:flex-col md:flex-row`
+
 export const TimePicker = ({ startTime, onStartTimeChange, endTime, onEndTimeChange, timePickerInputs, onHourInputChange, onMinutesInputChange }: TimePickerProps) => {
 
     const handleStartTimeChange = (time: CalendarTime) => {
@@ -23,7 +25,7 @@ export const TimePicker = ({ startTime, onStartTimeChange, endTime, onEndTimeCha
     };
 
     return (
-        <div className={`flex flex-row gap-4`}>
+        <div className={`${FLEX_CLASS} gap-4`}>
             <div className={`flex flex-col gap-0.5`}>
                 <p className={TIME_TEXT_CLASS}>Start</p>
                 <TimeInput

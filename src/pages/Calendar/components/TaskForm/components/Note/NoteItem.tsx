@@ -22,7 +22,7 @@ export const NoteItem = ({ note, onSelectNote, onRemoveNote, isSelected }: NoteI
     }
 
     return (
-        <div onClick={handleSelectNote} className={`flex flex-row items-center justify-between gap-5 ${BORDER_CLASS} rounded-md px-2.5 py-2 cursor-pointer ${isSelected ? 'border-[#8FACBD] bg-[#ddeaf1]' : ''}`}>
+        <div onClick={handleSelectNote} className={`flex flex-row items-center justify-between gap-5 ${BORDER_CLASS} rounded-md px-2.5 py-2 cursor-pointer ${isSelected ? 'border-[#8FACBD] bg-[#ddeaf1]' : 'bg-white'} `}>
             <p className={`${TEXT_SIZE_CLASS} select-none`}>{note.text}</p>
             <MyButton onClick={handleOnDeleteNote} className={`border-none`}>
                 <TrashIcon className={'w-3.75 h-3.75 block text-[#C0392B]'} />
