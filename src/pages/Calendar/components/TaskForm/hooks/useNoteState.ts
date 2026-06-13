@@ -5,7 +5,7 @@ interface UseNoteStateProps {
     initialNotes?: Note[];
 }
 
-const NOTE_MAX_LENGTH = 300;
+const NOTE_MAX_LENGTH = 3000;
 
 export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
     const [notes, setNotes] = useState<Note[]>(initialNotes ?? []);
