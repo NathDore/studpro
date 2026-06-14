@@ -20,7 +20,7 @@ interface TaskFormProps {
     onNewCourseClick: () => void;
 }
 
-const FLEX_TOP_CLASS = `flex flex-1 flex-col sm:flex-col md:flex-row`
+const FLEX_TOP_CLASS = `flex flex-col sm:flex-col md:flex-row`;
 
 export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEndTime, onClose, onNewCourseClick }: TaskFormProps) => {
     const {
@@ -53,16 +53,16 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
 
     const handleDelete = () => {
         if (mode !== 'update' || !selectedTask) return;
-        onRemove(selectedTask?.id);
-    }
+        onRemove(selectedTask.id);
+    };
 
     return (
-        <Overlay onClose={onClose}>
-            <Modal title={mode === 'create' ? 'New task' : 'Edit task'} onClose={onClose}>
-                <div className={`py-2 px-8 w-full h-full flex flex-1 flex-col gap-8`}>
+        <Overlay>
+            <Modal title={mode === 'create' ? 'New task' : 'Edit task'} onClose={onClose} width={850} height={600}>
+                <div className="py-2 px-8 w-full h-full grid grid-rows-[auto_1fr_auto] gap-8">
 
-                    {/* Top section */}
-                    <div className={`${FLEX_TOP_CLASS} justify-between items-center  py-1`}>
+                    {/* Top — course + time picker */}
+                    <div className={`${FLEX_TOP_CLASS} justify-between items-center py-1 gap-1.5`}>
                         <CoursePicker course={course} onCourseChange={onCourseChange} courses={courses} onNewCourseClick={onNewCourseClick} />
                         <TimePicker
                             startTime={startTime}
@@ -75,37 +75,37 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
                         />
                     </div>
 
-                    {/* Middle section */}
-                    <div className={`flex flex-col flex-87 rounded-lg py-1 gap-1.5`}>
+                    {/* Middle — notes */}
+                    <div className="flex flex-col rounded-lg py-1 gap-1.5 overflow-hidden">
                         <NoteList
                             notes={notes}
                             onSelectNote={onSelectNote}
                             onRemoveNote={onRemoveNote}
                             selectedNote={selectedNote}
                         />
-
                         <NoteInput
                             selectedNote={selectedNote}
                             onAddNote={onAddNote}
                             onEditNote={onEditNote}
                             unSelectNote={unSelectNote}
                             noteText={noteText}
-                            onNoteTextChanged={onNoteTextChanged} />
+                            onNoteTextChanged={onNoteTextChanged}
+                        />
                     </div>
 
-                    {/* Bottom section */}
-                    <div className={`flex-10 flex flex-row justify-start items-center gap-2.5  py-1`}>
-                        <MyButton onClick={handleSubmit} className={`w-30 h-10 flex justify-center items-center bg-green-300`}>
+                    {/* Bottom — actions */}
+                    <div className="flex flex-row justify-start items-center gap-2.5 py-1">
+                        <MyButton onClick={handleSubmit} className="w-30 h-10 flex justify-center items-center bg-green-300">
                             <p>{mode === 'create' ? 'Create' : 'Modify'}</p>
                         </MyButton>
-
-                        {
-                            mode === 'update' && <MyButton onClick={handleDelete} className={`w-30 h-10 flex justify-center items-cente bg-red-200`}>
-                                <WarningIcon className={'w-3.75 h-3.75 block text-[#C0392B]'} />
+                        {mode === 'update' && (
+                            <MyButton onClick={handleDelete} className="w-30 h-10 flex justify-center items-center bg-red-200">
+                                <WarningIcon className="w-3.75 h-3.75 block text-[#C0392B]" />
                                 <p>Delete</p>
                             </MyButton>
-                        }
+                        )}
                     </div>
+
                 </div>
             </Modal>
         </Overlay>
