@@ -30,7 +30,8 @@ interface TaskFormContentProps {
     onNoteTextChanged: (text: string) => void;
     handleSubmit: () => void;
     handleDelete: () => void;
-    mode: CalendarMode
+    mode: CalendarMode;
+    onNewCourseClick: () => void;
 }
 
 const FLEX_TOP_CLASS = `flex flex-1 flex-col sm:flex-col md:flex-row`
@@ -57,14 +58,15 @@ export const TaskFormContent = ({
     onNoteTextChanged,
     handleSubmit,
     handleDelete,
-    mode
+    mode,
+    onNewCourseClick
 }: TaskFormContentProps) => {
     return (
         <div className={`py-2 px-8 w-full h-full flex flex-1 flex-col gap-8`}>
 
             {/* Top section */}
             <div className={`${FLEX_TOP_CLASS} justify-between items-center  py-1`}>
-                <CoursePicker course={course} onCourseChange={onCourseChange} courses={courses} />
+                <CoursePicker course={course} onCourseChange={onCourseChange} courses={courses} onNewCourseClick={onNewCourseClick} />
                 <TimePicker
                     startTime={startTime}
                     onStartTimeChange={onStartTimeChange}

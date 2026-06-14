@@ -12,9 +12,10 @@ interface TaskFormProps {
     initialStartTime: CalendarTime;
     initialEndTime: CalendarTime;
     onClose: () => void;
+    onNewCourseClick: () => void;
 }
 
-export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEndTime, onClose }: TaskFormProps) => {
+export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEndTime, onClose, onNewCourseClick }: TaskFormProps) => {
     const {
         course,
         onCourseChange,
@@ -74,6 +75,7 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
                     handleSubmit={handleSubmit}
                     handleDelete={handleDelete}
                     mode={mode}
+                    onNewCourseClick={onNewCourseClick}
                 />
             </Modal>
         </Overlay>

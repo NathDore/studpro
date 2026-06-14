@@ -25,7 +25,7 @@ export interface CalendarBounds {
 
 export type CalendarMode = 'create' | 'update';
 
-export interface SelectedSlot {
+export interface TaskFormSelectedSlot {
     day: CalendarDay;
     startTime: CalendarTime;
     endTime: CalendarTime;

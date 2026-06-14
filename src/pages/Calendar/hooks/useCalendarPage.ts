@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTaskStore } from '../../../store/taskStore';
 import { getDays, getDayFromTask } from '../utils/calendarDayUtils';
-import type { SelectedSlot, CalendarMode, CalendarDay, CalendarTime } from '../Calendar.types';
+import type { TaskFormSelectedSlot, CalendarMode, CalendarDay, CalendarTime } from '../Calendar.types';
 import type { Task } from '../../../types/Task';
 import { getDayTimes } from '../utils/calendarTimeUtils';
 
@@ -11,34 +11,42 @@ const DAY_TIMES: CalendarTime[] = getDayTimes();
 export const useCalendarPage = () => {
     const { tasks } = useTaskStore();
 
-    const [displayForm, setDisplayForm] = useState<SelectedSlot | null>(null);
-    const [mode, setMode] = useState<CalendarMode>('create');
     const [selectedTask, setSelectedTask] = useState<Task | undefined>();
+    const [displayTaskForm, setDisplayTaskForm] = useState<TaskFormSelectedSlot | null>(null);
+    const [taskFormMode, setTaskFormMode] = useState<CalendarMode>('create');
+    const [displayCourseForm, setDisplayCourseForm] = useState<boolean>(false);
 
     const onHourCellClick = (day: CalendarDay, startTime: CalendarTime, endTime: CalendarTime) => {
-        setMode('create');
+        setTaskFormMode('create');
         setSelectedTask(undefined);
-        setDisplayForm({ day, startTime, endTime });
+        setDisplayTaskForm({ day, startTime, endTime });
     };
 
     const onTaskCellClick = (task: Task) => {
         const day = getDayFromTask(task);
-        setMode('update');
+        setTaskFormMode('update');
         setSelectedTask(task);
-        setDisplayForm({ day, startTime: task.startTime, endTime: task.endTime });
+        setDisplayTaskForm({ day, startTime: task.startTime, endTime: task.endTime });
     };
 
-    const closeForm = () => setDisplayForm(null);
+    const closeTaskForm = () => setDisplayTaskForm(null);
+
+    const onNewCourseClick = () => setDisplayCourseForm(true);
+
+    const closeCourseForm = () => setDisplayCourseForm(false);
 
     return {
         DAYS,
         DAY_TIMES,
         tasks,
-        displayForm,
-        mode,
+        displayTaskForm,
+        taskFormMode,
         selectedTask,
         onHourCellClick,
         onTaskCellClick,
-        closeForm,
+        closeTaskForm,
+        displayCourseForm,
+        onNewCourseClick,
+        closeCourseForm
     };
 };
