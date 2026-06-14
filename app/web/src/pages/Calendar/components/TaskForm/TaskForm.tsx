@@ -44,7 +44,8 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
         onSubmit,
         onRemove,
         noteText,
-        onNoteTextChanged
+        onNoteTextChanged,
+        clearNoteInput
     } = useTaskForm({ day, initialStartTime, initialEndTime, onClose, selectedTask });
 
     const handleSubmit = () => {
@@ -90,6 +91,7 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
                             unSelectNote={unSelectNote}
                             noteText={noteText}
                             onNoteTextChanged={onNoteTextChanged}
+                            clearNoteInput={clearNoteInput}
                         />
                     </div>
 
