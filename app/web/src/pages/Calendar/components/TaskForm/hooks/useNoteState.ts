@@ -23,6 +23,9 @@ export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
 
     const onRemoveNote = (noteId: string) => {
         setNotes(prev => prev.filter(n => n.id !== noteId));
+        if (selectedNote?.id === noteId) {
+            unSelectNote();
+        }
     };
 
     const onEditNote = (updatedNote: Note) => {
@@ -39,6 +42,10 @@ export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
         setSelectedNote(undefined);
         setNoteText('');
     };
+
+    const clearNoteInput = () => {
+        setNoteText('');
+    }
 
     const onNoteTextChanged = (text: string) => {
         setNoteText(text);
@@ -57,5 +64,6 @@ export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
         isNoteTextValid,
         isNoteTextTooLong,
         NOTE_MAX_LENGTH,
+        clearNoteInput
     };
 };

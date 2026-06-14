@@ -9,11 +9,12 @@ interface NoteInputProps {
     unSelectNote: () => void;
     noteText: string;
     onNoteTextChanged: (text: string) => void;
+    clearNoteInput: () => void;
 }
 
 const FLEX_CLASS = `flex flex-row flex-10 sm:flex-10 md:flex-10 lg:flex-10 xl:flex-10 2xl:flex-10`;
 
-export const NoteInput = ({ selectedNote, onAddNote, onEditNote, unSelectNote, noteText, onNoteTextChanged }: NoteInputProps) => {
+export const NoteInput = ({ selectedNote, onAddNote, onEditNote, unSelectNote, noteText, onNoteTextChanged, clearNoteInput }: NoteInputProps) => {
 
     const handleAddNote = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -24,7 +25,7 @@ export const NoteInput = ({ selectedNote, onAddNote, onEditNote, unSelectNote, n
         } else
             onAddNote({ id: crypto.randomUUID(), text: noteText });
 
-        unSelectNote();
+        clearNoteInput();
         onNoteTextChanged('');
     }
 
