@@ -57,7 +57,7 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
     };
 
     return (
-        <Overlay onClose={onClose}>
+        <Overlay>
             <Modal title={mode === 'create' ? 'New task' : 'Edit task'} onClose={onClose} width={850} height={600}>
                 <div className="py-2 px-8 w-full h-full grid grid-rows-[auto_1fr_auto] gap-8">
 
