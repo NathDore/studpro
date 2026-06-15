@@ -1,9 +1,14 @@
 interface ColorCircleProps {
     color: string;
+    width?: number;
+    height?: number;
+    isSelected?: boolean
 }
 
-export const ColorCircle = ({ color }: ColorCircleProps) => {
+export const ColorCircle = ({ color, width = 10, height = 10, isSelected }: ColorCircleProps) => {
     return (
-        <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: color }} />
+        <div
+            className={`rounded-full flex-shrink-0 transition-all ${isSelected ? 'ring-2 ring-offset-2 ring-gray-400' : ''}`}
+            style={{ backgroundColor: color, width, height }} />
     )
 }

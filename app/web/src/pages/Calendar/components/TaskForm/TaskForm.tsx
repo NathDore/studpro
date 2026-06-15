@@ -24,8 +24,8 @@ const FLEX_TOP_CLASS = `flex flex-col sm:flex-col md:flex-row`;
 
 export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEndTime, onClose, onNewCourseClick }: TaskFormProps) => {
     const {
-        course,
-        onCourseChange,
+        selectedCourse,
+        selectCourse,
         courses,
         startTime,
         onStartTimeChange,
@@ -41,7 +41,7 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
         selectedNote,
         onSelectNote,
         unSelectNote,
-        onSubmit,
+        onCreateTask,
         onRemove,
         noteText,
         onNoteTextChanged,
@@ -49,7 +49,7 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
     } = useTaskForm({ day, initialStartTime, initialEndTime, onClose, selectedTask });
 
     const handleSubmit = () => {
-        onSubmit(mode, course, notes, selectedTask ? selectedTask.id : crypto.randomUUID());
+        onCreateTask(mode, selectedCourse, notes, selectedTask ? selectedTask.id : crypto.randomUUID());
     };
 
     const handleDelete = () => {
@@ -64,7 +64,7 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
 
                     {/* Top — course + time picker */}
                     <div className={`${FLEX_TOP_CLASS} justify-between items-center py-1 gap-1.5`}>
-                        <CoursePicker course={course} onCourseChange={onCourseChange} courses={courses} onNewCourseClick={onNewCourseClick} />
+                        <CoursePicker selectedCourse={selectedCourse} selectCourse={selectCourse} courses={courses} onNewCourseClick={onNewCourseClick} />
                         <TimePicker
                             startTime={startTime}
                             onStartTimeChange={onStartTimeChange}
@@ -97,7 +97,11 @@ export const TaskForm = ({ mode, selectedTask, day, initialStartTime, initialEnd
 
                     {/* Bottom — actions */}
                     <div className="flex flex-row justify-start items-center gap-2.5 py-1">
-                        <MyButton onClick={handleSubmit} className="w-30 h-10 flex justify-center items-center bg-green-300">
+                        <MyButton
+                            onClick={handleSubmit}
+                            disabled={selectedCourse === null}
+                            className={`w-30 h-10 flex justify-center items-center bg-green-300 ${selectedCourse === null ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
                             <p>{mode === 'create' ? 'Create' : 'Modify'}</p>
                         </MyButton>
                         {mode === 'update' && (

@@ -1,45 +1,54 @@
 import { useState } from "react";
 import type { Course } from "../../../../../../types/Course";
-import { COURSE_GAP_CLASS, COURSE_PADDING_CLASS, COURSE_TEXT_CLASS } from "./styles-course-section";
+import { COURSE_PADDING_CLASS, COURSE_TEXT_CLASS } from "./styles-course-section";
 import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from "../../../../../../styles/styles-class";
 import { ColorCircle } from "../../../../../../components/ColorCircle";
 
 interface DropDownProps {
-    course: Course;
-    onCourseChange: (course: Course) => void;
+    selectedCourse: Course;
+    selectCourse: (course: Course) => void;
     courses: Course[];
 }
 
-export const CourseDropDown = ({ course, onCourseChange, courses }: DropDownProps) => {
+export const CourseDropDown = ({ selectedCourse, selectCourse, courses }: DropDownProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className={`flex-1 relative`}>
-            <div className={`flex flex-row items-center h-full ${COURSE_GAP_CLASS} ${TEXT_SIZE_CLASS} font-medium ${TEXT_COLOR_CLASS} ${COURSE_PADDING_CLASS} ${BORDER_CLASS} rounded-[5px] cursor-pointer hover:border-gray-400`} onClick={() => setIsOpen(!isOpen)}>
-                <div className={`flex flex-row items-center ${COURSE_GAP_CLASS}`}>
-                    <ColorCircle color={course.color} />
-                    <span className={COURSE_TEXT_CLASS}>{course.name}</span>
+        <div className="relative w-56 min-w-0">
+            <div
+                className={`flex flex-row items-center justify-between h-full gap-0.5 ${TEXT_SIZE_CLASS} font-medium ${TEXT_COLOR_CLASS} ${COURSE_PADDING_CLASS} ${BORDER_CLASS} rounded-[5px] cursor-pointer hover:border-gray-400`}
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <div className={`flex flex-row items-center gap-1.5 min-w-0`}>
+                    <ColorCircle color={selectedCourse.color} />
+                    <span className={`${COURSE_TEXT_CLASS} truncate`}>{selectedCourse.name}</span>
                 </div>
-                <span className={COURSE_TEXT_CLASS}>
+                <span className={`${COURSE_TEXT_CLASS} flex-shrink-0`}>
                     {isOpen ? "▲" : "▼"}
                 </span>
             </div>
 
             {isOpen && (
-                <div className={`absolute top-full left-0 min-w-full bg-white border border-gray-300 rounded-[5px] z-10`}>
-                    {courses.filter((c) => c.id !== course.id).map((c) => (
-                        <div
-                            key={c.id}
-                            className={`flex flex-row items-center ${COURSE_GAP_CLASS} ${COURSE_PADDING_CLASS} cursor-pointer ${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} hover:bg-[#f5f5f5]`}
-                            onClick={() => {
-                                onCourseChange(c);
-                                setIsOpen(false);
-                            }}
-                        >
-                            <ColorCircle color={c.color} />
-                            {c.name}
+                <div className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-[5px] z-10">
+                    {courses.filter((c) => c.id !== selectedCourse.id).length === 0 ? (
+                        <div className={`${COURSE_PADDING_CLASS} ${TEXT_SIZE_CLASS} text-gray-400 italic`}>
+                            No other courses
                         </div>
-                    ))}
+                    ) : (
+                        courses.filter((c) => c.id !== selectedCourse.id).map((c) => (
+                            <div
+                                key={c.id}
+                                className={`flex flex-row items-center gap-1.5 ${COURSE_PADDING_CLASS} cursor-pointer ${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} hover:bg-[#f5f5f5]`}
+                                onClick={() => {
+                                    selectCourse(c);
+                                    setIsOpen(false);
+                                }}
+                            >
+                                <ColorCircle color={c.color} />
+                                <span className="truncate">{c.name}</span>
+                            </div>
+                        ))
+                    )}
                 </div>
             )}
         </div>

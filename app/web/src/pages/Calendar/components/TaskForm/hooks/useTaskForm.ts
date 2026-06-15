@@ -1,14 +1,10 @@
-import type { Course } from "../../../../../types/Course";
 import type { CalendarDay, CalendarTime } from "../../../Calendar.types";
 import type { Task } from "../../../../../types/Task";
-import { useState } from "react";
-import { COURSE_DATA } from "../../../data/Task_data";
 import { getMonday } from "../../../../../utils/dateUtils";
 import { useTimeState } from "./useTimeState";
 import { useTaskActions } from "./useTaskAction";
 import { useNoteState } from "./useNoteState";
-
-const courses: Course[] = COURSE_DATA;
+import { useCourseStore } from "../../../../../store/courseStore";
 
 const monday = getMonday(new Date());
 const maxDate = new Date(monday);
@@ -23,17 +19,16 @@ interface UseTaskFormProps {
 }
 
 export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, selectedTask }: UseTaskFormProps) => {
-    const [course, setCourse] = useState<Course>(selectedTask?.course ?? courses[0]);
+
+    const { courses, selectedCourse, selectCourse } = useCourseStore();
 
     const timeState = useTimeState({ initialStartTime, initialEndTime, selectedTask });
     const noteState = useNoteState({ initialNotes: selectedTask?.notes });
     const actions = useTaskActions({ day, startTime: timeState.startTime, endTime: timeState.endTime, onClose });
 
-    const onCourseChange = (course: Course) => setCourse(course);
-
     return {
-        course,
-        onCourseChange,
+        selectedCourse,
+        selectCourse,
         courses,
         ...timeState,
         ...noteState,
