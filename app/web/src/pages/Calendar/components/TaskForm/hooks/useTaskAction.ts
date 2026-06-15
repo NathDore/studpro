@@ -14,7 +14,12 @@ interface UseTaskActionsProps {
 export const useTaskActions = ({ day, startTime, endTime, onClose }: UseTaskActionsProps) => {
     const { addTask, updateTask, removeTask, tasks } = useTaskStore();
 
-    const onSubmit = (mode: 'create' | 'update', course: Course, notes: Note[], id: string) => {
+    const onCreateTask = (mode: 'create' | 'update', course: Course | null, notes: Note[], id: string) => {
+        if (course === null) {
+            console.error('Course must be selected first');
+            return;
+        }
+
         if (mode === 'create') {
             addTask({
                 id,
@@ -44,5 +49,5 @@ export const useTaskActions = ({ day, startTime, endTime, onClose }: UseTaskActi
         onClose();
     };
 
-    return { onSubmit, onRemove };
+    return { onCreateTask, onRemove };
 };
