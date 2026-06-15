@@ -4,6 +4,7 @@ import { getDays, getDayFromTask } from '../utils/calendarDayUtils';
 import type { TaskFormSelectedSlot, CalendarMode, CalendarDay, CalendarTime } from '../Calendar.types';
 import type { Task } from '../../../types/Task';
 import { getDayTimes } from '../utils/calendarTimeUtils';
+import { useCourseStore } from '../../../store/courseStore';
 
 const DAYS: CalendarDay[] = getDays();
 const DAY_TIMES: CalendarTime[] = getDayTimes();
@@ -16,6 +17,8 @@ export const useCalendarPage = () => {
     const [taskFormMode, setTaskFormMode] = useState<CalendarMode>('create');
     const [displayCourseForm, setDisplayCourseForm] = useState<boolean>(false);
 
+    const { selectCourse } = useCourseStore();
+
     const onHourCellClick = (day: CalendarDay, startTime: CalendarTime, endTime: CalendarTime) => {
         setTaskFormMode('create');
         setSelectedTask(undefined);
@@ -26,6 +29,7 @@ export const useCalendarPage = () => {
         const day = getDayFromTask(task);
         setTaskFormMode('update');
         setSelectedTask(task);
+        selectCourse(task.course);
         setDisplayTaskForm({ day, startTime: task.startTime, endTime: task.endTime });
     };
 
