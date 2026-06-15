@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useTaskStore } from "../../../../../../../../store/taskStore";
 import { CELL_HEIGHT } from "../../../../../../../../constants";
-import { TASK_GAP } from "../../../../../../../../constants";
-import { getPeriodFromHour, getTaskPositionInCalendar } from "../../../../../../../../utils/taskUtils";
+import { getPeriodFromHour } from "../../../../../../../../utils/taskUtils";
+import { clampToAdjacentTask, clampToCalendarBounds, clampToMinHeight, getAdjacentTask, snapTo15 } from "../utils/resizeBarUtils";
 import type { CalendarBounds } from "../../../../../../Calendar.types";
 import type { Task } from "../../../../../../../../types/Task";
 import type { CalendarTime, TaskPosition } from "../../../../../../Calendar.types";
 
-type Direction = 'top' | 'bottom';
+export type Direction = 'top' | 'bottom';
 
 interface UseResizeBarProps {
     calendarBounds: CalendarBounds;
@@ -15,6 +15,9 @@ interface UseResizeBarProps {
 }
 
 export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) => {
+    const startClampHourTime = useRef<CalendarTime | null>(null);
+    const endClampHourTime = useRef<CalendarTime | null>(null);
+
     const isResizing = useRef(false);
     const direction = useRef<Direction>('top');
     const startY = useRef(0);
@@ -46,30 +49,6 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
         };
     }, []);
 
-    const getAdjacentTask = (dir: Direction, tasks: Task[], currentTask: Task): Task | null => {
-        const currentPos = getTaskPositionInCalendar(currentTask, cellWidth);
-        const sameDayTasks = tasks.filter(t =>
-            t.day.fullDate === currentTask.day.fullDate && t.id !== currentTask.id
-        );
-
-        let closestTask: Task | null = null;
-        let closestDistance = Infinity;
-
-        sameDayTasks.forEach(candidate => {
-            const candidatePos = getTaskPositionInCalendar(candidate, cellWidth);
-            const distance = dir === 'top'
-                ? currentPos.top - (candidatePos.top + candidatePos.height)
-                : candidatePos.top - (currentPos.top + currentPos.height);
-
-            if (distance >= 0 && distance < closestDistance) {
-                closestDistance = distance;
-                closestTask = candidate;
-            }
-        });
-
-        return closestTask;
-    };
-
     const onResizeTop = (e: MouseEvent, task: Task, position: TaskPosition) => {
         e.preventDefault();
         e.stopPropagation();
@@ -81,7 +60,7 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
         activeTask.current = task;
         direction.current = 'top';
         isResizing.current = true;
-        adjacentTask.current = getAdjacentTask('top', tasks, task);
+        adjacentTask.current = getAdjacentTask('top', tasks, task, cellWidth);
     };
 
     const onResizeBottom = (e: MouseEvent, task: Task, position: TaskPosition) => {
@@ -95,50 +74,8 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
         activeTask.current = task;
         direction.current = 'bottom';
         isResizing.current = true;
-        adjacentTask.current = getAdjacentTask('bottom', tasks, task);
+        adjacentTask.current = getAdjacentTask('bottom', tasks, task, cellWidth);
     };
-
-    const clampToMinHeight = (direction: Direction, deltaY: number): number => {
-        const heightOf15min = CELL_HEIGHT / 4;
-
-        let position: number = direction === 'top' ? startTop.current + deltaY : startTop.current + startHeight.current + deltaY;
-
-        if (direction === 'top') {
-            const clampHeight = (startTop.current + startHeight.current) - heightOf15min;
-            if (position > clampHeight) position = clampHeight;
-        } else {
-            const clampHeight = (startTop.current + heightOf15min);
-            if (position < clampHeight) position = clampHeight;
-        }
-
-        return position;
-    }
-
-    const clampToAdjacentTask = (direction: Direction, position: number): number => {
-        if (!adjacentTask.current) return position;
-
-        const adjacentTaskPos = getTaskPositionInCalendar(adjacentTask.current, cellWidth);
-
-        if (direction === 'top') {
-            const clampPos = (adjacentTaskPos.top + adjacentTaskPos.height) + TASK_GAP;
-            if (position < clampPos) position = clampPos;
-        } else {
-            const clampPos = adjacentTaskPos.top - TASK_GAP;
-            if (position > clampPos) position = clampPos;
-        }
-
-        return position;
-    }
-
-    const clampToCalendarBounds = (direction: Direction, position: number) => {
-        if (direction === 'top') {
-            position = position <= 0 ? 0 : position;
-        } else {
-            position = position >= calendarBounds.height ? calendarBounds.height : position;
-        }
-
-        return position;
-    }
 
     const onMouseMove = (e: MouseEvent) => {
         if (!isResizing.current || !activeTask.current) return;
@@ -148,30 +85,52 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
         let newEnd: CalendarTime = { ...activeTask.current.endTime };
 
         if (direction.current === 'top') {
-            let newTop = clampToMinHeight('top', deltaY);
-            newTop = clampToAdjacentTask('top', newTop);
-            newTop = clampToCalendarBounds('top', newTop);
+            let newTop = clampToMinHeight('top', deltaY, startTop.current, startHeight.current, CELL_HEIGHT);
+            if (adjacentTask.current) newTop = clampToAdjacentTask('top', newTop, adjacentTask.current, cellWidth);
+            newTop = clampToCalendarBounds('top', newTop, calendarBounds.height);
 
-            const newHours = newTop / CELL_HEIGHT;
+            const newHour = newTop / CELL_HEIGHT;
+            const snappedMinutes = snapTo15(newHour * 60);
+            const snappedHour = Math.floor(snappedMinutes / 60);
+            const snappedMin = snappedMinutes % 60;
+
+            startClampHourTime.current = {
+                id: activeTask.current.startTime.id,
+                period: getPeriodFromHour(snappedHour),
+                hour: snappedHour,
+                minutes: snappedMin,
+            };
+
             newStart = {
                 id: activeTask.current.startTime.id,
-                period: getPeriodFromHour(Math.floor(newHours)),
-                hour: Math.floor(newHours),
-                minutes: Math.round((newHours % 1) * 60),
+                period: getPeriodFromHour(Math.floor(newHour)),
+                hour: Math.floor(newHour),
+                minutes: Math.round((newHour % 1) * 60),
             };
         }
 
         if (direction.current === 'bottom') {
-            let newBottom = clampToMinHeight('bottom', deltaY);
-            newBottom = clampToAdjacentTask('bottom', newBottom);
-            newBottom = clampToCalendarBounds('bottom', newBottom);
+            let newBottom = clampToMinHeight('bottom', deltaY, startTop.current, startHeight.current, CELL_HEIGHT);
+            if (adjacentTask.current) newBottom = clampToAdjacentTask('bottom', newBottom, adjacentTask.current, cellWidth);
+            newBottom = clampToCalendarBounds('bottom', newBottom, calendarBounds.height);
 
-            const newHours = newBottom / CELL_HEIGHT;
+            const newHour = newBottom / CELL_HEIGHT;
+            const snappedMinutes = snapTo15(newHour * 60);
+            const snappedHour = Math.floor(snappedMinutes / 60);
+            const snappedMin = snappedMinutes % 60;
+
+            endClampHourTime.current = {
+                id: activeTask.current.endTime.id,
+                period: getPeriodFromHour(snappedHour),
+                hour: snappedHour,
+                minutes: snappedMin,
+            };
+
             newEnd = {
                 id: activeTask.current.endTime.id,
-                period: getPeriodFromHour(Math.floor(newHours)),
-                hour: Math.floor(newHours),
-                minutes: Math.round((newHours % 1) * 60),
+                period: getPeriodFromHour(Math.floor(newHour)),
+                hour: Math.floor(newHour),
+                minutes: Math.round((newHour % 1) * 60),
             };
         }
 
@@ -190,6 +149,20 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
 
     const onMouseUp = () => {
         if (!isResizing.current) return;
+
+        const currentTask = activeTask.current;
+        if (!currentTask) return;
+
+        if (startClampHourTime.current) {
+            updateTask({ ...currentTask, startTime: startClampHourTime.current });
+            startClampHourTime.current = null;
+        }
+
+        if (endClampHourTime.current) {
+            updateTask({ ...currentTask, endTime: endClampHourTime.current });
+            endClampHourTime.current = null;
+        }
+
         document.body.style.cursor = '';
         document.body.classList.remove('is-resizing');
         isResizing.current = false;
