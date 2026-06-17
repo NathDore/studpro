@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useTaskStore } from "../../../../../../../../store/taskStore";
-import { CELL_HEIGHT } from "../../../../../../../../constants";
+import { CELL_HEIGHT } from "../../../../../../../../constants/calendar-grid-constant";
 import { getPeriodFromHour } from "../../../../../../../../utils/taskUtils";
 import { clampToAdjacentTask, clampToCalendarBounds, clampToMinHeight, getAdjacentTask, snapTo15 } from "../utils/resizeBarUtils";
 import type { CalendarBounds } from "../../../../../../Calendar.types";

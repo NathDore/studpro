@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTaskStore } from '../../../store/taskStore';
-import { getDays, getDayFromTask } from '../utils/calendarDayUtils';
+import { getDays, getDayFromTask } from '../../../utils/calendarDayUtils';
 import type { TaskFormSelectedSlot, CalendarMode, CalendarDay, CalendarTime } from '../Calendar.types';
 import type { Task } from '../../../types/Task';
 import { getDayTimes } from '../utils/calendarTimeUtils';

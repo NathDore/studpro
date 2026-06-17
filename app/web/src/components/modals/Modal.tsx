@@ -1,6 +1,7 @@
 import React from 'react'
 import { MyButton } from '../buttons/MyButton';
 import { CloseIcon } from '../icons/CloseIcon';
+import { COLORS } from '../../constants/colors-constant';
 
 interface ModalProps {
     children?: React.ReactNode;
@@ -21,7 +22,7 @@ export const Modal = ({ children, title, onClose, width, height }: ModalProps) =
             onClick={(e) => e.stopPropagation()}
         >
             {/* Header */}
-            <div className={`bg-[#8FAcbd] w-full rounded-t-xl px-8 py-2 flex items-center justify-between border-b border-gray-300 gap-4`}>
+            <div className={`${COLORS.secondary} w-full rounded-t-xl px-8 py-2 flex items-center justify-between border-b border-gray-300 gap-4`}>
                 <p className={`text-[18px] font-bold text-[#2C2C2A] select-none cursor-default`}>
                     {title}
                 </p>

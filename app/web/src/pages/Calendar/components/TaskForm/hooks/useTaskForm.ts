@@ -24,7 +24,7 @@ export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, se
 
     const timeState = useTimeState({ initialStartTime, initialEndTime, selectedTask });
     const noteState = useNoteState({ initialNotes: selectedTask?.notes });
-    const actions = useTaskActions({ day, startTime: timeState.startTime, endTime: timeState.endTime, onClose });
+    const actions = useTaskActions({ day, startTime: timeState.startTime, endTime: timeState.endTime, isCompleted: selectedTask ? selectedTask.isCompleted : false, onClose });
 
     return {
         selectedCourse,

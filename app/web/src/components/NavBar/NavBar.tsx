@@ -11,7 +11,7 @@ export const NavBar = () => {
             <div className="flex flex-row gap-4">
                 <NavLink
                     className={({ isActive }) =>
-                        `flex flex-row items-center justify-center gap-1 px-[15px] pt-[2px] cursor-pointer text-[#2C2C2A] select-none
+                        `flex flex-row items-center justify-center gap-1 px-3.75 pt-0.5 cursor-pointer text-[#2C2C2A] select-none
                         ${isActive ? 'bg-[#2C2C2A] text-white rounded-[10px]' : ''}`
                     }
                     to="/"
@@ -22,7 +22,7 @@ export const NavBar = () => {
 
                 <NavLink
                     className={({ isActive }) =>
-                        `flex flex-row items-center justify-center gap-1 px-[15px] pt-[2px] cursor-pointer text-[#2C2C2A] select-none
+                        `flex flex-row items-center justify-center gap-1 px-3.75 pt-0.5 cursor-pointer text-[#2C2C2A] select-none
                         ${isActive ? 'bg-[#2C2C2A] text-white rounded-[10px]' : ''}`
                     }
                     to="/todo"

@@ -1,6 +1,6 @@
-import type { Task } from "../../../types/Task";
-import { getMonday } from "../../../utils/dateUtils";
-import type { CalendarDay, CalendarTimeDays } from "../Calendar.types";
+import type { Task } from "../types/Task";
+import { getMonday } from "./dateUtils";
+import type { CalendarDay, CalendarTimeDays } from "../pages/Calendar/Calendar.types";
 
 const DAY_NAMES: CalendarTimeDays[] = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 

@@ -3,7 +3,7 @@ import { Modal } from '../../../../components/modals/Modal'
 import { ColorCircle } from '../../../../components/ColorCircle';
 import { MyButton } from '../../../../components/buttons/MyButton';
 import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../styles/styles-class';
-import { COLORS } from '../../../../constants';
+import { COURSE_COLORS } from '../../../../constants/colors-constant';
 import { useCourseForm } from './hooks/useCourseForm';
 
 interface CourseFormProps {
@@ -18,7 +18,7 @@ export const CourseForm = ({ onClose }: CourseFormProps) => {
         selectedColor,
         onSelectColor,
         onCreateCourse
-    } = useCourseForm({ initialColor: COLORS[0], onClose });
+    } = useCourseForm({ initialColor: COURSE_COLORS[0], onClose });
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onCourseNameChange(e.target.value);
@@ -45,7 +45,7 @@ export const CourseForm = ({ onClose }: CourseFormProps) => {
                     </div>
                     <hr className="w-full border-t border-gray-300" />
                     <div className='flex flex-wrap'>
-                        {COLORS.map(c => (
+                        {COURSE_COLORS.map(c => (
                             <div
                                 key={c}
                                 onClick={() => onSelectColor(c)}

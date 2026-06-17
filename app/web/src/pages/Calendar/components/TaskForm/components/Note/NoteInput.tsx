@@ -20,10 +20,10 @@ export const NoteInput = ({ selectedNote, onAddNote, onEditNote, unSelectNote, n
         e.preventDefault();
 
         if (selectedNote) {
-            onEditNote({ id: selectedNote.id, text: noteText });
+            onEditNote({ id: selectedNote.id, text: noteText, isCompleted: false });
             unSelectNote();
         } else
-            onAddNote({ id: crypto.randomUUID(), text: noteText });
+            onAddNote({ id: crypto.randomUUID(), text: noteText, isCompleted: false });
 
         clearNoteInput();
         onNoteTextChanged('');
