@@ -1,9 +1,9 @@
-import { Overlay } from '../../../../components/modal/Overlay'
-import { Modal } from '../../../../components/modal/Modal'
-import { ColorCircle } from '../../../../components/ColorCircle';
-import { MyButton } from '../../../../components/MyButton';
-import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../styles/styles-class';
-import { COURSE_COLORS } from '../../../../constants/colors-constant';
+import { Overlay } from '../../modal/Overlay';
+import { Modal } from '../../modal/Modal';
+import { ColorCircle } from '../../ColorCircle';
+import { MyButton } from '../../MyButton';
+import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../styles/styles-class';
+import { COURSE_COLORS } from '../../../constants/colors-constant';
 import { useCourseForm } from './hooks/useCourseForm';
 
 interface CourseFormProps {

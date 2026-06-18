@@ -2,7 +2,7 @@ import { useCalendarPage } from './hooks/useCalendarPage';
 import { CalendarHeader } from './components/CalendarHeader';
 import { CalendarGrid } from './components/CalendarGrid/CalendarGrid';
 import { TaskForm } from '../../components/Forms/TaskForm/TaskForm';
-import { CourseForm } from './components/CourseForm/CourseForm';
+import { CourseForm } from '../../components/Forms/CourseForm/CourseForm';
 import { COLORS } from '../../constants/colors-constant';
 
 export const CalendarPage = () => {
