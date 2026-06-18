@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { useCourseStore } from "../../../../../store/courseStore";
-import type { Color } from "../../../../../constants/colors-constant";
+import { useCourseStore } from "../../../../store/courseStore";
+import type { Color } from "../../../../constants/colors-constant";
 
 interface UseCourseFormProps {
     initialColor: Color;
