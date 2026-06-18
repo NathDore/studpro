@@ -1,7 +1,8 @@
-import { TASK_GAP } from "../../../../../../../../constants";
 import type { Task } from "../../../../../../../../types/Task";
 import { getTaskPositionInCalendar } from "../../../../../../../../utils/taskUtils";
 import type { Direction } from "../hooks/useResizeBar";
+
+const TASK_GAP = 3;
 
 export const getAdjacentTask = (dir: Direction, tasks: Task[], currentTask: Task, cellWidth: number): Task | null => {
     const currentPos = getTaskPositionInCalendar(currentTask, cellWidth);

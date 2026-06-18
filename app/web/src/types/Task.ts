@@ -9,4 +9,5 @@ export interface Task {
     endTime: CalendarTime;
     course: Course,
     notes: Note[];
+    isCompleted: boolean;
 }

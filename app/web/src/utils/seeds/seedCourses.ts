@@ -1,5 +1,5 @@
-import { useCourseStore } from '../store/courseStore';
-import type { Course } from '../types/Course';
+import { useCourseStore } from '../../store/courseStore';
+import type { Course } from '../../types/Course';
 
 const MAT130: Course = { id: "MAT-130", name: "MAT-130", color: "#5B8DB8" };
 const MAT160: Course = { id: "MAT-160", name: "MAT-160", color: "#C97A3E" };

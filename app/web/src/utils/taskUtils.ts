@@ -1,6 +1,6 @@
+import { CELL_HEIGHT, TIME_CELL_WIDTH } from "../constants/calendar-grid-constant";
 import type { CalendarTime, TaskPosition } from "../pages/Calendar/Calendar.types";
 import type { Task } from "../types/Task";
-import { CELL_HEIGHT, TIME_CELL_WIDTH } from "../constants";
 
 export const timeDuration = (time: CalendarTime): number => {
     const hour12 = time.hour % 12;

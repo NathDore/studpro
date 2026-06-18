@@ -8,10 +8,11 @@ interface UseTaskActionsProps {
     day: CalendarDay;
     startTime: CalendarTime;
     endTime: CalendarTime;
+    isCompleted?: boolean;
     onClose: () => void;
 }
 
-export const useTaskActions = ({ day, startTime, endTime, onClose }: UseTaskActionsProps) => {
+export const useTaskActions = ({ day, startTime, endTime, isCompleted, onClose }: UseTaskActionsProps) => {
     const { addTask, updateTask, removeTask, tasks } = useTaskStore();
 
     const onCreateTask = (mode: 'create' | 'update', course: Course | null, notes: Note[], id: string) => {
@@ -28,6 +29,7 @@ export const useTaskActions = ({ day, startTime, endTime, onClose }: UseTaskActi
                 endTime,
                 course,
                 notes,
+                isCompleted: false
             });
         } else {
             updateTask({
@@ -37,6 +39,7 @@ export const useTaskActions = ({ day, startTime, endTime, onClose }: UseTaskActi
                 endTime,
                 course,
                 notes,
+                isCompleted: isCompleted || false
             });
         }
 
