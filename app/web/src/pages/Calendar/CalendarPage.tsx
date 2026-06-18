@@ -1,4 +1,4 @@
-import { useCalendarPage } from './hooks/useCalendarPage';
+import { useCalendarPage } from './useCalendarPage';
 import { CalendarHeader } from './components/CalendarHeader';
 import { CalendarGrid } from './components/CalendarGrid/CalendarGrid';
 import { TaskForm } from '../../components/Forms/TaskForm/TaskForm';

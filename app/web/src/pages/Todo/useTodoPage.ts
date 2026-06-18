@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { useTaskStore } from "../../../store/taskStore"
-import { getDays } from "../../../utils/calendarDayUtils";
-import type { Task } from "../../../types/Task";
-import type { CalendarDay } from "../../Calendar/Calendar.types";
-import type { TodoDay } from "../Todo.types";
+import { useTaskStore } from "../../store/taskStore"
+import { getDays } from "../../utils/calendarDayUtils";
+import type { Task } from "../../types/Task";
+import type { CalendarDay } from "../Calendar/Calendar.types";
+import type { TodoDay } from "./Todo.types";
 
 const DAYS = getDays();
 

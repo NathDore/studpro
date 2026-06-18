@@ -1,7 +1,7 @@
 import { Checkbox } from '../../../components/Checkbox'
 import { TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../styles/styles-class'
 import type { Task } from '../../../types/Task'
-import { NoteItem } from './NoteItem'
+import { NoteItem } from './NoteItem/NoteItem'
 
 interface TaskCardProps {
     task: Task
@@ -22,7 +22,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
 
             <div className='flex flex-1 flex-col gap-1.5'>
                 {
-                    task.notes.map(n => <NoteItem key={n.id} note={n} />)
+                    task.notes.map(n => <NoteItem key={n.id} note={n} taskId={task.id} />)
                 }
             </div>
         </div >

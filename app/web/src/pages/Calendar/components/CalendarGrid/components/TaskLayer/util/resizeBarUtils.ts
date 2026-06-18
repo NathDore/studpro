@@ -1,6 +1,6 @@
-import type { Task } from "../../../../../../../../types/Task";
-import { getTaskPositionInCalendar } from "../../../../../../../../utils/taskUtils";
+import type { Task } from "../../../../../../../types/Task";
 import type { Direction } from "../hooks/useResizeBar";
+import { getTaskPositionInCalendar } from "../../../../../../../utils/taskUtils";
 
 const TASK_GAP = 3;
 

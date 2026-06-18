@@ -2,7 +2,7 @@ import type { Task } from '../../../../../../../types/Task';
 import type { TaskPosition } from '../../../../../Calendar.types';
 import { NoteIconLayer } from './components/NoteIconLayer/NoteIconLayer';
 import { ExpandedNoteLayer } from './components/ExpandedNoteLayer/ExpandedNoteLayer';
-import { useTaskCell } from './hooks/useTaskCell';
+import { useTaskCell } from './useTaskCell';
 import './TaskCell.css';
 
 const WRAPPER_CLASS = 'group pointer-events-auto absolute flex justify-center';
