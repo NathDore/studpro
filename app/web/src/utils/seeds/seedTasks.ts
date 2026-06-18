@@ -37,6 +37,8 @@ const TASK_SEED_DATA: TaskBlueprint[] = [
             'Read chapter 2 again before doing the exercises.',
             'Solve problems 2.1 to 2.4.',
             'Check answers with the solution guide.',
+            'Other note',
+            'Again other note for testing',
         ],
     },
     {

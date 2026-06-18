@@ -9,7 +9,7 @@ interface NoteItem {
 export const NoteItem = ({ note }: NoteItem) => {
     return (
         <div className={`flex flex-row w-ful rounded-sm px-1.5 py-1.5 bg-gray-50/30`}>
-            <div className='flex flex-90'>
+            <div className='flex flex-85'>
                 <p className={`${TEXT_COLOR_CLASS} ${TEXT_SIZE_CLASS} cursor-default select-none`}>
                     {
                         note.text
@@ -17,7 +17,7 @@ export const NoteItem = ({ note }: NoteItem) => {
                 </p>
             </div>
 
-            <div className='flex flex-10 justify-end items-start'>
+            <div className='flex flex-15 justify-end items-start'>
                 <Checkbox checked={false} onChange={() => console.log('Has been checked')} width={15} height={15} />
             </div>
         </div>

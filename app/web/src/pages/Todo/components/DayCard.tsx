@@ -1,8 +1,11 @@
-import { MyButton } from "../../../components/buttons/MyButton";
+import { MyButton } from '../../../components/buttons/MyButton';
 import { COLORS } from "../../../constants/colors-constant";
-import { TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from "../../../styles/styles-class";
+import {
+    TEXT_COLOR_CLASS,
+    TEXT_SIZE_CLASS,
+} from "../../../styles/styles-class";
 import { TaskCard } from "./TaskCard";
-import type { TodoDay } from "../Todo.types"
+import type { TodoDay } from "../Todo.types";
 
 interface DayCardProps {
     todoDay: TodoDay;
@@ -10,25 +13,39 @@ interface DayCardProps {
 
 export const DayCard = ({ todoDay }: DayCardProps) => {
     return (
-        <div className='flex flex-col w-75 max-h-screen'>
-
-            <div className='flex w-full flex-row gap-1.5 bg-[#8FAcbd] rounded-t-xl px-2 py-2 items-center justify-between border-b border-gray-300 flex-shrink-0'>
-                <span className={`${TEXT_COLOR_CLASS} ${TEXT_SIZE_CLASS} font-medium`} > <strong>{todoDay.day.day}</strong>, {todoDay.day.date}  {todoDay.day.fullDate.toLocaleDateString('en-US', { month: 'short' })}.</span>
+        <div className='w-70 h-137.5 grid grid-rows-[5%_90%_3%] shrink-0'>
+            {/* Header */}
+            <div className={`flex flex-row gap-1.5 ${COLORS.secondary} rounded-t-xl px-2 py-2 items-center justify-between border-b border-gray-300`}>
+                <span
+                    className={`${TEXT_COLOR_CLASS} ${TEXT_SIZE_CLASS} font-medium`}
+                >
+                    <strong>{todoDay.day.day}</strong>, {todoDay.day.date}{' '}
+                    {todoDay.day.fullDate.toLocaleDateString('en-US', {
+                        month: 'short',
+                    })}
+                    .
+                </span>
             </div>
 
-            <div className={`${COLORS.primary} flex flex-col rounded-b-sm border-b border-l border-r border-gray-300`}>
-                <div className={`${COLORS.primary} flex flex-col  min-h-0 overflow-y-auto py-1.5 px-2.5 gap-1.5`}>
-                    {
-                        todoDay.tasks?.map(t => <TaskCard key={t.id} task={t} />)
-                    }
-                </div>
+            {/* Task List */}
+            <div
+                className={`${COLORS.primary} flex flex-col overflow-y-auto py-1.5 px-2.5 gap-1.5 border-l border-r border-gray-300 min-h-0 thin-scrollbar`}
+            >
+                {todoDay.tasks?.map((task) => (
+                    <TaskCard key={task.id} task={task} />
+                ))}
+            </div>
 
-                <div className='flex flex-row w-full h-7 shrink-0'>
-                    {
-                        todoDay.isCompleted && <MyButton>Complete</MyButton>
-                    }
-                </div>
+            {/* Footer */}
+            <div
+                className={`${COLORS.primary} flex items-center border-b border-l border-r border-gray-300 rounded-b-sm`}
+            >
+                {todoDay.isCompleted && (
+                    <MyButton>
+                        Complete
+                    </MyButton>
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
