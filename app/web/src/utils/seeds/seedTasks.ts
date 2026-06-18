@@ -4,6 +4,7 @@ import { getDays } from '../../utils/calendarDayUtils';
 import type { Task } from '../../types/Task';
 import type { Note } from '../../types/Note';
 import type { CalendarTime, CalendarPeriod } from '../../pages/Calendar/Calendar.types';
+import { useCourseStore } from '../../store/courseStore';
 
 const ENABLE_SEED: boolean = true;
 
@@ -146,6 +147,7 @@ const TASK_SEED_DATA: TaskBlueprint[] = [
 ];
 
 export const seedTasks = () => {
+    const { courses } = useCourseStore.getState();
     const { tasks, addTask } = useTaskStore.getState();
 
     if (tasks.length > 0) return;
@@ -159,7 +161,7 @@ export const seedTasks = () => {
             day: days[dayIndex],
             startTime: createTime(...start),
             endTime: createTime(...end),
-            course: COURSE_DATA[courseIndex],
+            course: courses[courseIndex],
             notes: notes.map(createNote),
             isCompleted: false,
         };
