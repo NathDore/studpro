@@ -23,7 +23,7 @@ export const CourseDropDown = ({ selectedCourse, selectCourse, courses }: DropDo
                     <ColorCircle color={selectedCourse.color} />
                     <span className={`${COURSE_TEXT_CLASS} truncate`}>{selectedCourse.name}</span>
                 </div>
-                <span className={`${COURSE_TEXT_CLASS} flex-shrink-0`}>
+                <span className={`${COURSE_TEXT_CLASS} shrink-0`}>
                     {isOpen ? "▲" : "▼"}
                 </span>
             </div>
