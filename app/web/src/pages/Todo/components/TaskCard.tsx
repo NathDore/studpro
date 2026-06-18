@@ -22,7 +22,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
 
             <div className='flex flex-1 flex-col gap-1.5'>
                 {
-                    task.notes.map(n => <NoteItem key={n.id} note={n} />)
+                    task.notes.map(n => <NoteItem key={n.id} note={n} taskId={task.id} />)
                 }
             </div>
         </div >
