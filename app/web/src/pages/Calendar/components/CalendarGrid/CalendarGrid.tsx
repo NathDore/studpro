@@ -3,7 +3,7 @@ import type { Task } from '../../../../types/Task';
 import { TaskLayer } from './components/TaskLayer/TaskLayer';
 import { Scrollbar } from './components/Scrollbar/Scrollbar';
 import { CalendarRow } from './components/CalendarRow/CalendarRow';
-import { useCalendarGrid } from './hooks/useCalendarGrid';
+import { useCalendarGrid } from './useCalendarGrid';
 
 interface CalendarGridProps {
     days: CalendarDay[];

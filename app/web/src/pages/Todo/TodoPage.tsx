@@ -1,6 +1,6 @@
 import { COLORS } from "../../constants/colors-constant";
 import { DayCard } from "./components/DayCard";
-import { useTodoPage } from "./hooks/useTodoPage"
+import { useTodoPage } from "./useTodoPage"
 
 export const TodoPage = () => {
     const { todoDays } = useTodoPage();

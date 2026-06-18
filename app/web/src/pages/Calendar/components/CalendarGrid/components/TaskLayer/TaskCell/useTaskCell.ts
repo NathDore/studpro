@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import type { Task } from "../../../../../../../../types/Task";
-import type { Note } from "../../../../../../../../types/Note";
-import { getTaskDuration, getTaskHours } from "../../../../../../../../utils/taskUtils";
+import type { Task } from "../../../../../../../types/Task";
+import type { Note } from "../../../../../../../types/Note";
+import { getTaskDuration, getTaskHours } from "../../../../../../../utils/taskUtils";
 
 interface UseTaskCellProps {
     task: Task;

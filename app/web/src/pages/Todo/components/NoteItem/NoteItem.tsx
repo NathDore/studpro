@@ -1,6 +1,6 @@
-import { Checkbox } from '../../../components/Checkbox';
-import { TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../styles/styles-class';
-import type { Note } from '../../../types/Note'
+import { Checkbox } from '../../../../components/Checkbox';
+import { TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../styles/styles-class';
+import type { Note } from '../../../../types/Note'
 
 interface NoteItem {
     note: Note;

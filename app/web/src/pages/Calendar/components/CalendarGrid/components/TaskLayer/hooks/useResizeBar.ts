@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
-import { useTaskStore } from "../../../../../../../../store/taskStore";
-import { CELL_HEIGHT } from "../../../../../../../../constants/calendar-grid-constant";
-import { getPeriodFromHour } from "../../../../../../../../utils/taskUtils";
-import { clampToAdjacentTask, clampToCalendarBounds, clampToMinHeight, getAdjacentTask, snapTo15 } from "../utils/resizeBarUtils";
-import type { CalendarBounds } from "../../../../../../Calendar.types";
-import type { Task } from "../../../../../../../../types/Task";
-import type { CalendarTime, TaskPosition } from "../../../../../../Calendar.types";
+import { useTaskStore } from "../../../../../../../store/taskStore";
+import { CELL_HEIGHT } from "../../../../../../../constants/calendar-grid-constant";
+import { getPeriodFromHour } from "../../../../../../../utils/taskUtils";
+import { clampToAdjacentTask, clampToCalendarBounds, clampToMinHeight, getAdjacentTask, snapTo15 } from "../util/resizeBarUtils";
+import type { CalendarBounds } from "../../../../../Calendar.types";
+import type { Task } from "../../../../../../../types/Task";
+import type { CalendarTime, TaskPosition } from "../../../../../Calendar.types";
 
 export type Direction = 'top' | 'bottom';
 

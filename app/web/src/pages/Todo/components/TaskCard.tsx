@@ -1,7 +1,7 @@
 import { Checkbox } from '../../../components/Checkbox'
 import { TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../styles/styles-class'
 import type { Task } from '../../../types/Task'
-import { NoteItem } from './NoteItem'
+import { NoteItem } from './NoteItem/NoteItem'
 
 interface TaskCardProps {
     task: Task
