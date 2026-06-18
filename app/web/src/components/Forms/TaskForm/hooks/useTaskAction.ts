@@ -1,8 +1,8 @@
-import { useTaskStore } from "../../../../../store/taskStore";
-import { taskExist } from "../../../../../utils/taskValidation";
-import type { Note } from "../../../../../types/Note";
-import type { Course } from "../../../../../types/Course";
-import type { CalendarDay, CalendarTime } from "../../../Calendar.types";
+import { useTaskStore } from "../../../../store/taskStore";
+import { taskExist } from "../../../../utils/taskValidation";
+import type { Note } from "../../../../types/Note";
+import type { Course } from "../../../../types/Course";
+import type { CalendarDay, CalendarTime } from "../../../../pages/Calendar/Calendar.types";
 
 interface UseTaskActionsProps {
     day: CalendarDay;

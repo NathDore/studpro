@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { getNextHour } from "../../../utils/calendarTimeUtils";
-import { validateTimePickerInput } from "../../../utils/calendarTimeUtils";
-import type { CalendarTime, TimePickerInputs, TimePickerInputType } from "../../../Calendar.types";
-import type { Task } from "../../../../../types/Task";
+import { getNextHour } from "../../../../pages/Calendar/utils/calendarTimeUtils";
+import { validateTimePickerInput } from "../../../../pages/Calendar/utils/calendarTimeUtils";
+import type { CalendarTime, TimePickerInputs, TimePickerInputType } from "../../../../pages/Calendar/Calendar.types";
+import type { Task } from "../../../../types/Task";
 
 interface UseTimeStateProps {
     initialStartTime: CalendarTime;

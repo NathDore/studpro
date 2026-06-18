@@ -1,14 +1,14 @@
-import type { Task } from '../../../../types/Task';
-import type { CalendarDay, CalendarTime } from '../../Calendar.types';
+import type { Task } from '../../../types/Task';
+import type { CalendarDay, CalendarTime } from '../../../pages/Calendar/Calendar.types';
 import { useTaskForm } from './hooks/useTaskForm';
-import { Overlay } from '../../../../components/modal/Overlay';
-import { Modal } from '../../../../components/modal/Modal';
+import { Overlay } from '../../modal/Overlay';
+import { Modal } from '../../modal/Modal';
 import { CoursePicker } from './components/Course/CoursePicker';
 import { TimePicker } from './components/Time/TimePicker';
 import { NoteList } from './components/Note/NoteList';
 import { NoteInput } from './components/Note/NoteInput';
-import { MyButton } from '../../../../components/MyButton';
-import { WarningIcon } from '../../../../components/icons/WarningIcon';
+import { MyButton } from '../../MyButton';
+import { WarningIcon } from '../../icons/WarningIcon';
 
 interface TaskFormProps {
     mode: 'create' | 'update';

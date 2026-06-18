@@ -1,10 +1,10 @@
-import type { CalendarDay, CalendarTime } from "../../../Calendar.types";
-import type { Task } from "../../../../../types/Task";
-import { getMonday } from "../../../../../utils/dateUtils";
+import type { CalendarDay, CalendarTime } from "../../../../pages/Calendar/Calendar.types";
+import type { Task } from "../../../../types/Task";
+import { getMonday } from "../../../../utils/dateUtils";
 import { useTimeState } from "./useTimeState";
 import { useTaskActions } from "./useTaskAction";
 import { useNoteState } from "./useNoteState";
-import { useCourseStore } from "../../../../../store/courseStore";
+import { useCourseStore } from "../../../../store/courseStore";
 
 const monday = getMonday(new Date());
 const maxDate = new Date(monday);

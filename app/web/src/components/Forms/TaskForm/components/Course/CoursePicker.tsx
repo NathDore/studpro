@@ -1,9 +1,9 @@
-import { PlusIcon } from '../../../../../../components/icons/PlusIcon';
+import { PlusIcon } from '../../../../icons/PlusIcon';
 import { CourseDropDown } from './CourseDropDown';
-import type { Course } from '../../../../../../types/Course';
 import { COURSE_HEIGHT_CLASS } from './styles-course-section';
-import { TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../../../styles/styles-class';
-import { MyButton } from '../../../../../../components/MyButton';
+import { TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../../styles/styles-class';
+import { MyButton } from '../../../../MyButton';
+import type { Course } from '../../../../../types/Course';
 
 interface CoursePickerProps {
     selectedCourse: Course | null;

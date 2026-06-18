@@ -1,8 +1,8 @@
 import { useState } from "react";
-import type { Course } from "../../../../../../types/Course";
 import { COURSE_PADDING_CLASS, COURSE_TEXT_CLASS } from "./styles-course-section";
-import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from "../../../../../../styles/styles-class";
-import { ColorCircle } from "../../../../../../components/ColorCircle";
+import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from "../../../../../styles/styles-class";
+import { ColorCircle } from "../../../../ColorCircle";
+import type { Course } from "../../../../../types/Course";
 
 interface DropDownProps {
     selectedCourse: Course;

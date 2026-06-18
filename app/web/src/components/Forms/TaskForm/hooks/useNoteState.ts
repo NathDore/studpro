@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Note } from "../../../../../types/Note"
+import type { Note } from "../../../../types/Note";
 
 interface UseNoteStateProps {
     initialNotes?: Note[];
