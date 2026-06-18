@@ -1,7 +1,7 @@
-import { MyButton } from '../../../../../../components/buttons/MyButton';
-import { TrashIcon } from '../../../../../../components/icons/TrashIcon';
-import { BORDER_CLASS, TEXT_SIZE_CLASS } from '../../../../../../styles/styles-class';
-import type { Note } from '../../../../../../types/Note'
+import { MyButton } from '../../../../MyButton';
+import { TrashIcon } from '../../../../icons/TrashIcon';
+import { BORDER_CLASS, TEXT_SIZE_CLASS } from '../../../../../styles/styles-class';
+import type { Note } from '../../../../../types/Note';
 
 interface NoteItemProps {
     note: Note;

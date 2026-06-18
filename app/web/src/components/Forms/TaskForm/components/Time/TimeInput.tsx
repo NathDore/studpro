@@ -1,6 +1,6 @@
-import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from "../../../../../../styles/styles-class";
-import type { CalendarPeriod, CalendarTime, TimePickerInputType } from "../../../../Calendar.types";
+import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from "../../../../../styles/styles-class";
 import { TIME_BOX_INPUT_CLASS } from "./styles-time-section";
+import type { CalendarPeriod, CalendarTime, TimePickerInputType } from "../../../../../pages/Calendar/Calendar.types";
 
 const TIME_INPUT_PERIOD_ROW_CLASS = `flex flex-row ${BORDER_CLASS} h-7 rounded-[5px]`;
 const TIME_INPUT_PERIOD_BOX_CLASS = `${TIME_BOX_INPUT_CLASS} border-none rounded-[0px] cursor-pointer select-none`;

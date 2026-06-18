@@ -1,5 +1,5 @@
 import React from 'react'
-import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../styles/styles-class';
+import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../styles/styles-class';
 
 interface MyButtonProps extends React.PropsWithChildren {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;

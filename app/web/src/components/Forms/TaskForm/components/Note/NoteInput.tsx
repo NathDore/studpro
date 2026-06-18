@@ -1,6 +1,6 @@
-import { MyButton } from '../../../../../../components/buttons/MyButton';
-import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../../../styles/styles-class';
-import type { Note } from '../../../../../../types/Note'
+import { MyButton } from '../../../../MyButton';
+import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../../styles/styles-class';
+import type { Note } from '../../../../../types/Note';
 
 interface NoteInputProps {
     selectedNote?: Note;

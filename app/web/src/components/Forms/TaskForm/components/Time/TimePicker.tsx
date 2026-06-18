@@ -1,6 +1,6 @@
 import { TIME_TEXT_CLASS } from './styles-time-section';
-import type { CalendarTime, TimePickerInputs, TimePickerInputType } from '../../../../Calendar.types';
 import { TimeInput } from './TimeInput';
+import type { CalendarTime, TimePickerInputs, TimePickerInputType } from '../../../../../pages/Calendar/Calendar.types';
 
 interface TimePickerProps {
     startTime: CalendarTime;

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { CalendarIcon } from '../icons/CalendarIcon';
-import { CheckIcon } from '../icons/CheckIcon';
+import { CalendarIcon } from './icons/CalendarIcon';
+import { CheckIcon } from './icons/CheckIcon';
 
 export const NavBar = () => {
     return (
