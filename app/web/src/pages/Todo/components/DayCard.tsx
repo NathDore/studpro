@@ -1,4 +1,4 @@
-import { MyButton } from '../../../components/buttons/MyButton';
+import { MyButton } from '../../../components/MyButton';
 import { COLORS } from "../../../constants/colors-constant";
 import {
     TEXT_COLOR_CLASS,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { MyButton } from '../buttons/MyButton';
+import { MyButton } from '../MyButton';
 import { CloseIcon } from '../icons/CloseIcon';
 import { COLORS } from '../../constants/colors-constant';
 

@@ -3,7 +3,7 @@ import { CourseDropDown } from './CourseDropDown';
 import type { Course } from '../../../../../../types/Course';
 import { COURSE_HEIGHT_CLASS } from './styles-course-section';
 import { TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../../../styles/styles-class';
-import { MyButton } from '../../../../../../components/buttons/MyButton';
+import { MyButton } from '../../../../../../components/MyButton';
 
 interface CoursePickerProps {
     selectedCourse: Course | null;

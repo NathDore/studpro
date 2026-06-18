@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import { CalendarPage } from "../pages/Calendar/CalendarPage";
 import { TodoPage } from "../pages/Todo/TodoPage";
-import { NavBar } from "../components/NavBar/NavBar";
+import { NavBar } from "../components/NavBar";
 
 function Root() {
     return (
