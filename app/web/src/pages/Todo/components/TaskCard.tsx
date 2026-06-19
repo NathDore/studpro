@@ -11,7 +11,7 @@ const USE_CHECKBOX = false;
 
 export const TaskCard = ({ task }: TaskCardProps) => {
     return (
-        <div className={`flex flex-col w-full rounded-sm px-1.5 py-1.5 gap-2.5`} style={{ backgroundColor: task.course.color }}>
+        <div className={`flex flex-col w-full rounded-sm px-1.5 py-1.5 gap-2.5`} style={{ backgroundColor: task.isCompleted ? '#5edc8a' : task.course.color }}>
 
             <div className='flex flex-row w-full justify-between'>
                 <p className={`${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} font-medium text-[15px] cursor-default select-none`}>{task.course.name}</p>
