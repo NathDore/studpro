@@ -30,7 +30,11 @@ export const useTaskStore = create<TaskStore>((set) => ({
             if (task.id !== taskId) return task;
 
             const notes = task.notes.map(n => n.id === note.id ? note : n);
-            return { ...task, notes };
+            const isCompleted = notes.every(n => n.isCompleted);
+
+            if (isCompleted) {
+                return { ...task, notes, isCompleted: true };
+            } else return { ...task, notes, isCompleted: false };
         })
     }))
 }));
