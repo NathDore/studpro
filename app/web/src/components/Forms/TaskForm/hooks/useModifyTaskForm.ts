@@ -13,7 +13,7 @@ export const useModifyTaskForm = (day: CalendarDay, initialStartTime: CalendarTi
     const { submit: submitRemove } = useRemoveTask();
 
     const task = useTaskWithRelations(selectedTask?.id ?? '');
-    const timeState = useTimeState({ initialStartTime, initialEndTime, selectedTask: undefined });
+    const timeState = useTimeState(selectedTask?.id ?? '', initialStartTime, initialEndTime, 'update');
     const noteState = useNoteState(task?.notes ?? [], 'update');
 
     const courseState = { courses, selectedCourse, selectCourse };

@@ -11,7 +11,7 @@ export const useCreateTaskForm = (day: CalendarDay, initialStartTime: CalendarTi
 
     const taskIdRef = useRef(crypto.randomUUID());
 
-    const timeState = useTimeState({ initialStartTime, initialEndTime, selectedTask: undefined });
+    const timeState = useTimeState(taskIdRef.current, initialStartTime, initialEndTime, 'create');
     const noteState = useNoteState([], 'create');
 
     const courseState = { courses, selectedCourse, selectCourse };
