@@ -3,18 +3,14 @@ import type { Task } from "../../../../../../../types/Task";
 import type { Note } from "../../../../../../../types/Note";
 import { getTaskDuration, getTaskHours } from "../../../../../../../utils/taskUtils";
 
-interface UseTaskCellProps {
-    task: Task;
-}
-
-export const useTaskCell = ({ task }: UseTaskCellProps) => {
+export const useTaskCell = (task: Task, notes: Note[]) => {
     const [layout, setLayout] = useState<'full' | 'inline' | 'minimal'>('full');
     const [iconships, setIconships] = useState<Note[]>([]);
     const [expandedNotes, setExpandedNotes] = useState<Note[]>([]);
 
     useEffect(() => {
         const taskDuration = getTaskDuration(task.startTime, task.endTime);
-        const totalNotes = task.notes.length;
+        const totalNotes = notes.length;
 
         if (taskDuration <= 30) {
             setLayout('minimal');
@@ -23,7 +19,7 @@ export const useTaskCell = ({ task }: UseTaskCellProps) => {
         } else if (taskDuration <= 120) {
             setLayout('inline');
             setExpandedNotes([]);
-            setIconships(task.notes);
+            setIconships(notes);
         } else {
             setLayout('full');
 
@@ -33,8 +29,8 @@ export const useTaskCell = ({ task }: UseTaskCellProps) => {
             const availableHoursForNotes = taskHours - RESERVED_HOURS_TITLE - RESERVED_HOURS_ICONS;
 
             const expandedCount = Math.min(availableHoursForNotes, totalNotes);
-            const expandedNotesArr = task.notes.slice(0, expandedCount);
-            const iconshipsArr = task.notes.slice(expandedCount);
+            const expandedNotesArr = notes.slice(0, expandedCount);
+            const iconshipsArr = notes.slice(expandedCount);
 
             setExpandedNotes(expandedNotesArr);
             setIconships(iconshipsArr);

@@ -1,37 +1,23 @@
 import { useState } from "react";
+import { useCreateNote } from "../../../../hooks/note/useCreateNote";
+import { useRemoveNote } from "../../../../hooks/note/useRemoveNote";
+import { useModifyNote } from "../../../../hooks/note/useModifyNote";
 import type { Note } from "../../../../types/Note";
-
-interface UseNoteStateProps {
-    initialNotes?: Note[];
-}
 
 const NOTE_MAX_LENGTH = 3000;
 
-export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
-    const [notes, setNotes] = useState<Note[]>(initialNotes ?? []);
+export const useNoteState = (initialNotes: Note[], mode: 'create' | 'update') => {
+    const [notes, setNotes] = useState<Note[]>(initialNotes);
     const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
     const [noteText, setNoteText] = useState<string>('');
+
+    const { submit: submitCreate } = useCreateNote();
+    const { submit: submitRemove } = useRemoveNote();
+    const { submit: submitModify } = useModifyNote();
 
     const isNoteTextEmpty = noteText.trim() === '';
     const isNoteTextTooLong = noteText.length > NOTE_MAX_LENGTH;
     const isNoteTextValid = !isNoteTextEmpty && !isNoteTextTooLong;
-
-    const onAddNote = (note: Note) => {
-        if (!isNoteTextValid) return;
-        setNotes(prev => [...prev, note]);
-    };
-
-    const onRemoveNote = (noteId: string) => {
-        setNotes(prev => prev.filter(n => n.id !== noteId));
-        if (selectedNote?.id === noteId) {
-            unSelectNote();
-        }
-    };
-
-    const onEditNote = (updatedNote: Note) => {
-        if (!isNoteTextValid) return;
-        setNotes(prev => prev.map(n => n.id === updatedNote.id ? updatedNote : n));
-    };
 
     const onSelectNote = (note: Note) => {
         setSelectedNote(note);
@@ -51,19 +37,47 @@ export const useNoteState = ({ initialNotes }: UseNoteStateProps) => {
         setNoteText(text);
     };
 
+    const onAddNote = (note: Note) => {
+        if (!isNoteTextValid) return;
+        setNotes(prev => [...prev, note]);
+        if (mode === 'update') {
+            submitCreate(note.id, note.taskId, note.text);
+        }
+    }
+
+    const onRemoveNote = (noteId: string) => {
+        setNotes(prev => prev.filter(n => n.id !== noteId));
+        if (mode === 'update') {
+            submitRemove(noteId);
+        }
+        if (selectedNote?.id === noteId) {
+            unSelectNote();
+        }
+    };
+
+    const onEditNote = (updatedNote: Note) => {
+        if (!isNoteTextValid) return;
+        setNotes(prev => prev.map(n => n.id === updatedNote.id ? updatedNote : n));
+        if (mode === 'update') {
+            submitModify(updatedNote.id, updatedNote.taskId, updatedNote.text, updatedNote.isCompleted);
+        }
+    };
+
+    const flushPendingNotes = () => {
+        notes.forEach(note => submitCreate(note.id, note.taskId, note.text));
+    };
+
     return {
-        notes,
         onAddNote,
         onRemoveNote,
         onEditNote,
         selectedNote,
+        noteText,
         onSelectNote,
         unSelectNote,
-        noteText,
         onNoteTextChanged,
-        isNoteTextValid,
-        isNoteTextTooLong,
-        NOTE_MAX_LENGTH,
-        clearNoteInput
-    };
-};
+        clearNoteInput,
+        notes,
+        flushPendingNotes
+    }
+}

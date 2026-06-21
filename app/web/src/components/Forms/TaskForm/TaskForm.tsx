@@ -21,15 +21,16 @@ interface TaskFormProps {
 }
 
 export const TaskForm = ({ mode = 'create', selectedTask, day, initialStartTime, initialEndTime, onClose, onNewCourseClick }: TaskFormProps) => {
-    const { courseState, timeState, noteState, actions } = useTaskForm({ day, initialStartTime, initialEndTime, onClose, selectedTask });
+
+    const { taskId, courseState, timeState, noteState, onSubmit, onDelete } = useTaskForm(mode, selectedTask, day, initialStartTime, initialEndTime, onClose);
 
     const handleSubmit = () => {
-        actions.onCreateTask(mode, courseState.selectedCourse, noteState.notes, selectedTask ? selectedTask.id : crypto.randomUUID());
+        onSubmit();
     };
 
     const handleDelete = () => {
         if (mode !== 'update' || !selectedTask) return;
-        actions.onRemove(selectedTask.id);
+        onDelete();
     };
 
     return (
@@ -50,6 +51,7 @@ export const TaskForm = ({ mode = 'create', selectedTask, day, initialStartTime,
                             onRemoveNote={noteState.onRemoveNote}
                         />
                         <NoteInput
+                            taskId={taskId}
                             selectedNote={noteState.selectedNote}
                             noteText={noteState.noteText}
                             onAddNote={noteState.onAddNote}
