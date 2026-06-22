@@ -1,5 +1,5 @@
 import { useTimeState } from "./useTimeState";
-import { useCourseStore } from "../../../../store/courseStore";
+import { useCourseState } from "./useCourseState";
 import { useNoteState } from "./useNoteState";
 import { useModifyTask } from "../../../../hooks/task/useModifyTask";
 import { useTaskWithRelations } from "../../../../hooks/useTaskWithRelations";
@@ -8,7 +8,6 @@ import type { CalendarDay, CalendarTime } from "../../../../pages/Calendar/Calen
 import type { Task } from "../../../../types/Task";
 
 export const useModifyTaskForm = (day: CalendarDay, initialStartTime: CalendarTime, initialEndTime: CalendarTime, onClose: () => void, selectedTask: Task | undefined) => {
-    const { courses, selectedCourse, selectCourse } = useCourseStore();
     const { submit: submitModify } = useModifyTask();
     const { submit: submitRemove } = useRemoveTask();
 
@@ -16,7 +15,8 @@ export const useModifyTaskForm = (day: CalendarDay, initialStartTime: CalendarTi
     const timeState = useTimeState(selectedTask?.id ?? '', initialStartTime, initialEndTime, 'update');
     const noteState = useNoteState(task?.notes ?? [], 'update');
 
-    const courseState = { courses, selectedCourse, selectCourse };
+    const { courses, selectedCourse, onSelectCourse } = useCourseState('update', selectedTask?.id);
+    const courseState = { courses, selectedCourse, onSelectCourse };
 
     const onSubmit = () => {
         if (!selectedCourse || !task || !selectedTask) return;

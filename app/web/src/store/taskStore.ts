@@ -9,6 +9,7 @@ interface TaskStore {
     removeTask: (taskId: string) => void;
     updateStartTime: (taskId: string, startTime: CalendarTime) => void;
     updateEndTime: (taskId: string, endTime: CalendarTime) => void;
+    updateCourse: (taskId: string, courseId: string) => void;
 }
 
 export const useTaskStore = create<TaskStore>((set) => ({
@@ -39,6 +40,12 @@ export const useTaskStore = create<TaskStore>((set) => ({
     updateEndTime: (taskId: string, endTime: CalendarTime) => set((state) => ({
         tasks: state.tasks.map((task) =>
             task.id === taskId ? { ...task, endTime: endTime } : task
+        )
+    })),
+
+    updateCourse: (taskId: string, courseId: string) => set((state) => ({
+        tasks: state.tasks.map((task) =>
+            task.id === taskId ? { ...task, courseId: courseId } : task
         )
     }))
 }));

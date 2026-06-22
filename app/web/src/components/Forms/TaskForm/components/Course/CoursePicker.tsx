@@ -7,18 +7,18 @@ import type { Course } from '../../../../../types/Course';
 
 interface CoursePickerProps {
     selectedCourse: Course | null;
-    selectCourse: (course: Course) => void;
+    onSelectCourse: (course: Course) => void;
     courses: Course[];
     onNewCourseClick: () => void;
 }
 
-export const CoursePicker = ({ selectedCourse, selectCourse, courses, onNewCourseClick }: CoursePickerProps) => {
+export const CoursePicker = ({ selectedCourse, onSelectCourse, courses, onNewCourseClick }: CoursePickerProps) => {
     return (
         <div className={`flex flex-col gap-0.5`}>
             <p className={`${TEXT_SIZE_CLASS} font-medium ${TEXT_COLOR_CLASS} select-none cursor-default`}>Course</p>
             <div className={`flex flex-row gap-0.5 ${COURSE_HEIGHT_CLASS}`}>
                 {
-                    courses.length > 0 && <CourseDropDown selectedCourse={selectedCourse ?? courses[0]} selectCourse={selectCourse} courses={courses} />
+                    courses.length > 0 && <CourseDropDown selectedCourse={selectedCourse ?? courses[0]} onSelectCourse={onSelectCourse} courses={courses} />
                 }
                 <MyButton onClick={onNewCourseClick}>
                     <PlusIcon className={`w-3 stroke-[1.1px] ${TEXT_COLOR_CLASS} cursor-pointer`} />

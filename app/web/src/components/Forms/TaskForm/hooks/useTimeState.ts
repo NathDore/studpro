@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { getNextHour } from "../../../../pages/Calendar/utils/calendarTimeUtils";
 import { validateTimePickerInput } from "../../../../pages/Calendar/utils/calendarTimeUtils";
-import type { CalendarTime, TimePickerInputs, TimePickerInputType } from "../../../../pages/Calendar/Calendar.types";
 import { useModifyTaskStartTime } from "../../../../hooks/task/useModifyTaskStartTime";
 import { useModifyTaskEndtime } from "../../../../hooks/task/useModifyTaskEndtime";
+import type { CalendarTime, TimePickerInputs, TimePickerInputType } from "../../../../pages/Calendar/Calendar.types";
 
 export const useTimeState = (taskId: string, initialStartTime: CalendarTime, initialEndTime: CalendarTime, mode: 'create' | 'update') => {
     const [startTime, setStartTime] = useState<CalendarTime>(initialStartTime);
