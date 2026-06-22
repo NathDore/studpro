@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useTaskStore } from '../../store/taskStore';
 import { getDays, getDayFromTask } from '../../utils/calendarDayUtils';
-import type { TaskFormSelectedSlot, CalendarMode, CalendarDay, CalendarTime } from './Calendar.types';
-import type { Task } from '../../types/Task';
 import { getDayTimes } from './utils/calendarTimeUtils';
 import { useCourseStore } from '../../store/courseStore';
+import type { TaskFormSelectedSlot, CalendarMode, CalendarDay, CalendarTime } from './Calendar.types';
+import type { Task } from '../../types/Task';
 
 const DAYS: CalendarDay[] = getDays();
 const DAY_TIMES: CalendarTime[] = getDayTimes();
@@ -17,7 +17,7 @@ export const useCalendarPage = () => {
     const [taskFormMode, setTaskFormMode] = useState<CalendarMode>('create');
     const [displayCourseForm, setDisplayCourseForm] = useState<boolean>(false);
 
-    const { selectCourse } = useCourseStore();
+    const { courses, selectCourse } = useCourseStore();
 
     const onHourCellClick = (day: CalendarDay, startTime: CalendarTime, endTime: CalendarTime) => {
         setTaskFormMode('create');
@@ -29,7 +29,10 @@ export const useCalendarPage = () => {
         const day = getDayFromTask(task);
         setTaskFormMode('update');
         setSelectedTask(task);
-        selectCourse(task.course);
+
+        const course = courses.find((c) => c.id === task.courseId) ?? null;
+        if (course) selectCourse(course);
+
         setDisplayTaskForm({ day, startTime: task.startTime, endTime: task.endTime });
     };
 

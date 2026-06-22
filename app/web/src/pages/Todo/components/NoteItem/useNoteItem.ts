@@ -1,21 +1,21 @@
 import { useState } from "react"
 import type { Note } from "../../../../types/Note";
-import { useTaskStore } from "../../../../store/taskStore";
+import { useNoteStore } from "../../../../store/noteStore";
 
 interface UseNoteItemProps {
     note: Note;
     taskId: string;
 }
 
-export const useNoteItem = ({ note, taskId }: UseNoteItemProps) => {
-    const { updateNote } = useTaskStore();
+export const useNoteItem = ({ note }: UseNoteItemProps) => {
+    const { updateNote } = useNoteStore();
 
     const [isChecked, setIsChecked] = useState<boolean>(note.isCompleted);
 
     const onChecked = () => {
         const isCompleted = !isChecked;
         setIsChecked(prev => !prev);
-        updateNote(taskId, { ...note, isCompleted: isCompleted });
+        updateNote({ ...note, isCompleted: isCompleted });
     }
     return {
         isChecked,

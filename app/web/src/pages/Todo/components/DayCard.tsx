@@ -32,7 +32,7 @@ export const DayCard = ({ todoDay }: DayCardProps) => {
                 className={`${COLORS.primary} flex flex-col overflow-y-auto py-1.5 px-2.5 gap-1.5 border-l border-r border-gray-300 min-h-0 thin-scrollbar`}
             >
                 {todoDay.tasks?.map((task) => (
-                    <TaskCard key={task.id} task={task} />
+                    <TaskCard key={task.id} taskId={task.id} />
                 ))}
             </div>
 

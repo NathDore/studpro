@@ -1,5 +1,5 @@
 import { useTaskStore } from '../../store/taskStore';
-import { COURSE_DATA } from './seedCourses';
+import { useNoteStore } from '../../store/noteStore';
 import { getDays } from '../../utils/calendarDayUtils';
 import type { Task } from '../../types/Task';
 import type { Note } from '../../types/Note';
@@ -15,8 +15,9 @@ const createTime = (hour: number, minutes: number, period: CalendarPeriod): Cale
     period,
 });
 
-const createNote = (text: string): Note => ({
+const createNote = (text: string, taskId: string): Note => ({
     id: crypto.randomUUID(),
+    taskId,
     text,
     isCompleted: false,
 });
@@ -149,6 +150,7 @@ const TASK_SEED_DATA: TaskBlueprint[] = [
 export const seedTasks = () => {
     const { courses } = useCourseStore.getState();
     const { tasks, addTask } = useTaskStore.getState();
+    const { addNote } = useNoteStore.getState();
 
     if (tasks.length > 0) return;
     if (!ENABLE_SEED) return;
@@ -156,16 +158,18 @@ export const seedTasks = () => {
     const days = getDays();
 
     TASK_SEED_DATA.forEach(({ dayIndex, courseIndex, start, end, notes }) => {
+        const taskId = crypto.randomUUID();
+
         const task: Task = {
-            id: crypto.randomUUID(),
+            id: taskId,
             day: days[dayIndex],
             startTime: createTime(...start),
             endTime: createTime(...end),
-            course: courses[courseIndex],
-            notes: notes.map(createNote),
+            courseId: courses[courseIndex].id,
             isCompleted: false,
         };
 
         addTask(task);
+        notes.forEach((text) => addNote(createNote(text, taskId)));
     });
 };

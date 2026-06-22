@@ -6,11 +6,11 @@ import type { Course } from "../../../../../types/Course";
 
 interface DropDownProps {
     selectedCourse: Course;
-    selectCourse: (course: Course) => void;
+    onSelectCourse: (course: Course) => void;
     courses: Course[];
 }
 
-export const CourseDropDown = ({ selectedCourse, selectCourse, courses }: DropDownProps) => {
+export const CourseDropDown = ({ selectedCourse, onSelectCourse, courses }: DropDownProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -40,7 +40,7 @@ export const CourseDropDown = ({ selectedCourse, selectCourse, courses }: DropDo
                                 key={c.id}
                                 className={`flex flex-row items-center gap-1.5 ${COURSE_PADDING_CLASS} cursor-pointer ${TEXT_SIZE_CLASS} ${TEXT_COLOR_CLASS} hover:bg-[#f5f5f5]`}
                                 onClick={() => {
-                                    selectCourse(c);
+                                    onSelectCourse(c);
                                     setIsOpen(false);
                                 }}
                             >

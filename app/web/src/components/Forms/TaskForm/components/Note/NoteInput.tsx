@@ -3,6 +3,7 @@ import { BORDER_CLASS, TEXT_COLOR_CLASS, TEXT_SIZE_CLASS } from '../../../../../
 import type { Note } from '../../../../../types/Note';
 
 interface NoteInputProps {
+    taskId: string;
     selectedNote?: Note;
     onAddNote: (note: Note) => void;
     onEditNote: (updatedNote: Note) => void;
@@ -14,16 +15,16 @@ interface NoteInputProps {
 
 const FLEX_CLASS = `flex flex-row flex-10 sm:flex-10 md:flex-10 lg:flex-10 xl:flex-10 2xl:flex-10`;
 
-export const NoteInput = ({ selectedNote, onAddNote, onEditNote, unSelectNote, noteText, onNoteTextChanged, clearNoteInput }: NoteInputProps) => {
+export const NoteInput = ({ taskId, selectedNote, onAddNote, onEditNote, unSelectNote, noteText, onNoteTextChanged, clearNoteInput }: NoteInputProps) => {
 
     const handleAddNote = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
         if (selectedNote) {
-            onEditNote({ id: selectedNote.id, text: noteText, isCompleted: false });
+            onEditNote({ id: selectedNote.id, text: noteText, isCompleted: false, taskId });
             unSelectNote();
         } else
-            onAddNote({ id: crypto.randomUUID(), text: noteText, isCompleted: false });
+            onAddNote({ id: crypto.randomUUID(), text: noteText, isCompleted: false, taskId });
 
         clearNoteInput();
         onNoteTextChanged('');

@@ -28,7 +28,7 @@ export const TaskLayer = ({ tasks, onTaskCellClick, calendarBounds }: TaskLayerP
                 return (
                     <TaskCell
                         key={task.id}
-                        task={task}
+                        taskId={task.id}
                         position={position}
                         onTaskCellClick={onTaskCellClick}
                         isResizing={isResizing}

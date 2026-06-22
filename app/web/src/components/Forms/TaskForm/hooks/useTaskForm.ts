@@ -1,32 +1,30 @@
-import type { CalendarDay, CalendarTime } from "../../../../pages/Calendar/Calendar.types";
+import { useCreateTaskForm } from "./useCreateTaskForm";
+import { useModifyTaskForm } from "./useModifyTaskForm";
 import type { Task } from "../../../../types/Task";
-import { useTimeState } from "./useTimeState";
-import { useTaskActions } from "./useTaskAction";
-import { useNoteState } from "./useNoteState";
-import { useCourseStore } from "../../../../store/courseStore";
+import type { CalendarDay, CalendarTime } from "../../../../pages/Calendar/Calendar.types";
 
-interface UseTaskFormProps {
-    selectedTask?: Task;
-    day: CalendarDay;
-    initialStartTime: CalendarTime;
-    initialEndTime: CalendarTime;
-    onClose: () => void;
-}
+export const useTaskForm = (
+    mode: 'create' | 'update',
+    selectedTask: Task | undefined,
+    day: CalendarDay,
+    initialStartTime: CalendarTime,
+    initialEndTime: CalendarTime,
+    onClose: () => void
+) => {
+    const createState = useCreateTaskForm(day, initialStartTime, initialEndTime, onClose);
+    const modifyState = useModifyTaskForm(day, initialStartTime, initialEndTime, onClose, selectedTask);
 
-export const useTaskForm = ({ day, initialStartTime, initialEndTime, onClose, selectedTask }: UseTaskFormProps) => {
-    const { courses, selectedCourse, selectCourse } = useCourseStore();
+    const isUpdate = mode === 'update' && !!selectedTask;
+    const { timeState, noteState, courseState, onSubmit, onDelete } = isUpdate ? modifyState : createState;
 
-    const timeState = useTimeState({ initialStartTime, initialEndTime, selectedTask });
-    const noteState = useNoteState({ initialNotes: selectedTask?.notes });
-    const actions = useTaskActions({
-        day,
-        startTime: timeState.startTime,
-        endTime: timeState.endTime,
-        isCompleted: selectedTask ? selectedTask.isCompleted : false,
-        onClose
-    });
+    const taskId = isUpdate ? selectedTask!.id : createState.taskId;
 
-    const courseState = { courses, selectedCourse, selectCourse };
-
-    return { courseState, timeState, noteState, actions };
+    return {
+        taskId,
+        timeState,
+        noteState,
+        courseState,
+        onSubmit,
+        onDelete
+    };
 };

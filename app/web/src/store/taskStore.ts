@@ -1,40 +1,51 @@
 import { create } from 'zustand';
 import type { Task } from '../types/Task';
-import type { Note } from '../types/Note';
+import type { CalendarTime } from '../pages/Calendar/Calendar.types';
 
 interface TaskStore {
     tasks: Task[];
     addTask: (task: Task) => void;
     updateTask: (updatedTask: Task) => void;
     removeTask: (taskId: string) => void;
-    updateNote: (taskId: string, note: Note) => void;
+    updateStartTime: (taskId: string, startTime: CalendarTime) => void;
+    updateEndTime: (taskId: string, endTime: CalendarTime) => void;
+    updateCourse: (taskId: string, courseId: string) => void;
 }
 
 export const useTaskStore = create<TaskStore>((set) => ({
     tasks: [],
+
     addTask: (task) => set((state) => ({
         tasks: [...state.tasks, task]
     })),
+
     updateTask: (updatedTask: Task) => set((state) => ({
         tasks: state.tasks.map((task) =>
             task.id === updatedTask.id ? updatedTask : task
         )
     })),
+
     removeTask: (taskId: string) => set((state) => ({
         tasks: state.tasks.filter((task) =>
             task.id !== taskId
         )
     })),
-    updateNote: (taskId: string, note: Note) => set((state) => ({
-        tasks: state.tasks.map((task): Task => {
-            if (task.id !== taskId) return task;
 
-            const notes = task.notes.map(n => n.id === note.id ? note : n);
-            const isCompleted = notes.every(n => n.isCompleted);
+    updateStartTime: (taskId: string, startTime: CalendarTime) => set((state) => ({
+        tasks: state.tasks.map((task) =>
+            task.id === taskId ? { ...task, startTime: startTime } : task
+        )
+    })),
 
-            if (isCompleted) {
-                return { ...task, notes, isCompleted: true };
-            } else return { ...task, notes, isCompleted: false };
-        })
+    updateEndTime: (taskId: string, endTime: CalendarTime) => set((state) => ({
+        tasks: state.tasks.map((task) =>
+            task.id === taskId ? { ...task, endTime: endTime } : task
+        )
+    })),
+
+    updateCourse: (taskId: string, courseId: string) => set((state) => ({
+        tasks: state.tasks.map((task) =>
+            task.id === taskId ? { ...task, courseId: courseId } : task
+        )
     }))
 }));

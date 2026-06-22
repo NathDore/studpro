@@ -4,6 +4,7 @@ import { NoteIconLayer } from './components/NoteIconLayer/NoteIconLayer';
 import { ExpandedNoteLayer } from './components/ExpandedNoteLayer/ExpandedNoteLayer';
 import { useTaskCell } from './useTaskCell';
 import './TaskCell.css';
+import { useTaskWithRelations } from '../../../../../../../hooks/useTaskWithRelations';
 
 const WRAPPER_CLASS = 'group pointer-events-auto absolute flex justify-center';
 const EXPANDED_NOTES_CLASS = 'flex flex-col gap-1 flex-1 overflow-hidden';
@@ -17,7 +18,7 @@ const RESIZE_BAR_HEIGHT: Record<'minimal' | 'inline' | 'full', string> = {
 
 interface TaskCellProps {
     position: TaskPosition;
-    task: Task;
+    taskId: string;
     onTaskCellClick: (task: Task) => void;
     isResizing: React.RefObject<boolean>;
     onResizeTop: (e: MouseEvent, task: Task, position: TaskPosition) => void;
@@ -26,13 +27,21 @@ interface TaskCellProps {
 
 export const TaskCell = ({
     position,
-    task,
+    taskId,
     onTaskCellClick,
     isResizing,
     onResizeTop,
     onResizeBottom
 }: TaskCellProps) => {
-    const { layout, expandedNotes, iconships } = useTaskCell({ task });
+
+    const task = useTaskWithRelations(taskId);
+    if (!task) return null;
+
+    const { course, notes } = task;
+
+    if (!course) return null;
+
+    const { layout, expandedNotes, iconships } = useTaskCell(task, notes);
 
     const resizeBarHeight = RESIZE_BAR_HEIGHT[layout];
     const topResizeBarClassName = `z-10 absolute left-0 w-full cursor-ns-resize flex items-center justify-center top-[-7px] ${resizeBarHeight}`;
@@ -72,13 +81,13 @@ export const TaskCell = ({
             </div>
 
             {/* Task Cell content */}
-            <div className={contentClassName} style={{ backgroundColor: task.course.color }}>
+            <div className={contentClassName} style={{ backgroundColor: course.color }}>
 
                 {layout === 'inline' && (
                     <>
                         {/* Title */}
                         <p className={titleClassName}>
-                            {task.course.name}
+                            {course.name}
                         </p>
 
                         {/* Icons */}
@@ -92,7 +101,7 @@ export const TaskCell = ({
                     <>
                         {/* Title */}
                         <p className={titleClassName}>
-                            {task.course.name}
+                            {course.name}
                         </p>
 
                         {/* Expanded notes */}
