@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useTaskStore } from "../../../../../../../store/taskStore";
-import { CELL_HEIGHT } from "../../../../../../../constants/calendar-grid-constant";
+import { CALENDAR_ROW_HEIGHT } from "../../../../../../../config/calendar-configs";
 import { getPeriodFromHour } from "../../../../../../../utils/taskUtils";
 import { clampToAdjacentTask, clampToCalendarBounds, clampToMinHeight, getAdjacentTask, snapTo15 } from "../util/resizeBarUtils";
 import type { CalendarBounds } from "../../../../../Calendar.types";
@@ -85,11 +85,11 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
         let newEnd: CalendarTime = { ...activeTask.current.endTime };
 
         if (direction.current === 'top') {
-            let newTop = clampToMinHeight('top', deltaY, startTop.current, startHeight.current, CELL_HEIGHT);
+            let newTop = clampToMinHeight('top', deltaY, startTop.current, startHeight.current, CALENDAR_ROW_HEIGHT);
             if (adjacentTask.current) newTop = clampToAdjacentTask('top', newTop, adjacentTask.current, cellWidth);
             newTop = clampToCalendarBounds('top', newTop, calendarBounds.height);
 
-            const newHour = newTop / CELL_HEIGHT;
+            const newHour = newTop / CALENDAR_ROW_HEIGHT;
             const snappedMinutes = snapTo15(newHour * 60);
             const snappedHour = Math.floor(snappedMinutes / 60);
             const snappedMin = snappedMinutes % 60;
@@ -110,11 +110,11 @@ export const useResizeBar = ({ calendarBounds, cellWidth }: UseResizeBarProps) =
         }
 
         if (direction.current === 'bottom') {
-            let newBottom = clampToMinHeight('bottom', deltaY, startTop.current, startHeight.current, CELL_HEIGHT);
+            let newBottom = clampToMinHeight('bottom', deltaY, startTop.current, startHeight.current, CALENDAR_ROW_HEIGHT);
             if (adjacentTask.current) newBottom = clampToAdjacentTask('bottom', newBottom, adjacentTask.current, cellWidth);
             newBottom = clampToCalendarBounds('bottom', newBottom, calendarBounds.height);
 
-            const newHour = newBottom / CELL_HEIGHT;
+            const newHour = newBottom / CALENDAR_ROW_HEIGHT;
             const snappedMinutes = snapTo15(newHour * 60);
             const snappedHour = Math.floor(snappedMinutes / 60);
             const snappedMin = snappedMinutes % 60;
