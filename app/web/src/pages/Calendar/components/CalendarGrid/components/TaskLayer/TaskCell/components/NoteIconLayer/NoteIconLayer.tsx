@@ -1,7 +1,7 @@
 import type { Note } from "../../../../../../../../../types/Note";
 import { NoteIconShip } from "./NoteIconShip";
 
-const MAX_VISIBLE_ICONS = 1;
+const MAX_VISIBLE_ICONS = 3;
 
 const CONTAINER_CLASS = 'flex flex-row gap-[2px] text-[#d8d8d8]';
 const HIDDEN_COUNT_CLASS = 'text-[10px] font-semibold text-inherit opacity-80 self-center px-[2px] whitespace-nowrap';

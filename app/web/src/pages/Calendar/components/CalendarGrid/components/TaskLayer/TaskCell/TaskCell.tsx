@@ -35,13 +35,12 @@ export const TaskCell = ({
 }: TaskCellProps) => {
 
     const task = useTaskWithRelations(taskId);
+    const { layout, expandedNotes, iconships } = useTaskCell(task ?? null, task?.notes ?? []);
+
     if (!task) return null;
+    if (!task.course) return null;
 
     const { course, notes } = task;
-
-    if (!course) return null;
-
-    const { layout, expandedNotes, iconships } = useTaskCell(task, notes);
 
     const resizeBarHeight = RESIZE_BAR_HEIGHT[layout];
     const topResizeBarClassName = `z-10 absolute left-0 w-full cursor-ns-resize flex items-center justify-center top-[-7px] ${resizeBarHeight}`;
