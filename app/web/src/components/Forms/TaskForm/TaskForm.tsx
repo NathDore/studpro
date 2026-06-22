@@ -68,7 +68,7 @@ export const TaskForm = ({ mode = 'create', selectedTask, day, initialStartTime,
                             disabled={courseState.selectedCourse === null}
                             className={`w-30 h-10 flex justify-center items-center bg-green-300 ${courseState.selectedCourse === null ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
-                            <p>{mode === 'create' ? 'Create' : 'Modify'}</p>
+                            <p>{mode === 'create' ? 'Create' : 'Continue'}</p>
                         </MyButton>
                         {mode === 'update' && (
                             <MyButton onClick={handleDelete} className='w-30 h-10 flex justify-center items-center bg-red-200'>

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useCourseStore } from "../../../../store/courseStore";
 import type { Color } from "../../../../constants/colors-constant";
+import { useCreateCourse } from "../../../../hooks/course/useCreateCourse";
 
 interface UseCourseFormProps {
     initialColor: Color;
@@ -14,7 +15,9 @@ export const useCourseForm = ({ initialColor, onClose }: UseCourseFormProps) => 
     const [courseName, setCourseName] = useState<string>('');
     const [selectedColor, setSelectedColor] = useState<Color>(initialColor);
 
-    const { addCourse, selectCourse } = useCourseStore();
+    const { submit: submitCreate } = useCreateCourse();
+
+    const { selectCourse } = useCourseStore();
 
     const onCourseNameChange = (name: string) => {
         setCourseName(capitalizeCourseName(sanitizeCourseName(name)));
@@ -31,7 +34,8 @@ export const useCourseForm = ({ initialColor, onClose }: UseCourseFormProps) => 
         if (!validCourseName) return;
 
         const addedCourse = { id: crypto.randomUUID(), name: courseName, color: selectedColor };
-        addCourse(addedCourse);
+
+        submitCreate(addedCourse.id, addedCourse.name, addedCourse.color);
         selectCourse(addedCourse);
         onClose();
     }
