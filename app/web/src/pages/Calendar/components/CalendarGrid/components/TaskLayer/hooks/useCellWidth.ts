@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { TIME_CELL_WIDTH } from "../../../../../../../constants/calendar-grid-constant";
+import { TIME_CELL_WIDTH } from "../../../../../../../config/calendar-configs";
 
 export const useCellWidth = () => {
     const layerRef = useRef<HTMLDivElement>(null);

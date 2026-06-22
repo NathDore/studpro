@@ -1,4 +1,4 @@
-import { CELL_HEIGHT, TIME_CELL_WIDTH } from "../constants/calendar-grid-constant";
+import { CALENDAR_ROW_HEIGHT, TIME_CELL_WIDTH } from "../config/calendar-configs";
 import type { CalendarTime, TaskPosition } from "../pages/Calendar/Calendar.types";
 import type { Task } from "../types/Task";
 
@@ -25,10 +25,8 @@ export const getTaskHours = (startTime: CalendarTime, endTime: CalendarTime): nu
 export const getTaskPositionInCalendar = (task: Task, cellWidth: number): TaskPosition => {
     const dayIndex = task.day.fullDate.getDay() === 0 ? 6 : task.day.fullDate.getDay() - 1;
 
-
-
     const left = TIME_CELL_WIDTH + dayIndex * cellWidth;
-    const top = (timeDuration(task.startTime) / 60) * CELL_HEIGHT;
+    const top = (timeDuration(task.startTime) / 60) * CALENDAR_ROW_HEIGHT;
 
     const endHour = task.endTime.hour === 0 && task.endTime.minutes === 0
         ? 24
@@ -36,7 +34,7 @@ export const getTaskPositionInCalendar = (task: Task, cellWidth: number): TaskPo
     const adjustedEndTime: CalendarTime = { id: task.endTime.id, period: task.endTime.period, hour: endHour, minutes: task.endTime.minutes };
 
     const durationInMinutes = getTaskDuration(task.startTime, adjustedEndTime);
-    const height = (durationInMinutes / 60) * CELL_HEIGHT;
+    const height = (durationInMinutes / 60) * CALENDAR_ROW_HEIGHT;
     const width = cellWidth;
 
     return { left, top, height, width };
