@@ -40,7 +40,7 @@ export const TaskCell = ({
     if (!task) return null;
     if (!task.course) return null;
 
-    const { course, notes } = task;
+    const { course } = task;
 
     const resizeBarHeight = RESIZE_BAR_HEIGHT[layout];
     const topResizeBarClassName = `z-10 absolute left-0 w-full cursor-ns-resize flex items-center justify-center top-[-7px] ${resizeBarHeight}`;

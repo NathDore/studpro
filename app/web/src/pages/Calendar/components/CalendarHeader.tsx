@@ -15,7 +15,7 @@ interface CalendarHeaderProps {
 export const CalendarHeader = ({ days }: CalendarHeaderProps) => {
     return (
         <div
-            className='sticky top-0 z-10 h-[50px] grid'
+            className='sticky top-0 z-10 h-12.5 grid'
             style={{ gridTemplateColumns: `${TIME_CELL_WIDTH}px repeat(7, 1fr)` }}
         >
             <div className={HEADER_EMPTY_CELL_CLASS} />
