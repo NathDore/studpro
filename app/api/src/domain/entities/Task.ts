@@ -3,5 +3,5 @@ export interface Task {
     day: string;       // ISO date
     startTime: string; // "HH:mm"
     endTime: string;
-    courseId: string | null;
+    courseId: string;
 }
