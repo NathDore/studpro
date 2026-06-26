@@ -2,14 +2,11 @@ import { randomUUID } from "crypto";
 import { Note } from "../../domain/entities/Note";
 import { NoteRepository } from "../../domain/repositories/NoteRepository";
 import { TaskRepository } from "../../domain/repositories/TaskRepository";
+import { isValidText } from "./validator";
 
 interface CreateNoteInput {
     taskId: string;
     text: string;
-}
-
-function isValidText(text: string): boolean {
-    return text.trim().length > 0;
 }
 
 export class CreateNote {
